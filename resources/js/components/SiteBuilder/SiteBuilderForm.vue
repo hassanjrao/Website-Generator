@@ -5,7 +5,8 @@
 
             <v-card>
                 <v-tabs background-color="deep-grey accent-4" center-active dark v-model="tab">
-                    <v-tab v-for="(tab, ind) in tabs" :key="ind" :disabled="tab.label!=='site_info' && !siteId ? true : false">
+                    <v-tab v-for="(tab, ind) in tabs" :key="ind"
+                        :disabled="tab.label !== 'site_info' && !siteId ? true : false">
                         {{ tab.text }}
                     </v-tab>
                 </v-tabs>
@@ -13,8 +14,13 @@
                 <v-tabs-items v-model="tab">
                     <v-tab-item v-for="(tab, i) in tabs" :key="i">
                         <v-card flat>
-                            <v-card-text v-if="tab.label=='site_info'">
-                                 <SiteInfo :site_info="siteInfo" @siteIdGenerated="getSideId"/>
+                            <v-card-text v-if="tab.label == 'site_info'">
+                                <SiteInfo :site_info="siteInfo" @siteIdGenerated="getSideId" />
+                            </v-card-text>
+
+
+                            <v-card-text v-if="tab.label == 'content'">
+                                <SiteContent :site_content="siteContent" />
                             </v-card-text>
                         </v-card>
                     </v-tab-item>
@@ -29,6 +35,7 @@
 <script>
 
 import SiteInfo from './SiteInfo'
+import SiteContent from './SiteContent.vue';
 
 export default {
     data() {
@@ -68,22 +75,24 @@ export default {
                     text: 'CRM'
                 },
             ],
-            siteInfo:[],
-            siteId:null
+            siteInfo: [],
+            siteId: 1,
+            siteContent: []
 
         }
     },
 
     methods: {
-        getSideId(siteId){
+        getSideId(siteId) {
             this.siteId = siteId;
-            this.tab=1;
+            this.tab = 1;
             console.log(this.siteId);
         }
     },
 
     components: {
-     SiteInfo
+        SiteInfo,
+        SiteContent
     },
 }
 </script>
