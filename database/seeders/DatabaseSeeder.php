@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\HeaderTemplate;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -22,9 +23,20 @@ class DatabaseSeeder extends Seeder
             AboutUsDescriptionSeeder::class,
             ShopTitleSeeder::class,
             ButtonNameSeeder::class,
-            PopularTitleSeeder::class,
             ContactTitleSeeder::class,
             ContactContentSeeder::class,
+            PopularTitleSeeder::class,
+            HeaderTemplateSeeder::class,
+            HeroSectionSeeder::class,
+            ProductSectionSeeder::class,
+            AboutSectionSeeder::class,
+            ContactSectionSeeder::class,
+            PopularProductSectionSeeder::class,
+            CtaSectionSeeder::class,
+            FeatureSectionSeeder::class,
+            FooterTemplateSeeder::class,
+            ProductPageSeeder::class,
+            CheckoutPageSeeder::class,
         ]);
     }
 }

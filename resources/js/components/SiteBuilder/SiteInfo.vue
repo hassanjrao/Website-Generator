@@ -198,7 +198,7 @@ export default {
     data() {
         return {
             loading: false,
-            siteId:null,
+            siteId: null,
         }
     },
 
@@ -308,7 +308,7 @@ export default {
             }
 
             this.loading = true
-            axios.post('/sites/store', {
+            axios.post('/sites/create-site', {
                 site_name: this.site_info.name,
                 url: this.site_info.url,
                 email: this.site_info.email,
@@ -331,14 +331,14 @@ export default {
                 .then(response => {
                     this.loading = false
                     this.siteId = response.data.data.site_id
-                    this.showStatus(response.data.message,"success")
+                    this.showStatus(response.data.message, "success")
 
                     this.$emit('siteIdGenerated', this.siteId)
                 })
                 .catch(error => {
                     console.log(error)
                     this.loading = false
-                    this.showStatus(error.response.data.message,"error")
+                    this.showStatus(error.response.data.message, "error")
                 })
         }
     },

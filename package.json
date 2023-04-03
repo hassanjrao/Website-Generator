@@ -18,6 +18,7 @@
     "vuetify": "^2.6.0"
   },
   "devDependencies": {
+    "@mdi/font": "^7.2.96",
     "@popperjs/core": "^2.10.2",
     "axios": "^0.21.1",
     "bootstrap": "^5.1.3",

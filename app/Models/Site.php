@@ -23,4 +23,8 @@ class Site extends Model
     public function deletedBy(){
         return $this->belongsTo(User::class,'deleted_by');
     }
+
+    public function siteContent(){
+        return $this->hasOne(SiteContent::class);
+    }
 }

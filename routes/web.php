@@ -31,8 +31,10 @@ Route::middleware(["auth"])->group(function () {
 
         Route::get("/", [SiteController::class,"index"])->name("sites.index");
         Route::get("create", [SiteController::class,"create"])->name("sites.create");
-        Route::post("store", [SiteController::class,"store"])->name("sites.store");
+        Route::post("create-site", [SiteController::class,"createSite"])->name("sites.createSite");
+        Route::get("download/{site}", [SiteController::class,"download"])->name("sites.download");
 
+        Route::post("submit-site-content", [SiteController::class,"submitSiteContent"])->name("sites.submit-site-content");
     });
 
 });

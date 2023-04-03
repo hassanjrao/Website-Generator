@@ -20,7 +20,19 @@
 
 
                             <v-card-text v-if="tab.label == 'content'">
-                                <SiteContent :site_content="siteContent" />
+                                <SiteContent
+                                :site_content="siteContent"
+                                :slogans="slogans"
+                                :taglines="taglines"
+                                :aboutustitles="aboutustitles"
+                                :aboutuscontent="aboutuscontent"
+                                :shoptitles="shoptitles"
+                                :buttonnames="buttonnames"
+                                :populartitles="populartitles"
+                                :contacttitles="contacttitles"
+                                :contactcontent="contactcontent"
+                                :site_id="siteId"
+                                />
                             </v-card-text>
                         </v-card>
                     </v-tab-item>
@@ -38,6 +50,46 @@ import SiteInfo from './SiteInfo'
 import SiteContent from './SiteContent.vue';
 
 export default {
+
+    props:{
+        slogans: {
+            type: Array,
+            required: true
+        },
+        taglines: {
+            type: Array,
+            required: true
+        },
+        aboutustitles: {
+            type: Array,
+            required: true
+        },
+        aboutuscontent: {
+            type: Array,
+            required: true
+        },
+        shoptitles: {
+            type: Array,
+            required: true
+        },
+        buttonnames: {
+            type: Array,
+            required: true
+        },
+        populartitles: {
+            type: Array,
+            required: true
+        },
+        contacttitles: {
+            type: Array,
+            required: true
+        },
+        contactcontent: {
+            type: Array,
+            required: true
+        }
+    },
+
     data() {
         return {
             tab: null,
@@ -76,7 +128,7 @@ export default {
                 },
             ],
             siteInfo: [],
-            siteId: 1,
+            siteId: null,
             siteContent: []
 
         }
@@ -94,5 +146,10 @@ export default {
         SiteInfo,
         SiteContent
     },
+
+    mounted() {
+
+        console.log(this.taglines);
+    }
 }
 </script>

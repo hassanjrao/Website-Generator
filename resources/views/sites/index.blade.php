@@ -69,8 +69,8 @@
                                     <td>
                                         <div class="btn-group" role="group" aria-label="Horizontal Primary">
 
-                                            {{-- <a href="{{ route('sites.download', ['site' => $site]) }}"
-                                                class="btn btn-sm btn-alt-warning">Download</a> --}}
+                                            <a href="{{ route('sites.download', ['site' => $site]) }}"
+                                                class="btn btn-sm btn-alt-warning">Download</a>
 
                                             {{-- <a href="{{ route('sites.edit', $site->id) }}"
                                                 class="btn btn-sm btn-alt-primary">Edit</a> --}}

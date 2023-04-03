@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\PopularTitle;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -68,5 +69,7 @@ class PopularTitleSeeder extends Seeder
                 "updated_by" => "1"
             ];
         }
+
+        PopularTitle::insert($popularTitleArr);
     }
 }
