@@ -20,20 +20,16 @@
 
 
                             <v-card-text v-if="tab.label == 'content'">
-                                <SiteContent
-                                :site_content="siteContent"
-                                :slogans="slogans"
-                                :taglines="taglines"
-                                :aboutustitles="aboutustitles"
-                                :aboutuscontent="aboutuscontent"
-                                :shoptitles="shoptitles"
-                                :buttonnames="buttonnames"
-                                :populartitles="populartitles"
-                                :contacttitles="contacttitles"
-                                :contactcontent="contactcontent"
-                                :site_id="siteId"
-                                />
+                                <SiteContent :site_content="siteContent" :slogans="slogans" :taglines="taglines"
+                                    :aboutustitles="aboutustitles" :aboutuscontent="aboutuscontent" :shoptitles="shoptitles"
+                                    :buttonnames="buttonnames" :populartitles="populartitles" :contacttitles="contacttitles"
+                                    :contactcontent="contactcontent" :site_id="siteId" />
                             </v-card-text>
+
+                            <v-card-text v-if="tab.label == 'templates'">
+                                <Template :headertemplates="headertemplates" :herosections="herosections" :productsections="productsections" :aboutsections="aboutsections" :contactsections="contactsections"  />
+                            </v-card-text>
+
                         </v-card>
                     </v-tab-item>
                 </v-tabs-items>
@@ -48,10 +44,11 @@
 
 import SiteInfo from './SiteInfo'
 import SiteContent from './SiteContent.vue';
+import Template from './Template.vue';
 
 export default {
 
-    props:{
+    props: {
         slogans: {
             type: Array,
             required: true
@@ -87,7 +84,28 @@ export default {
         contactcontent: {
             type: Array,
             required: true
-        }
+        },
+        headertemplates: {
+            type: Array,
+            required: true
+        },
+        herosections: {
+            type: Array,
+            required: true
+        },
+        productsections: {
+            type: Array,
+            required: true
+        },
+        aboutsections: {
+            type: Array,
+            required: true
+        },
+        contactsections: {
+            type: Array,
+            required: true
+        },
+
     },
 
     data() {
@@ -128,7 +146,7 @@ export default {
                 },
             ],
             siteInfo: [],
-            siteId: null,
+            siteId: 1,
             siteContent: []
 
         }
@@ -144,7 +162,8 @@ export default {
 
     components: {
         SiteInfo,
-        SiteContent
+        SiteContent,
+        Template
     },
 
     mounted() {

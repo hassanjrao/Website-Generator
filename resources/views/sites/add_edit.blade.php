@@ -18,6 +18,11 @@
         :populartitles="{{ $popularTitles }}"
         :contactTitles="{{ $contactTitles }}"
         :contactContent="{{ $contactContent }}"
+        :headertemplates="{{ $headerTemplates }}"
+        :herosections="{{ $heroSections }}"
+        :productsections="{{ $productSections }}"
+        :aboutsections="{{ $aboutSections }}"
+        :contactsections="{{ $contactSections }}"
         />
     </div>
 

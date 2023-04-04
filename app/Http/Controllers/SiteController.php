@@ -2,12 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AboutSection;
 use App\Models\AboutUsDescription;
 use App\Models\AboutUsTitle;
 use App\Models\ButtonName;
 use App\Models\ContactContent;
+use App\Models\ContactSection;
 use App\Models\ContactTitle;
+use App\Models\HeaderTemplate;
+use App\Models\HeroSection;
 use App\Models\PopularTitle;
+use App\Models\ProductSection;
 use App\Models\ShopTitle;
 use App\Models\Site;
 use App\Models\SiteContent;
@@ -111,7 +116,90 @@ class SiteController extends Controller
             ];
         });
 
-        return view('sites.add_edit', compact('site', 'slogans', 'tagLines', 'aboutUsTitles', 'aboutUsContent', 'shopTitles', 'buttonNames', 'popularTitles', 'contactTitles', 'contactContent'));
+        $headerTemplates = $this->headerTemplates();
+        $headerTemplates = $headerTemplates->map(function ($headerTemplate) {
+            return [
+                "text" => $headerTemplate->name,
+                "value" => $headerTemplate->id
+            ];
+        });
+
+        $heroSections = $this->getHeroSections();
+        $heroSections = $heroSections->map(function ($heroSection) {
+            return [
+                "text" => $heroSection->name,
+                "value" => $heroSection->id
+            ];
+        });
+
+
+        $productSections = $this->getProductSections();
+        $productSections = $productSections->map(function ($productSection) {
+            return [
+                "text" => $productSection->name,
+                "value" => $productSection->id
+            ];
+        });
+
+
+        $aboutSections = $this->getAboutSections();
+        $aboutSections = $aboutSections->map(function ($aboutSection) {
+            return [
+                "text" => $aboutSection->name,
+                "value" => $aboutSection->id
+            ];
+        });
+
+        $contactSections = $this->getContactSections();
+        $contactSections = $contactSections->map(function ($contactSection) {
+            return [
+                "text" => $contactSection->name,
+                "value" => $contactSection->id
+            ];
+        });
+
+
+        return view('sites.add_edit',
+            compact(
+                'site',
+                'slogans',
+                'tagLines',
+                'aboutUsTitles',
+                'aboutUsContent',
+                'shopTitles',
+                'buttonNames',
+                'popularTitles',
+                'contactTitles',
+                'contactContent',
+                'headerTemplates',
+                'heroSections',
+                'productSections',
+                'aboutSections',
+                'contactSections'
+            )
+        );
+    }
+
+    public function getContactSections()
+    {
+        $contactSections = ContactSection::all();
+        return $contactSections;
+    }
+
+    public function getAboutSections(){
+        $aboutSections = AboutSection::all();
+        return $aboutSections;
+    }
+
+    public function getProductSections()
+    {
+        $productSections = ProductSection::all();
+        return $productSections;
+    }
+
+    public function getHeroSections(){
+        $heroSections = HeroSection::all();
+        return $heroSections;
     }
 
     public function getContactContent()
@@ -168,6 +256,12 @@ class SiteController extends Controller
     {
         $aboutUsContent = AboutUsDescription::latest()->get();
         return $aboutUsContent;
+    }
+
+    public function headerTemplates()
+    {
+        $headerTemplates = HeaderTemplate::all();
+        return $headerTemplates;
     }
 
     public function createSite(Request $request)
@@ -295,7 +389,7 @@ class SiteController extends Controller
         $randNum = rand(1000, 9999);
         $projectName = 'project_' . $site->id . '_' . $siteName . '_' . $randNum . '_' . time();
 
-        $newProjectDestination= $this->copyProject($projectName);
+        $newProjectDestination = $this->copyProject($projectName);
 
 
 
@@ -368,7 +462,7 @@ class SiteController extends Controller
 
 
 
-        $this->generateZip($site,$projectName,$newProjectDestination);
+        $this->generateZip($site, $projectName, $newProjectDestination);
 
 
 
@@ -390,10 +484,9 @@ class SiteController extends Controller
         // return path of the new project
 
         return $destination;
-
     }
 
-    public function generateZip($site,$projectName,$newProjectDestination)
+    public function generateZip($site, $projectName, $newProjectDestination)
     {
         $siteName = str_replace(' ', '_', $site->name);
 
@@ -424,7 +517,7 @@ class SiteController extends Controller
         $zip->close();
 
         // store the zip file in the storage folder
-        Storage::put('zip-projects'.$zip_file, file_get_contents($zip_file));
+        Storage::put('zip-projects' . $zip_file, file_get_contents($zip_file));
 
 
 
