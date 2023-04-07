@@ -6,13 +6,20 @@ use App\Models\AboutSection;
 use App\Models\AboutUsDescription;
 use App\Models\AboutUsTitle;
 use App\Models\ButtonName;
+use App\Models\CheckoutPage;
 use App\Models\ContactContent;
 use App\Models\ContactSection;
 use App\Models\ContactTitle;
+use App\Models\CtaSection;
+use App\Models\FeatureSection;
+use App\Models\FooterTemplate;
 use App\Models\HeaderTemplate;
 use App\Models\HeroSection;
+use App\Models\PopularProductSection;
 use App\Models\PopularTitle;
+use App\Models\ProductPage;
 use App\Models\ProductSection;
+use App\Models\RelatedProductSection;
 use App\Models\ShopTitle;
 use App\Models\Site;
 use App\Models\SiteContent;
@@ -158,8 +165,69 @@ class SiteController extends Controller
             ];
         });
 
+        $popularProductSections = $this->getPopularProductSections();
+        $popularProductSections = $popularProductSections->map(function ($popularProductSection) {
+            return [
+                "text" => $popularProductSection->name,
+                "value" => $popularProductSection->id
+            ];
+        });
 
-        return view('sites.add_edit',
+        $ctaSections = $this->getCtaSections();
+        $ctaSections = $ctaSections->map(function ($ctaSection) {
+            return [
+                "text" => $ctaSection->name,
+                "value" => $ctaSection->id
+            ];
+        });
+
+        $featureSections = $this->getFeatureSections();
+        $featureSections = $featureSections->map(function ($featureSection) {
+            return [
+                "text" => $featureSection->name,
+                "value" => $featureSection->id
+            ];
+        });
+
+        $footerTemplates = $this->getFooterTemplates();
+        $footerTemplates = $footerTemplates->map(function ($footerTemplate) {
+            return [
+                "text" => $footerTemplate->name,
+                "value" => $footerTemplate->id
+            ];
+        });
+
+        $productPages = $this->getProductPages();
+        $productPages = $productPages->map(function ($productPage) {
+            return [
+                "text" => $productPage->name,
+                "value" => $productPage->id
+            ];
+        });
+
+        $checkoutPages = $this->getCheckoutPages();
+        $checkoutPages = $checkoutPages->map(function ($checkoutPage) {
+            return [
+                "text" => $checkoutPage->name,
+                "value" => $checkoutPage->id
+            ];
+        });
+
+        $relatedProductSections = $this->getRelatedProductSections();
+        $relatedProductSections = $relatedProductSections->map(function ($relatedProductSection) {
+            return [
+                "text" => $relatedProductSection->name,
+                "value" => $relatedProductSection->id
+            ];
+        });
+
+        $layouts = $this->getLayouts();
+
+        $layouts = json_encode($layouts);
+
+
+        return view(
+            'sites.add_edit',
             compact(
                 'site',
                 'slogans',
@@ -175,9 +243,102 @@ class SiteController extends Controller
                 'heroSections',
                 'productSections',
                 'aboutSections',
-                'contactSections'
+                'contactSections',
+                'popularProductSections',
+                'ctaSections',
+                'featureSections',
+                'footerTemplates',
+                'productPages',
+                'checkoutPages',
+                'relatedProductSections',
+                'layouts'
             )
         );
+    }
+
+    public function getLayouts()
+    {
+        $layouts = [
+            [
+                "id" => 1,
+                "name" => "Header",
+                "fixed" => true,
+            ],
+            [
+                "id" => 2,
+                "name" => "Hero Section",
+            ],
+            [
+                "id" => 3,
+                "name" => "About Section",
+            ],
+            [
+                "id" => 4,
+                "name" => "Product Section",
+            ],
+
+            [
+                "id" => 5,
+                "name" => "Featured Products",
+            ],
+
+            [
+                "id" => 6,
+                "name" => "Contact",
+            ],
+
+            [
+                "id" => 7,
+                "name" => "Footer",
+                "fixed" => true,
+            ],
+
+        ];
+
+        return $layouts;
+    }
+
+    public function getRelatedProductSections()
+    {
+        $relatedProductSections = RelatedProductSection::all();
+        return $relatedProductSections;
+    }
+
+    public function getCheckoutPages()
+    {
+        $checkoutPages = CheckoutPage::all();
+        return $checkoutPages;
+    }
+
+    public function getProductPages()
+    {
+        $productPages = ProductPage::all();
+        return $productPages;
+    }
+
+    public function getFooterTemplates()
+    {
+        $footerTemplates = FooterTemplate::all();
+        return $footerTemplates;
+    }
+
+    public function getFeatureSections()
+    {
+        $featureSections = FeatureSection::all();
+        return $featureSections;
+    }
+
+    public function getCtaSections()
+    {
+        $ctaSections = CtaSection::all();
+        return $ctaSections;
+    }
+
+
+    public function getPopularProductSections()
+    {
+        $popularProductSections = PopularProductSection::all();
+        return $popularProductSections;
     }
 
     public function getContactSections()
@@ -186,7 +347,8 @@ class SiteController extends Controller
         return $contactSections;
     }
 
-    public function getAboutSections(){
+    public function getAboutSections()
+    {
         $aboutSections = AboutSection::all();
         return $aboutSections;
     }
@@ -197,7 +359,8 @@ class SiteController extends Controller
         return $productSections;
     }
 
-    public function getHeroSections(){
+    public function getHeroSections()
+    {
         $heroSections = HeroSection::all();
         return $heroSections;
     }

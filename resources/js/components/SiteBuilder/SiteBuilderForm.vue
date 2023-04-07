@@ -19,15 +19,19 @@
                             </v-card-text>
 
 
-                            <v-card-text v-if="tab.label == 'content'">
-                                <SiteContent :site_content="siteContent" :slogans="slogans" :taglines="taglines"
-                                    :aboutustitles="aboutustitles" :aboutuscontent="aboutuscontent" :shoptitles="shoptitles"
-                                    :buttonnames="buttonnames" :populartitles="populartitles" :contacttitles="contacttitles"
-                                    :contactcontent="contactcontent" :site_id="siteId" />
-                            </v-card-text>
 
                             <v-card-text v-if="tab.label == 'templates'">
-                                <Template :headertemplates="headertemplates" :herosections="herosections" :productsections="productsections" :aboutsections="aboutsections" :contactsections="contactsections"  />
+                                <Template :headertemplates="headertemplates" :herosections="herosections"
+                                    :productsections="productsections" :aboutsections="aboutsections"
+                                    :contactsections="contactsections" :popularproductsections="popularproductsections"
+                                    :ctasections="ctasections" :featuresections="featuresections"
+                                    :footertemplates="footertemplates" :productpages="productpages"
+                                    :checkoutpages="checkoutpages" :relatedproductsections="relatedproductsections"
+                                    :layouts="layouts" :site_id="siteId" :site_content="siteContent"
+                                    :aboutustitles="aboutustitles" :slogans="slogans" :shoptitles="shoptitles"
+                                    :taglines="taglines" :aboutuscontent="aboutuscontent" :buttonnames="buttonnames"
+                                    :populartitles="populartitles" :contacttitles="contacttitles"
+                                    :contactcontent="contactcontent" />
                             </v-card-text>
 
                         </v-card>
@@ -105,6 +109,38 @@ export default {
             type: Array,
             required: true
         },
+        popularproductsections: {
+            type: Array,
+            required: true
+        },
+        ctasections: {
+            type: Array,
+            required: true
+        },
+        featuresections: {
+            type: Array,
+            required: true
+        },
+        footertemplates: {
+            type: Array,
+            required: true
+        },
+        productpages: {
+            type: Array,
+            required: true
+        },
+        checkoutpages: {
+            type: Array,
+            required: true
+        },
+        relatedproductsections: {
+            type: Array,
+            required: true
+        },
+        layouts: {
+            type: Array,
+            required: true
+        }
 
     },
 
@@ -120,10 +156,7 @@ export default {
                     label: 'products',
                     text: 'Products'
                 },
-                {
-                    label: 'content',
-                    text: 'Content'
-                },
+
                 {
                     label: 'templates',
                     text: 'Templates'

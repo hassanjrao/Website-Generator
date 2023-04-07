@@ -23,6 +23,14 @@
         :productsections="{{ $productSections }}"
         :aboutsections="{{ $aboutSections }}"
         :contactsections="{{ $contactSections }}"
+        :popularproductsections="{{ $popularProductSections }}"
+        :ctasections="{{ $ctaSections }}"
+        :featuresections="{{ $featureSections }}"
+        :footertemplates="{{ $footerTemplates }}"
+        :productpages="{{ $productPages }}"
+        :checkoutpages="{{ $checkoutPages }}"
+        :relatedproductsections="{{ $relatedProductSections }}"
+        :layouts="{{  $layouts }}"
         />
     </div>
 
