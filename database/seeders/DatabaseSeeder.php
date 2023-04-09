@@ -37,6 +37,9 @@ class DatabaseSeeder extends Seeder
             FooterTemplateSeeder::class,
             ProductPageSeeder::class,
             CheckoutPageSeeder::class,
+            LoadingGifSeeder::class,
+            CreditCardSeeder::class,
+            RelatedProductSectionSeeder::class,
         ]);
     }
 }

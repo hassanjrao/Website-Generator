@@ -10,11 +10,13 @@ use App\Models\CheckoutPage;
 use App\Models\ContactContent;
 use App\Models\ContactSection;
 use App\Models\ContactTitle;
+use App\Models\CreditCard;
 use App\Models\CtaSection;
 use App\Models\FeatureSection;
 use App\Models\FooterTemplate;
 use App\Models\HeaderTemplate;
 use App\Models\HeroSection;
+use App\Models\LoadingGif;
 use App\Models\PopularProductSection;
 use App\Models\PopularTitle;
 use App\Models\ProductPage;
@@ -22,7 +24,10 @@ use App\Models\ProductSection;
 use App\Models\RelatedProductSection;
 use App\Models\ShopTitle;
 use App\Models\Site;
+use App\Models\SiteColorFont;
 use App\Models\SiteContent;
+use App\Models\SiteCreditCard;
+use App\Models\SiteTemplate;
 use App\Models\Slogan;
 use App\Models\TagLine;
 use Illuminate\Http\Request;
@@ -222,12 +227,23 @@ class SiteController extends Controller
         });
 
         $layouts = $this->getLayouts();
-
         $layouts = json_encode($layouts);
 
 
-        return view(
-            'sites.add_edit',
+        $loadingGifs = $this->getLoadingGifs();
+        $loadingGifs = json_encode($loadingGifs);
+
+        $colors = $this->getSiteColors();
+        $colors = json_encode($colors);
+
+        $fontFamilies = $this->getSiteFonts();
+        $fontFamilies = json_encode($fontFamilies);
+
+        $creditCards = $this->getCreditCards();
+        $creditCards = json_encode($creditCards);
+
+
+        return view('sites.add_edit',
             compact(
                 'site',
                 'slogans',
@@ -251,9 +267,196 @@ class SiteController extends Controller
                 'productPages',
                 'checkoutPages',
                 'relatedProductSections',
-                'layouts'
+                'layouts',
+                'loadingGifs',
+                'colors',
+                'fontFamilies',
+                'creditCards'
             )
         );
+    }
+
+    public function getCreditCards()
+    {
+        $creditCards = CreditCard::all();
+
+        $creditCards = $creditCards->map(function ($creditCard) {
+            return [
+                "id" => $creditCard->id,
+                "name" => $creditCard->name,
+                "image" => Storage::url("uploads/credit-cards/" . $creditCard->image)
+            ];
+        });
+
+        return $creditCards;
+    }
+
+    public function getSiteColors()
+    {
+
+        $colors = [
+
+            [
+                'label' => 'Primary Color',
+                'name' => 'primary_color',
+                'value' => '#000000'
+            ],
+            [
+                'label' => 'Primary Text Color',
+                'name' => 'primary_text_color',
+                'value' => '#000000'
+            ],
+            [
+                'label' => 'Secondary Color',
+                'name' => 'secondary_color',
+                'value' => '#000000'
+            ],
+            [
+                'label' => 'Secondary Text Color',
+                'name' => 'secondary_text_color',
+                'value' => '#000000'
+            ],
+            [
+                'label' => 'Top bar BG Color',
+                'name' => 'top_bar_bg_color',
+                'value' => '#000000'
+            ],
+            [
+                'label' => 'Top bar Text Color',
+                'name' => 'top_bar_text_color',
+                'value' => '#000000'
+            ],
+            [
+                'label' => 'Header BG Color',
+                'name' => 'header_bg_color',
+                'value' => '#000000'
+            ],
+            [
+                'label' => 'Header Text Color',
+                'name' => 'header_text_color',
+                'value' => '#000000'
+            ],
+            [
+                'label' => 'Header Icon Color',
+                'name' => 'header_icon_color',
+                'value' => '#000000'
+            ],
+            [
+                'label' => 'Banner Overlay Color',
+                'name' => 'banner_overlay_color',
+                'value' => '#000000'
+            ],
+            [
+                'label' => 'Banner Text Color',
+                'name' => 'banner_text_color',
+                'value' => '#000000'
+            ],
+            [
+                'label' => 'Button BG Color',
+                'name' => 'button_bg_color',
+                'value' => '#000000'
+            ],
+            [
+                'label' => 'Button Text Color',
+                'name' => 'button_text_color',
+                'value' => '#000000'
+            ],
+            [
+                'label' => 'Button Hover BG Color',
+                'name' => 'button_hover_bg_color',
+                'value' => '#000000'
+            ],
+            [
+                'label' => 'Button Hover Text Color',
+                'name' => 'button_hover_text_color',
+                'value' => '#000000'
+            ],
+            [
+                'label' => 'Footer BG Color',
+                'name' => 'footer_bg_color',
+                'value' => '#000000'
+            ],
+            [
+                'label' => 'Footer Text Color',
+                'name' => 'footer_text_color',
+                'value' => '#000000'
+            ]
+        ];
+
+        return $colors;
+    }
+
+    public function getSiteFonts()
+    {
+
+
+        // 1-Open Sans ; 2-Alegreya ; 3-Poppins ; 4-Roboto ; 5-Montserrat ; 6-Lato ; 7-Oswald ; 8-Raleway ;
+        // 9-Mulish ; 10-Nunito ; 11-Assistant ; 12-Barlow ; 13-Rubik ; 14-Work Sans ; 15-Mukta
+
+        $fontFamilies = [
+            [
+                "text" => "Open Sans",
+                "value" => 1
+            ],
+            [
+                "text" => "Alegreya",
+                "value" => 2
+            ],
+            [
+                "text" => "Poppins",
+                "value" => 3
+            ],
+            [
+                "text" => "Roboto",
+                "value" => 4
+            ],
+            [
+                "text" => "Montserrat",
+                "value" => 5
+            ],
+            [
+                "text" => "Lato",
+                "value" => 6
+            ],
+            [
+                "text" => "Oswald",
+                "value" => 7
+            ],
+            [
+                "text" => "Raleway",
+                "value" => 8
+            ],
+            [
+                "text" => "Mulish",
+                "value" => 9
+            ],
+            [
+                "text" => "Nunito",
+                "value" => 10
+            ],
+            [
+                "text" => "Assistant",
+                "value" => 11
+            ],
+            [
+                "text" => "Barlow",
+                "value" => 12
+            ],
+            [
+                "text" => "Rubik",
+                "value" => 13
+            ],
+            [
+                "text" => "Work Sans",
+                "value" => 14
+            ],
+            [
+                "text" => "Mukta",
+                "value" => 15
+            ],
+        ];
+
+        return $fontFamilies;
     }
 
     public function getLayouts()
@@ -296,6 +499,20 @@ class SiteController extends Controller
         ];
 
         return $layouts;
+    }
+
+    public function getLoadingGifs()
+    {
+        $loadingGifs = LoadingGif::all();
+
+        $loadingGifs = $loadingGifs->map(function ($loadingGif) {
+            return [
+                "id" => $loadingGif->id,
+                "image" => asset('media/loading-gifs/' . $loadingGif->image),
+            ];
+        });
+
+        return $loadingGifs;
     }
 
     public function getRelatedProductSections()
@@ -538,6 +755,168 @@ class SiteController extends Controller
             ]
         ], 200);
     }
+
+
+    public function submitSiteTemplate(Request $request)
+    {
+
+        $request->validate([
+            "site_id" => "required|exists:sites,id",
+            "header_template_id" => "required|exists:header_templates,id",
+            "hero_section_id" => "required|exists:hero_sections,id",
+            "product_section_id" => "required|exists:product_sections,id",
+            "related_product_section_id" => "required|exists:related_product_sections,id",
+            "about_section_id" => "required|exists:about_sections,id",
+            "contact_section_id" => "required|exists:contact_sections,id",
+            "popular_product_section_id" => "required|exists:popular_product_sections,id",
+            "cta_section_id" => "required|exists:cta_sections,id",
+            "feature_section_id" => "required|exists:feature_sections,id",
+            "footer_template_id" => "required|exists:footer_templates,id",
+            "product_page_id" => "required|exists:product_pages,id",
+            "checkout_page_id" => "required|exists:checkout_pages,id",
+        ]);
+
+
+        $siteTemplateData = [
+            "site_id" => $request->site_id,
+            "header_template_id" => $request->header_template_id,
+            "hero_section_id" => $request->hero_section_id,
+            "product_section_id" => $request->product_section_id,
+            "related_product_section_id" => $request->related_product_section_id,
+            "about_section_id" => $request->about_section_id,
+            "contact_section_id" => $request->contact_section_id,
+            "popular_product_section_id" => $request->popular_product_section_id,
+            "cta_section_id" => $request->cta_section_id,
+            "feature_section_id" => $request->feature_section_id,
+            "footer_template_id" => $request->footer_template_id,
+            "product_page_id" => $request->product_page_id,
+            "checkout_page_id" => $request->checkout_page_id,
+            "loading_gif_id" => 1
+        ];
+
+
+        $siteTemplate = SiteTemplate::where("site_id", $request->site_id)->first();
+
+        if ($siteTemplate) {
+            $siteTemplate->update($siteTemplateData);
+        } else {
+            $siteTemplate = SiteTemplate::create($siteTemplateData);
+        }
+
+        return response()->json([
+            "message" => "Site Template Added Successfully",
+            "data" => [
+                "site_template_id" => $siteTemplate->id,
+            ]
+        ], 200);
+    }
+
+
+    public function submitSiteLoadingGif(Request $request)
+    {
+
+        $request->validate([
+            "site_id" => "required|exists:sites,id",
+            "loading_gif_id" => "required|exists:loading_gifs,id",
+        ]);
+
+
+        SiteTemplate::where("site_id", $request->site_id)->update([
+            "loading_gif_id" => $request->loading_gif_id
+        ]);
+
+        return response()->json([
+            "message" => "Loading Gif Updated Successfully",
+
+        ], 200);
+    }
+
+
+    public function submitSiteColorFont(Request $request)
+    {
+        $request->validate([
+            "site_id" => "required|exists:sites,id",
+            "font_family" => "required",
+            "colors_fonts"=>"required",
+        ]);
+
+        $colors_fonts = $request->colors_fonts;
+
+        $colorFontData=[
+            "site_id" => $request->site_id,
+            "font_family" => $request->font_family,
+            "primary_color" => $colors_fonts[0]["value"],
+            "primary_text_color" => $colors_fonts[1]["value"],
+            "secondary_color" => $colors_fonts[2]["value"],
+            "secondary_text_color" => $colors_fonts[3]["value"],
+            "top_bar_bg_color" => $colors_fonts[4]["value"],
+            "top_bar_text_color" => $colors_fonts[5]["value"],
+            "header_bg_color" => $colors_fonts[6]["value"],
+            "header_text_color" => $colors_fonts[7]["value"],
+            "header_icon_color" => $colors_fonts[8]["value"],
+            "banner_overlay_color" => $colors_fonts[9]["value"],
+            "banner_text_color" => $colors_fonts[10]["value"],
+            "button_bg_color" => $colors_fonts[11]["value"],
+            "button_text_color" => $colors_fonts[12]["value"],
+            "button_hover_bg_color" => $colors_fonts[13]["value"],
+            "button_hover_text_color" => $colors_fonts[14]["value"],
+            "footer_bg_color" => $colors_fonts[15]["value"],
+            "footer_text_color" => $colors_fonts[16]["value"],
+        ];
+
+        $siteColorFont = SiteColorFont::where("site_id", $request->site_id)->first();
+
+        if ($siteColorFont) {
+            $siteColorFont->update($colorFontData);
+        } else {
+            $siteColorFont = SiteColorFont::create($colorFontData);
+        }
+
+        return response()->json([
+            "message" => "Site Color Font Added Successfully",
+            "data" => [
+                "site_color_font_id" => $siteColorFont->id,
+            ]
+        ], 200);
+
+
+    }
+
+
+    public function submitSiteCreditCard(Request $request)
+    {
+
+        $request->validate([
+            "site_id" => "required|exists:sites,id",
+            "credit_card_ids" => "required|array",
+            "credit_card_ids.*" => "required|exists:credit_cards,id",
+        ]);
+
+
+        $creditCardData=[];
+
+        foreach ($request->credit_card_ids as $creditCardId) {
+            $creditCardData[]=[
+                "site_id" => $request->site_id,
+                "credit_card_id" => $creditCardId,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
+        }
+
+        SiteCreditCard::where("site_id", $request->site_id)->delete();
+
+        SiteCreditCard::insert($creditCardData);
+
+
+        return response()->json([
+            "message" => "Credit Cards Added Successfully",
+
+        ], 200);
+    }
+
+
+
 
     public function download($site)
     {

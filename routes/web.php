@@ -35,6 +35,10 @@ Route::middleware(["auth"])->group(function () {
         Route::get("download/{site}", [SiteController::class,"download"])->name("sites.download");
 
         Route::post("submit-site-content", [SiteController::class,"submitSiteContent"])->name("sites.submit-site-content");
+        Route::post("submit-site-template", [SiteController::class,"submitSiteTemplate"])->name("sites.submit-site-template");
+        Route::post("submit-site-loading-gif", [SiteController::class,"submitSiteLoadingGif"])->name("sites.submit-site-loading-gif");
+        Route::post("submit-site-color-font", [SiteController::class,"submitSiteColorFont"])->name("sites.submit-site-color-font");
+        Route::post("submit-site-credit-card", [SiteController::class,"submitSiteCreditCard"])->name("sites.submit-site-credit-card");
     });
 
 });

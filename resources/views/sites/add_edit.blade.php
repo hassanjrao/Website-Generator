@@ -31,6 +31,10 @@
         :checkoutpages="{{ $checkoutPages }}"
         :relatedproductsections="{{ $relatedProductSections }}"
         :layouts="{{  $layouts }}"
+        :loadingGifs="{{ $loadingGifs }}"
+        :colorsfonts="{{ $colors }}"
+        :fontFamilies="{{ $fontFamilies }}"
+        :creditcards="{{ $creditCards }}"
         />
     </div>
 

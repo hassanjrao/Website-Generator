@@ -26,13 +26,15 @@
                 <v-tab-item v-for="(tab, i) in tabs" :key="i">
                     <v-card flat v-if="tab.label == 'template'">
 
+
+                        <v-card-title class="d-flex justify-content-between">
+                            <h6 class="headline mb-0">Template</h6>
+
+                            <v-btn color="primary" :loading="loading" @click="submitSiteTemplate">Submit</v-btn>
+                        </v-card-title>
+
                         <v-card-text>
 
-                            <div class="text-right">
-                                <v-btn class="ma-2" color="primary" @click="randomize()">
-                                    Submit
-                                </v-btn>
-                            </div>
                             <v-row>
                                 <v-col cols="12" sm="12" md="12">
 
@@ -244,6 +246,22 @@
                     </v-card>
 
 
+                    <v-card tile v-if="tab.label == 'loading_gifs'">
+                        <LoadingGifs :site_id="siteId" :loadinggifs="loadinggifs" />
+                    </v-card>
+
+
+                    <v-card tile v-if="tab.label == 'colors_fonts'">
+                        <ColorsFonts :site_id="siteId" :colorsfonts="colorsfonts" :fontfamilies="fontfamilies" />
+                    </v-card>
+
+
+                    <v-card tile v-if="tab.label == 'credit_cards'">
+                        <CreditCards :site_id="siteId" :creditcards="creditcards" />
+                    </v-card>
+
+
+
                 </v-tab-item>
 
             </v-tabs-items>
@@ -262,6 +280,9 @@ import { required } from 'vuelidate/lib/validators'
 import alert from '../../shared/alert'
 import Layout from './Layout.vue'
 import SiteContent from './SiteContent.vue'
+import LoadingGifs from './LoadingGifs.vue'
+import ColorsFonts from './ColorsFonts.vue'
+import CreditCards from './CreditCards.vue'
 
 
 export default {
@@ -363,6 +384,22 @@ export default {
             type: Array,
             required: true
         },
+        loadinggifs: {
+            type: Array,
+            required: true
+        },
+        colorsfonts: {
+            type: Array,
+            required: true
+        },
+        fontfamilies: {
+            type: Array,
+            required: true
+        },
+        creditcards: {
+            type: Array,
+            required: true
+        },
     },
     validations: {
         selectedHeaderTemplate: {
@@ -417,7 +454,7 @@ export default {
             selectedProductPages: null,
             selectedCheckoutPages: null,
             selectedRelatedProductSection: null,
-            siteId: 1,
+            siteId: null,
             siteContent: [],
             tabs: [
                 {
@@ -438,11 +475,17 @@ export default {
                     text: 'Loading Gifs'
                 },
                 {
-                    label: 'layout',
-                    text: 'Layout'
+                    label: 'colors_fonts',
+                    text: 'Colors & Fonts'
+                },
+                {
+                    label: 'credit_cards',
+                    text: 'Credit Cards'
                 }
             ],
             tab: 'template',
+            loading: false,
+            siteTemplateId: null,
         }
     },
     computed: {
@@ -523,6 +566,50 @@ export default {
 
     methods: {
 
+        submitSiteTemplate() {
+
+            this.$v.$touch();
+
+
+            if (this.$v.$error) {
+                return;
+            }
+
+            this.loading = true;
+
+            axios.post('/sites/submit-site-template', {
+                site_id: this.siteId,
+                header_template_id: this.selectedHeaderTemplate,
+                hero_section_id: this.selectedHeroSection,
+                product_section_id: this.selectedProductSection,
+                about_section_id: this.selectedAboutSection,
+                contact_section_id: this.selectedContactSection,
+                popular_product_section_id: this.selectedPopularProductSection,
+                cta_section_id: this.selectedCtaSection,
+                feature_section_id: this.selectedFeatureSection,
+                footer_template_id: this.selectedFooterTemplate,
+                product_page_id: this.selectedProductPages,
+                checkout_page_id: this.selectedCheckoutPages,
+                related_product_section_id: this.selectedRelatedProductSection,
+
+            })
+                .then(response => {
+                    console.log(response);
+                    this.loading = false;
+                    this.siteTemplateId = response.data.data.site_template_id;
+
+                    this.showStatus(response.data.message, 'success');
+                })
+                .catch(error => {
+                    console.log(error);
+                    this.loading = false;
+                    this.showStatus(error.response.data.message, 'error');
+                });
+
+
+        }
+
+
 
     },
     mounted() {
@@ -530,10 +617,16 @@ export default {
     },
     created() {
         this.showStatus = alert.showStatus;
+        this.siteId = this.site_id;
+
+        console.log(this.siteId);
     },
     components: {
         Layout,
-        SiteContent
+        SiteContent,
+        LoadingGifs,
+        ColorsFonts,
+        CreditCards
     },
 }
 

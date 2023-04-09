@@ -3,8 +3,10 @@
 
 
         <!-- header -->
-        <v-card-title>
+        <v-card-title class="d-flex justify-content-between">
             <h6 class="headline mb-0">Site Content</h6>
+
+                <v-btn color="primary" :loading="loading" @click="submitSiteContent">Submit</v-btn>
 
         </v-card-title>
 
@@ -84,11 +86,6 @@
                 </v-row>
 
 
-                <v-row>
-                    <v-col cols="12" sm="12" md="12" class="text-right">
-                        <v-btn color="primary" :loading="loading" @click="submitSiteContent">Submit</v-btn>
-                    </v-col>
-                </v-row>
 
             </v-container>
 
@@ -284,7 +281,7 @@ export default {
                 .then(response => {
                     console.log(response.data)
                     this.loading = false
-                    this.showStatus(response.data.message,"success")
+                    this.showStatus(response.data.message, "success")
 
                 })
                 .catch(error => {

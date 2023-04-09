@@ -3,9 +3,10 @@
 
 
         <!-- header -->
-        <v-card-title>
+        <v-card-title  class="d-flex justify-content-between">
             <h6 class="headline mb-0">Site Information</h6>
 
+            <v-btn color="primary" :loading="loading" @click="submitSiteInfo">Submit</v-btn>
         </v-card-title>
 
         <!-- divider -->
@@ -114,11 +115,6 @@
 
                 <!-- submit button -->
 
-                <v-row>
-                    <v-col cols="12" sm="12" md="12" class="text-right">
-                        <v-btn color="primary" :loading="loading" @click="submitSiteInfo">Submit</v-btn>
-                    </v-col>
-                </v-row>
 
             </v-container>
         </v-card-text>

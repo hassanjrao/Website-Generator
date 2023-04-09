@@ -31,7 +31,9 @@
                                     :aboutustitles="aboutustitles" :slogans="slogans" :shoptitles="shoptitles"
                                     :taglines="taglines" :aboutuscontent="aboutuscontent" :buttonnames="buttonnames"
                                     :populartitles="populartitles" :contacttitles="contacttitles"
-                                    :contactcontent="contactcontent" />
+                                    :contactcontent="contactcontent" :loadinggifs="loadinggifs" :colorsfonts="colorsfonts"
+                                    :creditcards="creditcards" :fontfamilies="fontfamilies"
+                                    />
                             </v-card-text>
 
                         </v-card>
@@ -140,6 +142,22 @@ export default {
         layouts: {
             type: Array,
             required: true
+        },
+        loadinggifs:{
+            type: Array,
+            required: true
+        },
+        colorsfonts: {
+            type: Array,
+            required: true
+        },
+        fontfamilies:{
+            type: Array,
+            required: true
+        },
+        creditcards:{
+            type: Array,
+            required: true
         }
 
     },
@@ -162,16 +180,8 @@ export default {
                     text: 'Templates'
                 },
                 {
-                    label: 'colors',
-                    text: 'Colors'
-                },
-                {
-                    label: 'credit_cards',
-                    text: 'Credit Cards'
-                },
-                {
-                    label: 'terms',
-                    text: 'Terms'
+                    label: 'others',
+                    text: 'Others'
                 },
                 {
                     label: 'crm',
