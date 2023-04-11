@@ -36,6 +36,10 @@
                                     />
                             </v-card-text>
 
+                            <v-card-text v-if="tab.label == 'others'">
+                                <TermsOthers :site_id="siteId" :sortproductsby="sortproductsby"/>
+                            </v-card-text>
+
                         </v-card>
                     </v-tab-item>
                 </v-tabs-items>
@@ -51,6 +55,8 @@
 import SiteInfo from './SiteInfo'
 import SiteContent from './SiteContent.vue';
 import Template from './Template.vue';
+import TermsOthers from './TermsOthers.vue';
+
 
 export default {
 
@@ -158,7 +164,11 @@ export default {
         creditcards:{
             type: Array,
             required: true
-        }
+        },
+        sortproductsby:{
+            type: Array,
+            required: true
+        },
 
     },
 
@@ -206,7 +216,8 @@ export default {
     components: {
         SiteInfo,
         SiteContent,
-        Template
+        Template,
+        TermsOthers
     },
 
     mounted() {

@@ -52,7 +52,7 @@
 
 import { required } from 'vuelidate/lib/validators'
 import alert from '../../shared/alert'
-
+                                                             
 
 export default {
 

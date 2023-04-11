@@ -445,7 +445,7 @@ $pageConfig =  array(
     ],
 
     'oneProductCartLimit' => 'no', //this limits one product in the shopping cart
-
+                                                                          
     'shippingOption' => array(
         'enableShippingOption' => 'no', //enables shipping option to checkout page and add description to terms page
         'shippingOptionName' => 'Shipping Insurance', //name that will be displayed in the checkout and terms page

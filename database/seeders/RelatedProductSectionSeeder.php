@@ -24,7 +24,7 @@ class RelatedProductSectionSeeder extends Seeder
                 "updated_at" => now(),
             ];
 
-        }
+        }                                    
 
         RelatedProductSection::insert($templates);
     }

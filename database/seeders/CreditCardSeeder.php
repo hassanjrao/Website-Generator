@@ -35,7 +35,7 @@ class CreditCardSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-
+            // this is the                                       
         ]);
 
     }

@@ -18,7 +18,7 @@ return new class extends Migration
 
             $table->foreignId('site_id')->constrained();
             $table->foreignId('credit_card_id')->constrained();
-
+                         
             $table->timestamps();
         });
     }

@@ -25,7 +25,6 @@ class HeroSectionSeeder extends Seeder
             ];
 
         }
-
         HeroSection::insert($templates);
     }
 }

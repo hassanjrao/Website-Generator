@@ -8,34 +8,18 @@
 @section('content')
 
     <div class="content content-boxed">
-        <site-builder-form
-        :slogans="{{ $slogans }}"
-        :taglines="{{ $tagLines }}"
-        :aboutustitles="{{ $aboutUsTitles }}"
-        :aboutuscontent="{{ $aboutUsContent }}"
-        :shoptitles="{{ $shopTitles }}"
-        :buttonNames="{{ $buttonNames }}"
-        :populartitles="{{ $popularTitles }}"
-        :contactTitles="{{ $contactTitles }}"
-        :contactContent="{{ $contactContent }}"
-        :headertemplates="{{ $headerTemplates }}"
-        :herosections="{{ $heroSections }}"
-        :productsections="{{ $productSections }}"
-        :aboutsections="{{ $aboutSections }}"
-        :contactsections="{{ $contactSections }}"
-        :popularproductsections="{{ $popularProductSections }}"
-        :ctasections="{{ $ctaSections }}"
-        :featuresections="{{ $featureSections }}"
-        :footertemplates="{{ $footerTemplates }}"
-        :productpages="{{ $productPages }}"
-        :checkoutpages="{{ $checkoutPages }}"
-        :relatedproductsections="{{ $relatedProductSections }}"
-        :layouts="{{  $layouts }}"
-        :loadingGifs="{{ $loadingGifs }}"
-        :colorsfonts="{{ $colors }}"
-        :fontFamilies="{{ $fontFamilies }}"
-        :creditcards="{{ $creditCards }}"
-        />
+        <site-builder-form :slogans="{{ $slogans }}" :taglines="{{ $tagLines }}"
+            :aboutustitles="{{ $aboutUsTitles }}" :aboutuscontent="{{ $aboutUsContent }}" :shoptitles="{{ $shopTitles }}"
+            :buttonNames="{{ $buttonNames }}" :populartitles="{{ $popularTitles }}" :contactTitles="{{ $contactTitles }}"
+            :contactContent="{{ $contactContent }}" :headertemplates="{{ $headerTemplates }}"
+            :herosections="{{ $heroSections }}" :productsections="{{ $productSections }}"
+            :aboutsections="{{ $aboutSections }}" :contactsections="{{ $contactSections }}"
+            :popularproductsections="{{ $popularProductSections }}" :ctasections="{{ $ctaSections }}"
+            :featuresections="{{ $featureSections }}" :footertemplates="{{ $footerTemplates }}"
+            :productpages="{{ $productPages }}" :checkoutpages="{{ $checkoutPages }}"
+            :relatedproductsections="{{ $relatedProductSections }}" :layouts="{{ $layouts }}"
+            :loadingGifs="{{ $loadingGifs }}" :colorsfonts="{{ $colors }}" :fontFamilies="{{ $fontFamilies }}"
+            :creditcards="{{ $creditCards }}" :sortproductsby="{{ $sortProductsBy }}" />
     </div>
 
 

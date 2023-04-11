@@ -17,6 +17,8 @@ class ProductSectionSeeder extends Seeder
     {
         $templates=[];
 
+
+
         for($i=1; $i<=15; $i++){
             $templates[]=[
                 'name' => "Section-$i",
@@ -24,7 +26,7 @@ class ProductSectionSeeder extends Seeder
                 "updated_at" => now(),
             ];
 
-        }
+        }                             
 
         ProductSection::insert($templates);
     }

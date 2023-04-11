@@ -29,6 +29,7 @@ use App\Models\SiteContent;
 use App\Models\SiteCreditCard;
 use App\Models\SiteTemplate;
 use App\Models\Slogan;
+use App\Models\SortProductBy;
 use App\Models\TagLine;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -226,6 +227,14 @@ class SiteController extends Controller
             ];
         });
 
+        $sortProductsBy = $this->getSortProductsBy();
+        $sortProductsBy = $sortProductsBy->map(function ($sortProductBy) {
+            return [
+                "text" => $sortProductBy->name,
+                "value" => $sortProductBy->id
+            ];
+        });
+
         $layouts = $this->getLayouts();
         $layouts = json_encode($layouts);
 
@@ -271,10 +280,21 @@ class SiteController extends Controller
                 'loadingGifs',
                 'colors',
                 'fontFamilies',
-                'creditCards'
+                'creditCards',
+                'sortProductsBy'
             )
         );
     }
+
+
+    public function getSortProductsBy(){
+
+        $sortProductsBy=SortProductBy::all();
+
+        return $sortProductsBy;
+    }
+
+
 
     public function getCreditCards()
     {
@@ -898,7 +918,7 @@ class SiteController extends Controller
         foreach ($request->credit_card_ids as $creditCardId) {
             $creditCardData[]=[
                 "site_id" => $request->site_id,
-                "credit_card_id" => $creditCardId,
+             "credit_card_id" => $creditCardId,
                 'created_at' => now(),
                 'updated_at' => now(),
             ];

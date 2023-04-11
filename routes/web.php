@@ -34,6 +34,7 @@ Route::middleware(["auth"])->group(function () {
         Route::post("create-site", [SiteController::class,"createSite"])->name("sites.createSite");
         Route::get("download/{site}", [SiteController::class,"download"])->name("sites.download");
 
+                                     
         Route::post("submit-site-content", [SiteController::class,"submitSiteContent"])->name("sites.submit-site-content");
         Route::post("submit-site-template", [SiteController::class,"submitSiteTemplate"])->name("sites.submit-site-template");
         Route::post("submit-site-loading-gif", [SiteController::class,"submitSiteLoadingGif"])->name("sites.submit-site-loading-gif");

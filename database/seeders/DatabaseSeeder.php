@@ -40,6 +40,7 @@ class DatabaseSeeder extends Seeder
             LoadingGifSeeder::class,
             CreditCardSeeder::class,
             RelatedProductSectionSeeder::class,
+            SortProductBysSeeder::class,
         ]);
     }
 }
