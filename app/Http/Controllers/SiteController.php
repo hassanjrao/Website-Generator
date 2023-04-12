@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\AboutSection;
 use App\Models\AboutUsDescription;
 use App\Models\AboutUsTitle;
+use App\Models\AdvertisingCompany;
 use App\Models\ButtonName;
 use App\Models\CheckoutPage;
 use App\Models\ContactContent;
@@ -19,6 +20,8 @@ use App\Models\HeroSection;
 use App\Models\LoadingGif;
 use App\Models\PopularProductSection;
 use App\Models\PopularTitle;
+use App\Models\Product;
+use App\Models\ProductCategory;
 use App\Models\ProductPage;
 use App\Models\ProductSection;
 use App\Models\RelatedProductSection;
@@ -27,7 +30,9 @@ use App\Models\Site;
 use App\Models\SiteColorFont;
 use App\Models\SiteContent;
 use App\Models\SiteCreditCard;
+use App\Models\SiteCrmSetting;
 use App\Models\SiteTemplate;
+use App\Models\SiteTermOther;
 use App\Models\Slogan;
 use App\Models\SortProductBy;
 use App\Models\TagLine;
@@ -42,8 +47,6 @@ class SiteController extends Controller
         $sites = Site::latest()
             ->with(['createdBy', 'updatedBy'])
             ->get();
-
-
 
         return view('sites.index', compact('sites'));
     }
@@ -235,6 +238,23 @@ class SiteController extends Controller
             ];
         });
 
+        $advertisingCompanies = $this->getAdvertisingCompanies();
+        $advertisingCompanies = $advertisingCompanies->map(function ($advertisingCompany) {
+            return [
+                "text" => $advertisingCompany->name,
+                "value" => $advertisingCompany->id,
+                'url' => $advertisingCompany->url,
+                'username' => $advertisingCompany->username,
+                'password' => $advertisingCompany->password,
+                'shipping_id' => $advertisingCompany->shipping_id,
+                'compaign_id' => $advertisingCompany->compaign_id,
+                'tran_type' => $advertisingCompany->tran_type,
+                'offer_id' => $advertisingCompany->offer_id,
+                'billing_model_id' => $advertisingCompany->billing_model_id,
+                'gateway_id' => $advertisingCompany->gateway_id,
+            ];
+        });
+
         $layouts = $this->getLayouts();
         $layouts = json_encode($layouts);
 
@@ -252,7 +272,11 @@ class SiteController extends Controller
         $creditCards = json_encode($creditCards);
 
 
-        return view('sites.add_edit',
+        // $totalProducts = Prod;
+
+
+        return view(
+            'sites.add_edit',
             compact(
                 'site',
                 'slogans',
@@ -281,15 +305,46 @@ class SiteController extends Controller
                 'colors',
                 'fontFamilies',
                 'creditCards',
-                'sortProductsBy'
+                'sortProductsBy',
+                'advertisingCompanies'
             )
         );
     }
 
+    public function getCategories(Request $request)
+    {
 
-    public function getSortProductsBy(){
+        $request->validate([
+            'advertising_company_id' => 'required',
+        ]);
 
-        $sortProductsBy=SortProductBy::all();
+        $categories = ProductCategory::where('advertising_company_id', $request->advertising_company_id)->get();
+
+        $categories= $categories->map(function($product){
+            return [
+                "text"=>$product->name,
+                "value"=>$product->id,
+            ];
+        });
+
+        return response()->json([
+            "data" => [
+                "categories" => $categories
+            ]
+        ]);
+    }
+
+    public function getAdvertisingCompanies()
+    {
+        $advertisingCompanies = AdvertisingCompany::all();
+
+        return $advertisingCompanies;
+    }
+
+    public function getSortProductsBy()
+    {
+
+        $sortProductsBy = SortProductBy::all();
 
         return $sortProductsBy;
     }
@@ -857,12 +912,12 @@ class SiteController extends Controller
         $request->validate([
             "site_id" => "required|exists:sites,id",
             "font_family" => "required",
-            "colors_fonts"=>"required",
+            "colors_fonts" => "required",
         ]);
 
         $colors_fonts = $request->colors_fonts;
 
-        $colorFontData=[
+        $colorFontData = [
             "site_id" => $request->site_id,
             "font_family" => $request->font_family,
             "primary_color" => $colors_fonts[0]["value"],
@@ -898,8 +953,6 @@ class SiteController extends Controller
                 "site_color_font_id" => $siteColorFont->id,
             ]
         ], 200);
-
-
     }
 
 
@@ -913,12 +966,12 @@ class SiteController extends Controller
         ]);
 
 
-        $creditCardData=[];
+        $creditCardData = [];
 
         foreach ($request->credit_card_ids as $creditCardId) {
-            $creditCardData[]=[
+            $creditCardData[] = [
                 "site_id" => $request->site_id,
-             "credit_card_id" => $creditCardId,
+                "credit_card_id" => $creditCardId,
                 'created_at' => now(),
                 'updated_at' => now(),
             ];
@@ -931,6 +984,90 @@ class SiteController extends Controller
 
         return response()->json([
             "message" => "Credit Cards Added Successfully",
+
+        ], 200);
+    }
+
+    public function submitSiteTermsOthers(Request $request)
+    {
+
+        $request->validate([
+            'site_id' => 'required|exists:sites,id',
+            "display_category" => "required|boolean",
+            'display_billing_model' => 'required|boolean',
+            'display_related_products' => 'required|boolean',
+            'only_show_first_price' => 'required|boolean',
+            'show_navigation_cart' => 'required|boolean',
+            'show_popular_products' => 'required|boolean',
+            'popular_products' => 'required|integer',
+            'one_product_cart_limit' => 'required|boolean',
+            'shipping_option' => 'required|boolean',
+            'shipping_name' => 'required_if:shipping_option,1',
+            'shipping_price' => 'required_if:shipping_option,1',
+            'generic_terms' => 'required|boolean',
+            'individual_product_terms' => 'required|boolean',
+            'total_price_terms' => 'required|boolean',
+        ]);
+
+        $termsOthersData = [
+            'site_id' => $request->site_id,
+            'display_category' => $request->display_category,
+            'display_billing_model' => $request->display_billing_model,
+            'display_related_products' => $request->display_related_products,
+            'only_show_first_price' => $request->only_show_first_price,
+            'show_navigation_cart' => $request->show_navigation_cart,
+            'show_popular_products' => $request->show_popular_products,
+            'popular_products' => $request->popular_products,
+            'one_product_cart_limit' => $request->one_product_cart_limit,
+            'shipping_option' => $request->shipping_option,
+            'shipping_name' => $request->shipping_name,
+            'shipping_price' => $request->shipping_price,
+            'generic_terms' => $request->generic_terms,
+            'individual_product_terms' => $request->individual_product_terms,
+            'total_price_terms' => $request->total_price_terms,
+        ];
+
+
+        $siteTermsOthers = SiteTermOther::where("site_id", $request->site_id)->first();
+
+        if ($siteTermsOthers) {
+            $siteTermsOthers->update($termsOthersData);
+        } else {
+            $siteTermsOthers = SiteTermOther::create($termsOthersData);
+        }
+
+        return response()->json([
+            "message" => "Site Terms Others Added Successfully",
+            "data" => [
+                "site_terms_others_id" => $siteTermsOthers->id,
+            ]
+        ], 200);
+    }
+
+    public function submitSiteCrmSettings(Request $request)
+    {
+
+        $request->validate([
+            'site_id' => 'required|exists:sites,id',
+            'advertising_company_id' => "required|exists:advertising_companies,id"
+        ]);
+
+        $crmData = [
+            'site_id' => $request->site_id,
+            'advertising_company_id' => $request->advertising_company_id
+        ];
+
+
+        $siteCrmSetting = SiteCrmSetting::where("site_id", $request->site_id)->first();
+
+        if ($siteCrmSetting) {
+            $siteCrmSetting->update($crmData);
+        } else {
+            $siteCrmSetting = SiteCrmSetting::create($crmData);
+        }
+
+        return response()->json([
+            "message" => "Site CRM settings added successfully",
 
         ], 200);
     }

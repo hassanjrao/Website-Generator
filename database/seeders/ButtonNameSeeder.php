@@ -40,7 +40,7 @@ class ButtonNameSeeder extends Seeder
             22 => 'Shop It',
             23 => 'Claim',
             24 => 'Choose',
-            25 => 'Buy & Enjoy',
+            25 => 'Buy & Enjoy',    
             26 => 'Get',
             27 => 'View',
             28 => 'Grab Item',

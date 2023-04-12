@@ -19,7 +19,9 @@
             :productpages="{{ $productPages }}" :checkoutpages="{{ $checkoutPages }}"
             :relatedproductsections="{{ $relatedProductSections }}" :layouts="{{ $layouts }}"
             :loadingGifs="{{ $loadingGifs }}" :colorsfonts="{{ $colors }}" :fontFamilies="{{ $fontFamilies }}"
-            :creditcards="{{ $creditCards }}" :sortproductsby="{{ $sortProductsBy }}" />
+            :creditcards="{{ $creditCards }}" :sortproductsby="{{ $sortProductsBy }}"
+            :advertisingcompanies="{{ $advertisingCompanies }}"
+            />
     </div>
 
 

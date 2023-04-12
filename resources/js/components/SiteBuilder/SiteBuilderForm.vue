@@ -40,6 +40,16 @@
                                 <TermsOthers :site_id="siteId" :sortproductsby="sortproductsby"/>
                             </v-card-text>
 
+
+                            <v-card-text v-if="tab.label == 'crm'">
+                                <CRM :site_id="siteId" :advertisingcompanies="advertisingcompanies"/>
+                            </v-card-text>
+
+
+                            <v-card-text v-if="tab.label == 'products'">
+                                <Products :site_id="siteId" :advertisingcompanies="advertisingcompanies"/>
+                            </v-card-text>
+
                         </v-card>
                     </v-tab-item>
                 </v-tabs-items>
@@ -56,6 +66,8 @@ import SiteInfo from './SiteInfo'
 import SiteContent from './SiteContent.vue';
 import Template from './Template.vue';
 import TermsOthers from './TermsOthers.vue';
+import CRM from './CRM.vue';
+import Products from './Products.vue';
 
 
 export default {
@@ -170,6 +182,11 @@ export default {
             required: true
         },
 
+        advertisingcompanies:{
+            type: Array,
+            required: true
+        },
+
     },
 
     data() {
@@ -217,7 +234,9 @@ export default {
         SiteInfo,
         SiteContent,
         Template,
-        TermsOthers
+        TermsOthers,
+        CRM,
+        Products
     },
 
     mounted() {

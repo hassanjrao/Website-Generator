@@ -41,6 +41,9 @@ class DatabaseSeeder extends Seeder
             CreditCardSeeder::class,
             RelatedProductSectionSeeder::class,
             SortProductBysSeeder::class,
+            AdvertisingCompanySeeder::class,
+            ProductSeeder::class,
+            ProductCategorySeeder::class,
         ]);
     }
 }
