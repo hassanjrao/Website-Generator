@@ -168,7 +168,7 @@ export default {
         submitTermsOthers() {
             this.$v.$touch();
 
-          
+
             if (!this.$v.$error) {
                 this.loading = true;
                 axios.post('/sites/submit-site-terms-others', {
@@ -187,6 +187,7 @@ export default {
                     generic_terms: this.genericTerms,
                     individual_product_terms: this.individualProductTerms,
                     total_price_terms: this.totalPriceTerms,
+                    sort_product_by_id: this.selectedSortProductBy,
 
                 })
                     .then(response => {

@@ -6,7 +6,7 @@
         <v-card-title class="d-flex justify-content-between">
             <h6 class="headline mb-0">Products</h6>
 
-            <v-btn color="primary" :loading="loading" @click="submitTermsOthers()">Submit</v-btn>
+            <v-btn color="primary" :loading="loading" @click="submitProductCategory()">Submit</v-btn>
 
         </v-card-title>
 
@@ -104,15 +104,15 @@ export default {
 
     methods: {
 
-        submitTermsOthers() {
+        submitProductCategory() {
             this.$v.$touch();
 
 
             if (!this.$v.$error) {
                 this.loading = true;
-                axios.post('/sites/submit-site-crm-settings', {
+                axios.post('/sites/submit-site-product-category', {
                     site_id: this.siteId,
-                    advertising_company_id: this.selectedAdvertisingCompany,
+                    product_category_id: this.selectedCategory,
                 })
                     .then(response => {
                         this.loading = false;

@@ -27,4 +27,28 @@ class Site extends Model
     public function siteContent(){
         return $this->hasOne(SiteContent::class);
     }
+
+    public function siteProductCategory(){
+        return $this->hasOne(SiteProductCategory::class);
+    }
+
+    public function siteTemplate(){
+        return $this->hasOne(SiteTemplate::class);
+    }
+
+    public function siteColorFont(){
+        return $this->hasOne(SiteColorFont::class);
+    }
+
+    public function siteTermOther(){
+        return $this->hasOne(SiteTermOther::class);
+    }
+
+    public function siteCreditCards(){
+        return $this->hasMany(SiteCreditCard::class);
+    }
+
+    public function siteCrmSetting(){
+        return $this->hasOne(SiteCrmSetting::class);
+    }
 }

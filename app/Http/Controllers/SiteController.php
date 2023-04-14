@@ -31,6 +31,7 @@ use App\Models\SiteColorFont;
 use App\Models\SiteContent;
 use App\Models\SiteCreditCard;
 use App\Models\SiteCrmSetting;
+use App\Models\SiteProductCategory;
 use App\Models\SiteTemplate;
 use App\Models\SiteTermOther;
 use App\Models\Slogan;
@@ -832,6 +833,36 @@ class SiteController extends Controller
     }
 
 
+    public function submitSiteProductCategory(Request $request){
+
+        $request->validate([
+            "site_id" => "required|exists:sites,id",
+            "product_category_id" => "required|exists:product_categories,id",
+        ]);
+
+        $data=[
+            "site_id" => $request->site_id,
+            "product_category_id" => $request->product_category_id,
+        ];
+
+        $siteProductCategory = SiteProductCategory::where("site_id", $request->site_id)->first();
+
+        if($siteProductCategory){
+            $siteProductCategory->update($data);
+        }else{
+            $siteProductCategory = SiteProductCategory::create($data);
+        }
+
+        return response()->json([
+            "message" => "Site Product Category Added Successfully",
+            "data" => [
+                "site_product_category_id" => $siteProductCategory->id,
+            ]
+        ], 200);
+
+    }
+
+
     public function submitSiteTemplate(Request $request)
     {
 
@@ -1007,6 +1038,7 @@ class SiteController extends Controller
             'generic_terms' => 'required|boolean',
             'individual_product_terms' => 'required|boolean',
             'total_price_terms' => 'required|boolean',
+            'sort_product_by_id' => 'required|exists:sort_product_by,id',
         ]);
 
         $termsOthersData = [
@@ -1025,6 +1057,7 @@ class SiteController extends Controller
             'generic_terms' => $request->generic_terms,
             'individual_product_terms' => $request->individual_product_terms,
             'total_price_terms' => $request->total_price_terms,
+            'sort_product_by_id' => $request->sort_product_by_id,
         ];
 
 
@@ -1075,152 +1108,4 @@ class SiteController extends Controller
 
 
 
-    public function download($site)
-    {
-
-        $site = Site::findorfail($site);
-
-        $siteContent = $site->siteContent;
-
-
-        // make new project
-        $siteName = str_replace(' ', '_', $site->name);
-        $randNum = rand(1000, 9999);
-        $projectName = 'project_' . $site->id . '_' . $siteName . '_' . $randNum . '_' . time();
-
-        $newProjectDestination = $this->copyProject($projectName);
-
-
-
-        $siteInfofile = $newProjectDestination . '\bp_config\site-info.php';
-
-
-
-        // open the file using the fopen() function
-
-        $siteInfofile = fopen($siteInfofile, 'a') or die("can't open file");
-
-
-        //Website Information
-        $generalConfig =  [
-            'brand_name' => $site->name,
-            'website_url' => $site->url,
-            'email' => $site->email,
-            'descriptor' => $site->description,
-            'corp_name' => $site->corp_name,
-            'phone_number' => $site->phone_number,
-            'address' => $site->address,
-            'fulfillment' => $site->fulfillment,
-            'return_address' => $site->return_address,
-
-            'trial_period' => $site->trial_period,
-            'trial_period_breakdown' => $site->trial_period_breakdown,
-            'shipping_period' => $site->shipping_period,
-            'shipping_carrier' => $site->shipping_carrier,
-            'customer_service_hours' => $site->customer_service_hours,
-            'add_stylesheet' => $site->style_sheet,
-            'maximum_ticket_value' => $site->maximum_ticket_value,
-            'naming_convention' => [    //this is the billing model name
-                '1' => 'One Time Sale',              //this is for SS
-                '2' => 'Trial',            //this is for trial
-                '3' => 'Continuity'        //this is for continuity
-            ],
-            'product_count' => 0, //total products count
-        ];
-
-
-
-
-        //Website Content
-        $updateContent = array(
-            'slogan'        => $siteContent->slogan->title,
-            'tagline'       => $siteContent->tagLine->title,
-            'aboutUsTitle'  => $siteContent->aboutUsTitle->title,
-            'aboutUs'       => $siteContent->aboutUsDescription->description,
-            'shopTitle'     => $siteContent->shopTitle->title,
-            'buttonName'    => $siteContent->buttonName->title,
-            'popularTitle'  => $siteContent->popularTitle->title,
-            'contactTitle'  => $siteContent->contactTitle->title,
-            'contactContent'  => $siteContent->contactContent->description,
-        );
-
-        $generalConfig = var_export($generalConfig, true);
-        $generalConfig = PHP_EOL . PHP_EOL . PHP_EOL . '$generalConfig = ' . $generalConfig . ';';
-
-        $updateContent = var_export($updateContent, true);
-        $updateContent = PHP_EOL . PHP_EOL . PHP_EOL . '$updateContent = ' . $updateContent . ';';
-
-        fwrite($siteInfofile, $generalConfig);
-        fwrite($siteInfofile, $updateContent);
-
-        fclose($siteInfofile);
-
-
-
-
-
-
-
-        $this->generateZip($site, $projectName, $newProjectDestination);
-
-
-
-        // dd($site);/
-    }
-
-    public function copyProject($projectName)
-    {
-
-        // copy public/storage/project to public/storage/project{site_id}
-
-        $source = public_path('storage\real-project');
-
-
-        $destination = public_path('storage\projects\\' . $projectName);
-
-        File::copyDirectory($source, $destination);
-
-        // return path of the new project
-
-        return $destination;
-    }
-
-    public function generateZip($site, $projectName, $newProjectDestination)
-    {
-        $siteName = str_replace(' ', '_', $site->name);
-
-        $zip_file = "{$projectName}.zip";
-        $zip = new \ZipArchive();
-        $zip->open($zip_file, \ZipArchive::CREATE | \ZipArchive::OVERWRITE);
-
-        // get real path for our folder
-
-        $path = $newProjectDestination;
-
-
-
-        $files = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path));
-
-        foreach ($files as $name => $file) {
-
-            // We're skipping all subfolders
-            if (!$file->isDir()) {
-                $filePath     = $file->getRealPath();
-
-                // extracting filename with substr/strlen
-                $relativePath = 'project/' . substr($filePath, strlen($path) + 1);
-
-                $zip->addFile($filePath, $relativePath);
-            }
-        }
-        $zip->close();
-
-        // store the zip file in the storage folder
-        Storage::put('zip-projects' . $zip_file, file_get_contents($zip_file));
-
-
-
-
-        return response()->download($zip_file);
-    }
 }

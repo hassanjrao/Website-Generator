@@ -3,6 +3,7 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SiteController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ZippedSiteController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -32,18 +33,23 @@ Route::middleware(["auth"])->group(function () {
         Route::get("/", [SiteController::class,"index"])->name("sites.index");
         Route::get("create", [SiteController::class,"create"])->name("sites.create");
         Route::post("create-site", [SiteController::class,"createSite"])->name("sites.createSite");
-        Route::get("download/{site}", [SiteController::class,"download"])->name("sites.download");
-
 
         Route::get("get-categories", [SiteController::class,"getCategories"])->name("sites.get-categories");
 
         Route::post("submit-site-content", [SiteController::class,"submitSiteContent"])->name("sites.submit-site-content");
+        Route::post("submit-site-product-category", [SiteController::class,"submitSiteProductCategory"])->name("sites.submit-site-product-category");
         Route::post("submit-site-template", [SiteController::class,"submitSiteTemplate"])->name("sites.submit-site-template");
         Route::post("submit-site-loading-gif", [SiteController::class,"submitSiteLoadingGif"])->name("sites.submit-site-loading-gif");
         Route::post("submit-site-color-font", [SiteController::class,"submitSiteColorFont"])->name("sites.submit-site-color-font");
         Route::post("submit-site-credit-card", [SiteController::class,"submitSiteCreditCard"])->name("sites.submit-site-credit-card");
         Route::post("submit-site-terms-others", [SiteController::class,"submitSiteTermsOthers"])->name("sites.submit-site-terms-others");
         Route::post("submit-site-crm-settings", [SiteController::class,"submitSiteCrmSettings"])->name("sites.submit-site-crm-settings");
+
+
+
+        Route::get("download/{site}", [ZippedSiteController::class,"download"])->name("sites.download");
+
+
 
     });
 
