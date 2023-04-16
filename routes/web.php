@@ -44,6 +44,7 @@ Route::middleware(["auth"])->group(function () {
         Route::post("submit-site-credit-card", [SiteController::class,"submitSiteCreditCard"])->name("sites.submit-site-credit-card");
         Route::post("submit-site-terms-others", [SiteController::class,"submitSiteTermsOthers"])->name("sites.submit-site-terms-others");
         Route::post("submit-site-crm-settings", [SiteController::class,"submitSiteCrmSettings"])->name("sites.submit-site-crm-settings");
+        Route::post("submit-site-page-layout", [SiteController::class,"submitSitePageLayout"])->name("sites.submit-site-page-layout");
 
 
 

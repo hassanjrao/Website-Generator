@@ -33,21 +33,36 @@
                                     :populartitles="populartitles" :contacttitles="contacttitles"
                                     :contactcontent="contactcontent" :loadinggifs="loadinggifs" :colorsfonts="colorsfonts"
                                     :creditcards="creditcards" :fontfamilies="fontfamilies"
+                                    @templateSubmitted="getTemplateSubmitted"
+                                    @layoutSubmitted="getLayoutSubmitted"
+                                    @contentSubmitted="getContentSubmitted"
+                                    @loadingGifsSubmitted="getLoadingGifsSubmitted"
+                                    @colorFontSubmitted="getColorFontSubmitted"
+                                    @creditCardSubmitted="getCreditCardSubmitted"
+
                                     />
                             </v-card-text>
 
                             <v-card-text v-if="tab.label == 'others'">
-                                <TermsOthers :site_id="siteId" :sortproductsby="sortproductsby"/>
+                                <TermsOthers :site_id="siteId" :sortproductsby="sortproductsby"
+                                    :totalproducts="totalproducts" @termsOthersSubmitted="getTermsOthersSubmitted" />
                             </v-card-text>
 
 
                             <v-card-text v-if="tab.label == 'crm'">
-                                <CRM :site_id="siteId" :advertisingcompanies="advertisingcompanies"/>
+                                <CRM :site_id="siteId" :advertisingcompanies="advertisingcompanies"
+                                    @crmSubmitted="getCrmSubmitted" />
                             </v-card-text>
 
 
                             <v-card-text v-if="tab.label == 'products'">
-                                <Products :site_id="siteId" :advertisingcompanies="advertisingcompanies"/>
+                                <Products :site_id="siteId" :advertisingcompanies="advertisingcompanies"
+                                    @productsSubmitted="getProductsSubmitted" />
+                            </v-card-text>
+
+
+                            <v-card-text v-if="tab.label == 'generate_site'">
+                                <GenerateSite :site_id="siteId" :steps-required="stepsRequired" />
                             </v-card-text>
 
                         </v-card>
@@ -68,6 +83,7 @@ import Template from './Template.vue';
 import TermsOthers from './TermsOthers.vue';
 import CRM from './CRM.vue';
 import Products from './Products.vue';
+import GenerateSite from './GenerateSite.vue';
 
 
 export default {
@@ -161,7 +177,7 @@ export default {
             type: Array,
             required: true
         },
-        loadinggifs:{
+        loadinggifs: {
             type: Array,
             required: true
         },
@@ -169,21 +185,26 @@ export default {
             type: Array,
             required: true
         },
-        fontfamilies:{
+        fontfamilies: {
             type: Array,
             required: true
         },
-        creditcards:{
+        creditcards: {
             type: Array,
             required: true
         },
-        sortproductsby:{
+        sortproductsby: {
             type: Array,
             required: true
         },
 
-        advertisingcompanies:{
+        advertisingcompanies: {
             type: Array,
+            required: true
+        },
+
+        totalproducts: {
+            type: Number,
             required: true
         },
 
@@ -214,20 +235,208 @@ export default {
                     label: 'crm',
                     text: 'CRM'
                 },
+                {
+                    label: 'generate_site',
+                    text: 'Generate Site'
+                },
             ],
             siteInfo: [],
-            siteId: 1,
-            siteContent: []
+            siteId: null,
+            productsSubmitted: false,
+            templateSubmitted: false,
+            layoutSubmitted: false,
+            contentSubmitted: false,
+            loadingGifsSubmitted: false,
+            colorFontsSubmitted: false,
+            creditCardSubmitted: false,
+            termsOthersSubmitted: false,
+            crmSubmitted: false,
+            siteContent: [],
+            stepsRequired:[
+                {
+                    label :'site_info',
+                    submitted: false,
+                    message: 'Please complete the site information step'
+                },
+                {
+                    label :'products',
+                    submitted: false,
+                    message: 'Please complete the products step'
+                },
+                {
+                    label :'templates',
+                    submitted: false,
+                    message: 'Please complete the template step'
+                },
+                {
+                    label: 'layout',
+                    submitted: false,
+                    message: 'Please complete the layout step'
+                },
+                {
+                    label: 'content',
+                    submitted: false,
+                    message: 'Please complete the content step'
+                },
+                {
+                    label: 'loading_gifs',
+                    submitted: false,
+                    message: 'Please complete the loading gifs step'
+                },
+                {
+                    label: 'color_fonts',
+                    submitted: false,
+                    message: 'Please complete the color and fonts step'
+                },
+                {
+                    label: 'credit_card',
+                    submitted: false,
+                    message: 'Please complete the credit card step'
+                },
+                {
+                    label: 'terms_others',
+                    submitted: false,
+                    message: 'Please complete the terms and others step'
+                },
+                {
+                    label: 'crm',
+                    submitted: false,
+                    message: 'Please complete the crm step'
+                },
+
+
+            ]
 
         }
     },
 
     methods: {
+
+
         getSideId(siteId) {
             this.siteId = siteId;
             this.tab = 1;
             console.log(this.siteId);
+
+            this.stepsRequired.forEach((step) => {
+                if(step.label === 'site_info'){
+                    step.submitted = true;
+                    step.message = 'Site information step completed';
+                }
+            })
+
         }
+        ,
+        getTemplateSubmitted(templateSubmitted) {
+            this.templateSubmitted = templateSubmitted;
+            console.log("templateSubmitted "+this.templateSubmitted);
+
+
+
+            this.stepsRequired.forEach((step) => {
+                if(step.label === 'templates'){
+                    step.submitted = true;
+                    step.message = 'Template step completed';
+                }
+            })
+
+        },
+        getProductsSubmitted(productsSubmitted) {
+            this.productsSubmitted = productsSubmitted;
+           console.log("productsSubmitted "+this.productsSubmitted);
+
+
+           this.tab=2
+            this.stepsRequired.forEach((step) => {
+                if(step.label === 'products'){
+                    step.submitted = true;
+                    step.message = 'Products step completed';
+                }
+            })
+        },
+        getLayoutSubmitted(layoutSubmitted) {
+            this.layoutSubmitted = layoutSubmitted;
+           console.log("layoutSubmitted "+this.layoutSubmitted);
+
+            this.stepsRequired.forEach((step) => {
+                if(step.label === 'layout'){
+                    step.submitted = true;
+                    step.message = 'Layout step completed';
+                }
+            })
+        },
+        getContentSubmitted(contentSubmitted) {
+            this.contentSubmitted = contentSubmitted;
+            console.log("contentSubmitted "+this.contentSubmitted);
+
+            this.stepsRequired.forEach((step) => {
+                if(step.label === 'content'){
+                    step.submitted = true;
+                    step.message = 'Content step completed';
+                }
+            })
+        },
+        getLoadingGifsSubmitted(loadingGifsSubmitted) {
+            this.loadingGifsSubmitted = loadingGifsSubmitted;
+           console.log("loadingGifsSubmitted "+this.loadingGifsSubmitted);
+
+            this.stepsRequired.forEach((step) => {
+                if(step.label === 'loading_gifs'){
+                    step.submitted = true;
+                    step.message = 'Loading gifs step completed';
+                }
+            })
+        },
+        getColorFontSubmitted(colorFontsSubmitted) {
+            this.colorFontsSubmitted = colorFontsSubmitted;
+            console.log("colorFontsSubmitted "+this.colorFontsSubmitted);
+
+            this.stepsRequired.forEach((step) => {
+                if(step.label === 'color_fonts'){
+                    step.submitted = true;
+                    step.message = 'Color and fonts step completed';
+                }
+            })
+        },
+        getCreditCardSubmitted(creditCardSubmitted) {
+            this.creditCardSubmitted = creditCardSubmitted;
+            console.log("creditCardSubmitted "+this.creditCardSubmitted);
+
+            this.tab=3
+
+            this.stepsRequired.forEach((step) => {
+                if(step.label === 'credit_card'){
+                    step.submitted = true;
+                    step.message = 'Credit card step completed';
+                }
+            })
+        },
+        getTermsOthersSubmitted(termsOthersSubmitted) {
+            this.termsOthersSubmitted = termsOthersSubmitted;
+            console.log("termsOthersSubmitted "+this.termsOthersSubmitted);
+
+            this.tab=4
+
+            this.stepsRequired.forEach((step) => {
+                if(step.label === 'terms_others'){
+                    step.submitted = true;
+                    step.message = 'Terms and others step completed';
+                }
+            })
+        },
+        getCrmSubmitted(crmSubmitted) {
+            this.crmSubmitted = crmSubmitted;
+            console.log("crmSubmitted "+this.crmSubmitted);
+
+            this.tab=5
+
+            this.stepsRequired.forEach((step) => {
+                if(step.label === 'crm'){
+                    step.submitted = true;
+                    step.message = 'Crm step completed';
+                }
+            })
+        },
     },
 
     components: {
@@ -236,7 +445,8 @@ export default {
         Template,
         TermsOthers,
         CRM,
-        Products
+        Products,
+        GenerateSite
     },
 
     mounted() {

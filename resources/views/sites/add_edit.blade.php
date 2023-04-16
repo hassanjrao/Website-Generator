@@ -20,7 +20,7 @@
             :relatedproductsections="{{ $relatedProductSections }}" :layouts="{{ $layouts }}"
             :loadingGifs="{{ $loadingGifs }}" :colorsfonts="{{ $colors }}" :fontFamilies="{{ $fontFamilies }}"
             :creditcards="{{ $creditCards }}" :sortproductsby="{{ $sortProductsBy }}"
-            :advertisingcompanies="{{ $advertisingCompanies }}"
+            :advertisingcompanies="{{ $advertisingCompanies }}" :totalproducts="{{ $totalProducts }}"
             />
     </div>
 

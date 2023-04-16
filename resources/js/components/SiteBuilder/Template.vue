@@ -231,7 +231,7 @@
 
                     <v-card tile v-if="tab.label == 'layout'">
 
-                        <Layout :layouts="layouts" />
+                        <Layout :layouts="layouts" :site_id="siteId" @layoutSubmitted="getLayoutSubmitted"/>
 
                     </v-card>
 
@@ -241,23 +241,31 @@
                         <SiteContent :site_content="siteContent" :slogans="slogans" :taglines="taglines"
                             :aboutustitles="aboutustitles" :aboutuscontent="aboutuscontent" :shoptitles="shoptitles"
                             :buttonnames="buttonnames" :populartitles="populartitles" :contacttitles="contacttitles"
-                            :contactcontent="contactcontent" :site_id="siteId" />
+                            :contactcontent="contactcontent" :site_id="siteId"
+                            @contentSubmitted="getContentSubmitted" />
+                            />
 
                     </v-card>
 
 
                     <v-card tile v-if="tab.label == 'loading_gifs'">
-                        <LoadingGifs :site_id="siteId" :loadinggifs="loadinggifs" />
+                        <LoadingGifs :site_id="siteId" :loadinggifs="loadinggifs"
+                            @loadingGifsSubmitted="getLoadingGifsSubmitted"
+                        />
                     </v-card>
 
 
                     <v-card tile v-if="tab.label == 'colors_fonts'">
-                        <ColorsFonts :site_id="siteId" :colorsfonts="colorsfonts" :fontfamilies="fontfamilies" />
+                        <ColorsFonts :site_id="siteId" :colorsfonts="colorsfonts" :fontfamilies="fontfamilies"
+                            @colorFontSubmitted="getColorFontSubmitted"
+                        />
                     </v-card>
 
 
                     <v-card tile v-if="tab.label == 'credit_cards'">
-                        <CreditCards :site_id="siteId" :creditcards="creditcards" />
+                        <CreditCards :site_id="siteId" :creditcards="creditcards"
+                            @creditCardSubmitted="getCreditCardSubmitted"
+                        />
                     </v-card>
 
 
@@ -599,6 +607,11 @@ export default {
                     this.siteTemplateId = response.data.data.site_template_id;
 
                     this.showStatus(response.data.message, 'success');
+
+
+                    this.$emit('templateSubmitted', true)
+
+                    this.tab=1
                 })
                 .catch(error => {
                     console.log(error);
@@ -607,7 +620,35 @@ export default {
                 });
 
 
-        }
+        },
+
+        getLayoutSubmitted(layoutSubmitted) {
+            this.$emit('layoutSubmitted', layoutSubmitted)
+            this.tab=2
+        },
+
+        getContentSubmitted(contentSubmitted) {
+            this.$emit('contentSubmitted', contentSubmitted)
+            this.tab=3
+        },
+
+        getLoadingGifsSubmitted(loadingGifsSubmitted) {
+            this.$emit('loadingGifsSubmitted', loadingGifsSubmitted)
+            this.tab=4
+        },
+
+        getColorFontSubmitted(colorFontSubmitted) {
+            this.$emit('colorFontSubmitted', colorFontSubmitted)
+            this.tab=5
+        },
+
+        getCreditCardSubmitted(creditCardSubmitted) {
+            this.$emit('creditCardSubmitted', creditCardSubmitted)
+
+        },
+
+
+
 
 
 

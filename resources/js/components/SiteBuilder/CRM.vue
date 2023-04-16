@@ -146,6 +146,9 @@ export default {
                     .then(response => {
                         this.loading = false;
                         this.showStatus(response.data.message, 'success');
+
+
+                        this.$emit('crmSubmitted', true)
                     })
                     .catch(error => {
                         this.loading = false;

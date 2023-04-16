@@ -3,6 +3,15 @@
 
 
         <!-- body -->
+        <v-card-title class="d-flex justify-content-between">
+            <h6 class="headline mb-0">Layout</h6>
+
+            <v-btn color="primary" :loading="loading" @click="submitPageLayout">Submit</v-btn>
+
+        </v-card-title>
+
+        <!-- divider -->
+        <v-divider></v-divider>
 
 
         <v-card-text>
@@ -11,13 +20,14 @@
 
             <v-row class="justify-content-around align-items-center">
 
-                <v-col cols="12" sm="6" md="4" >
+                <v-col cols="12" sm="6" md="4">
                     <v-btn class="ma-2" color="secondary" @click="randomize()">
                         Randomize
                         <v-icon right dark>
                             mdi-cached
                         </v-icon>
                     </v-btn>
+
                 </v-col>
 
                 <v-col cols="12" sm="6" md="4">
@@ -32,8 +42,8 @@
                                     <v-list-item style="border:1px solid black" class="mb-2">
 
                                         <v-list-item-content :key="item.name" class="d-flex" style="padding:0px !important">
-                                            <v-switch :label="item.name" :value="item"
-                                                v-model="layoutItemsIncluded" :disabled="item.name=='Header' || item.name=='Footer'">
+                                            <v-switch :label="item.name" :value="item" v-model="layoutItemsIncluded"
+                                                :disabled="item.name == 'Header' || item.name == 'Footer'">
                                             </v-switch>
                                         </v-list-item-content>
 
@@ -71,6 +81,10 @@ export default {
             type: Array,
             required: true
         },
+        site_id: {
+            type: Number,
+            required: true
+        },
 
     },
 
@@ -78,6 +92,8 @@ export default {
         return {
             layoutItems: [],
             layoutItemsIncluded: [],
+            loading: false,
+            siteId: null,
         }
     },
     computed: {
@@ -112,12 +128,57 @@ export default {
         isDraggable(context) {
             const { index, futureIndex } = context
             return !(this.layoutItems[index].fixed || this.layoutItems[futureIndex].fixed);
+        },
+
+        submitPageLayout() {
+            console.log('layoutItemIncluded', this.layoutItemsIncluded);
+            console.log('layoutItems', this.layoutItems);
+
+            //get only those items from layoutItems that are included in layoutItemsIncluded with the same order as layoutItems
+
+            let layoutItemsIncluded = this.layoutItemsIncluded;
+            let layoutItems = this.layoutItems;
+
+            let layoutItemsIncludedOrdered = [];
+
+            layoutItems.forEach(item => {
+                layoutItemsIncluded.forEach(itemIncluded => {
+                    if (item.name == itemIncluded.name) {
+                        layoutItemsIncludedOrdered.push(itemIncluded);
+                    }
+                });
+            });
+
+            axios.post('/sites/submit-site-page-layout', {
+                layout_items: layoutItemsIncludedOrdered,
+                site_id:this.siteId
+            })
+                .then(response => {
+                    console.log(response);
+                    this.loading = false;
+
+                    this.showStatus(response.data.message,'success')
+
+
+                    this.$emit('layoutSubmitted', true)
+                })
+                .catch(error => {
+                    console.log(error);
+
+                    this.loading = false;
+                    this.showStatus(error.response.data.message,'error')
+                });
+
+
+
         }
     },
     mounted() {
         console.log('Template.vue mounted');
         this.layoutItems = this.layouts;
         this.layoutItemsIncluded = this.layouts;
+
+        this.siteId = this.site_id;
     },
     created() {
         this.showStatus = alert.showStatus;

@@ -283,6 +283,9 @@ export default {
                     this.loading = false
                     this.showStatus(response.data.message, "success")
 
+
+                    this.$emit('contentSubmitted', true)
+
                 })
                 .catch(error => {
                     console.log(error)

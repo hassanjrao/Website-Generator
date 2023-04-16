@@ -117,6 +117,9 @@ export default {
                     .then(response => {
                         this.loading = false;
                         this.showStatus(response.data.message, 'success');
+
+
+                    this.$emit('productsSubmitted', true)
                     })
                     .catch(error => {
                         this.loading = false;

@@ -72,6 +72,13 @@
                     </v-col>
 
                     <v-col cols="12" sm="6" md="4">
+                        <v-text-field v-model="site_info.trial_period" label="Trial Period" required
+                            @input="$v.site_info.trial_period.$touch()"
+                            :error-messages="trialPeriodErrors"
+                            @blur="$v.site_info.trial_period.$touch()"></v-text-field>
+                    </v-col>
+
+                    <v-col cols="12" sm="6" md="4">
                         <v-text-field v-model="site_info.trial_period_breakdown" label="Trial Period Breakdown" required
                             @input="$v.site_info.trial_period_breakdown.$touch()"
                             :error-messages="trialPeriodBreakdownErrors"
@@ -170,6 +177,9 @@ export default {
             fulfillment: {
                 required
             },
+            trial_period: {
+                required
+            },
             trial_period_breakdown: {
                 required
             },
@@ -260,6 +270,12 @@ export default {
             !this.$v.site_info.trial_period_breakdown.required && errors.push('Trial period breakdown is required.')
             return errors
         },
+        trialPeriodErrors() {
+            const errors = []
+            if (!this.$v.site_info.trial_period.$dirty) return errors
+            !this.$v.site_info.trial_period.required && errors.push('Trial period is required.')
+            return errors
+        },
         shippingPeriodErrors() {
             const errors = []
             if (!this.$v.site_info.shipping_period.$dirty) return errors
@@ -315,6 +331,7 @@ export default {
                 return_address: this.site_info.return_address,
                 fulfillment: this.site_info.fulfillment,
                 trial_period_breakdown: this.site_info.trial_period_breakdown,
+                trial_period: this.site_info.trial_period,
                 shipping_period: this.site_info.shipping_period,
                 shipping_carrier: this.site_info.shipping_carrier,
                 style_sheet: this.site_info.style_sheet,

@@ -11,13 +11,14 @@ use App\Models\CheckoutPage;
 use App\Models\ContactContent;
 use App\Models\ContactSection;
 use App\Models\ContactTitle;
-use App\Models\CreditCard;
+use App\Models\CreditCardSet;
 use App\Models\CtaSection;
 use App\Models\FeatureSection;
 use App\Models\FooterTemplate;
 use App\Models\HeaderTemplate;
 use App\Models\HeroSection;
 use App\Models\LoadingGif;
+use App\Models\PageLayout;
 use App\Models\PopularProductSection;
 use App\Models\PopularTitle;
 use App\Models\Product;
@@ -31,6 +32,7 @@ use App\Models\SiteColorFont;
 use App\Models\SiteContent;
 use App\Models\SiteCreditCard;
 use App\Models\SiteCrmSetting;
+use App\Models\SitePageLayout;
 use App\Models\SiteProductCategory;
 use App\Models\SiteTemplate;
 use App\Models\SiteTermOther;
@@ -273,6 +275,9 @@ class SiteController extends Controller
         $creditCards = json_encode($creditCards);
 
 
+        $totalProducts = Product::all()->count();
+
+
         // $totalProducts = Prod;
 
 
@@ -307,7 +312,8 @@ class SiteController extends Controller
                 'fontFamilies',
                 'creditCards',
                 'sortProductsBy',
-                'advertisingCompanies'
+                'advertisingCompanies',
+                'totalProducts'
             )
         );
     }
@@ -321,10 +327,10 @@ class SiteController extends Controller
 
         $categories = ProductCategory::where('advertising_company_id', $request->advertising_company_id)->get();
 
-        $categories= $categories->map(function($product){
+        $categories = $categories->map(function ($product) {
             return [
-                "text"=>$product->name,
-                "value"=>$product->id,
+                "text" => $product->name,
+                "value" => $product->id,
             ];
         });
 
@@ -354,15 +360,22 @@ class SiteController extends Controller
 
     public function getCreditCards()
     {
-        $creditCards = CreditCard::all();
+        $creditCards = CreditCardSet::with('creditCardSetItems')->get();
 
         $creditCards = $creditCards->map(function ($creditCard) {
             return [
                 "id" => $creditCard->id,
                 "name" => $creditCard->name,
-                "image" => Storage::url("uploads/credit-cards/" . $creditCard->image)
+                "items" => $creditCard->creditCardSetItems->map(function ($creditCardItem) {
+                    return [
+                        "id" => $creditCardItem->id,
+                        "name" => $creditCardItem->name,
+                        "image" => Storage::url("uploads/credit-cards/" . $creditCardItem->image)
+                    ];
+                })
             ];
         });
+
 
         return $creditCards;
     }
@@ -574,6 +587,18 @@ class SiteController extends Controller
 
         ];
 
+        $layouts = PageLayout::all();
+
+
+        $layouts = $layouts->map(function ($layouts) {
+            return [
+                "id" => $layouts->id,
+                "name" => $layouts->name,
+                "fixed" => $layouts->code == 'header' || $layouts->code == 'footer' ? true : false,
+            ];
+        });
+
+
         return $layouts;
     }
 
@@ -734,6 +759,7 @@ class SiteController extends Controller
             "return_address" => "required",
             "fulfillment" => "required",
             "trial_period_breakdown" => "required",
+            "trial_period" => "required",
             "shipping_period" => "required",
             "shipping_carrier" => "required",
             "style_sheet" => "required",
@@ -754,6 +780,7 @@ class SiteController extends Controller
             "return_address" => $request->return_address,
             "fulfillment" => $request->fulfillment,
             "trial_period_breakdown" => $request->trial_period_breakdown,
+            "trial_period" => $request->trial_period,
             "shipping_period" => $request->shipping_period,
             "shipping_carrier" => $request->shipping_carrier,
             "style_sheet" => $request->style_sheet,
@@ -780,6 +807,32 @@ class SiteController extends Controller
             "data" => [
                 "site_id" => $siteId,
             ]
+        ], 200);
+    }
+
+    public function submitSitePageLayout(Request $request)
+    {
+
+        $request->validate([
+            "site_id" => "required|exists:sites,id",
+            'layout_items' => 'required|array',
+
+        ]);
+
+        $siteId = $request->site_id;
+        $layoutItems = $request->layout_items;
+
+        SitePageLayout::where("site_id", $siteId)->delete();
+
+        foreach ($layoutItems as $layoutItem) {
+            SitePageLayout::create([
+                "site_id" => $siteId,
+                "page_layout_id" => $layoutItem["id"],
+            ]);
+        }
+
+        return response()->json([
+            "message" => "Site Page Layout Added Successfully",
         ], 200);
     }
 
@@ -833,23 +886,24 @@ class SiteController extends Controller
     }
 
 
-    public function submitSiteProductCategory(Request $request){
+    public function submitSiteProductCategory(Request $request)
+    {
 
         $request->validate([
             "site_id" => "required|exists:sites,id",
             "product_category_id" => "required|exists:product_categories,id",
         ]);
 
-        $data=[
+        $data = [
             "site_id" => $request->site_id,
             "product_category_id" => $request->product_category_id,
         ];
 
         $siteProductCategory = SiteProductCategory::where("site_id", $request->site_id)->first();
 
-        if($siteProductCategory){
+        if ($siteProductCategory) {
             $siteProductCategory->update($data);
-        }else{
+        } else {
             $siteProductCategory = SiteProductCategory::create($data);
         }
 
@@ -859,7 +913,6 @@ class SiteController extends Controller
                 "site_product_category_id" => $siteProductCategory->id,
             ]
         ], 200);
-
     }
 
 
@@ -992,29 +1045,30 @@ class SiteController extends Controller
 
         $request->validate([
             "site_id" => "required|exists:sites,id",
-            "credit_card_ids" => "required|array",
-            "credit_card_ids.*" => "required|exists:credit_cards,id",
+            "credit_card_set_id" => "required|exists:credit_card_sets,id",
+
         ]);
 
 
-        $creditCardData = [];
 
-        foreach ($request->credit_card_ids as $creditCardId) {
-            $creditCardData[] = [
+
+        $siteCreditCardSet =  SiteCreditCard::where("site_id", $request->site_id)->first();
+
+        if ($siteCreditCardSet) {
+            SiteCreditCard::where("site_id", $request->site_id)->update([
+                "credit_card_set_id" => $request->credit_card_set_id
+            ]);
+        } else {
+            SiteCreditCard::create([
                 "site_id" => $request->site_id,
-                "credit_card_id" => $creditCardId,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ];
+                "credit_card_set_id" => $request->credit_card_set_id
+            ]);
         }
 
-        SiteCreditCard::where("site_id", $request->site_id)->delete();
-
-        SiteCreditCard::insert($creditCardData);
 
 
         return response()->json([
-            "message" => "Credit Cards Added Successfully",
+            "message" => "Credit Card Added Successfully",
 
         ], 200);
     }
@@ -1039,6 +1093,7 @@ class SiteController extends Controller
             'individual_product_terms' => 'required|boolean',
             'total_price_terms' => 'required|boolean',
             'sort_product_by_id' => 'required|exists:sort_product_by,id',
+            'show_billing_column_checkout_page' => 'required|boolean',
         ]);
 
         $termsOthersData = [
@@ -1058,6 +1113,7 @@ class SiteController extends Controller
             'individual_product_terms' => $request->individual_product_terms,
             'total_price_terms' => $request->total_price_terms,
             'sort_product_by_id' => $request->sort_product_by_id,
+            'show_billing_column_checkout_page' => $request->show_billing_column_checkout_page,
         ];
 
 
@@ -1104,8 +1160,4 @@ class SiteController extends Controller
 
         ], 200);
     }
-
-
-
-
 }

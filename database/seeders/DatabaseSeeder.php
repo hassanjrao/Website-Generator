@@ -44,6 +44,9 @@ class DatabaseSeeder extends Seeder
             AdvertisingCompanySeeder::class,
             ProductSeeder::class,
             ProductCategorySeeder::class,
+            PageLayoutSeeder::class,
+            SizeSeeder::class,
+            ProductSizeSeeder::class,
         ]);
     }
 }

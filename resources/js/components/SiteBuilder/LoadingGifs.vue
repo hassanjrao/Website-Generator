@@ -84,6 +84,8 @@ export default {
                     this.loading = false;
 
                     this.showStatus(response.data.message, 'success');
+
+                    this.$emit('loadingGifsSubmitted', true)
                 })
                 .catch(error => {
                     this.loading = false;

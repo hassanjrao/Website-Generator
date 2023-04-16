@@ -44,11 +44,15 @@ class Site extends Model
         return $this->hasOne(SiteTermOther::class);
     }
 
-    public function siteCreditCards(){
-        return $this->hasMany(SiteCreditCard::class);
+    public function siteCreditCardSet(){
+        return $this->hasOne(SiteCreditCard::class);
     }
 
     public function siteCrmSetting(){
         return $this->hasOne(SiteCrmSetting::class);
+    }
+
+    public function sitePageLayouts(){
+        return $this->hasMany(SitePageLayout::class);
     }
 }

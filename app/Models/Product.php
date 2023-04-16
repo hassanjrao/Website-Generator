@@ -20,4 +20,9 @@ class Product extends Model
     {
         return $this->hasMany(ProductShopOption::class);
     }
+
+    public function sizes()
+    {
+        return $this->belongsToMany(Size::class);
+    }
 }

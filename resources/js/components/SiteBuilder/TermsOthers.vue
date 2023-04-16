@@ -56,7 +56,7 @@
 
 
                     <v-col cols="12" sm="4" md="4" v-if="showPopularProducts">
-                        <v-slider hint="Im a hint" max="50" min="-50" v-model="popularProducts" label="Popular Products"
+                        <v-slider hint="Im a hint" thumb-label="always" :max="totalproducts" min="0" v-model="popularProducts" label="Popular Products"
                             class="mt-4"></v-slider>
                     </v-col>
 
@@ -92,6 +92,10 @@
                         <v-switch inset label="Total Price Terms" v-model.number="totalPriceTerms"></v-switch>
                     </v-col>
 
+                    <v-col cols="12" sm="4" md="4">
+                        <v-switch inset label="Show Billing Column Checkout Page" v-model.number="showBillingColumnCheckoutPage"></v-switch>
+                    </v-col>
+
 
                 </v-row>
 
@@ -119,7 +123,11 @@ export default {
         sortproductsby: {
             type: Array,
             required: true
-        }
+        },
+        totalproducts: {
+            type: Number,
+            required: true
+        },
     },
 
     validations: {
@@ -159,6 +167,7 @@ export default {
             genericTerms: true,
             individualProductTerms: true,
             totalPriceTerms: false,
+            showBillingColumnCheckoutPage: false,
         }
     },
 
@@ -188,11 +197,15 @@ export default {
                     individual_product_terms: this.individualProductTerms,
                     total_price_terms: this.totalPriceTerms,
                     sort_product_by_id: this.selectedSortProductBy,
+                    show_billing_column_checkout_page: this.showBillingColumnCheckoutPage,
 
                 })
                     .then(response => {
                         this.loading = false;
                         this.showStatus(response.data.message, 'success');
+
+
+                    this.$emit('termsOthersSubmitted', true)
                     })
                     .catch(error => {
                         this.loading = false;
@@ -220,6 +233,12 @@ export default {
             !this.$v.shippingPrice.required && errors.push('Shipping Price is required.');
             !this.$v.shippingPrice.numeric && errors.push('Shipping Price must be numeric.');
             return errors;
+        },
+    },
+
+    watch: {
+        popularProducts: function (val) {
+            console.log(val);
         },
     }
 }

@@ -117,7 +117,7 @@ export default {
             }
         }
     },
-                                                               
+
     methods: {
 
         submitSiteColorFont(){
@@ -130,6 +130,8 @@ export default {
                 .then(response => {
                     this.loading = false;
                     this.showStatus(response.data.message,'success');
+
+                    this.$emit('colorFontSubmitted', true)
                 })
                 .catch(error => {
                     this.loading = false;

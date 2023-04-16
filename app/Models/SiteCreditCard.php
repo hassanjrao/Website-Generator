@@ -16,8 +16,8 @@ class SiteCreditCard extends Model
         return $this->belongsTo(Site::class);
     }
 
-    public function creditCard()
+    public function creditCardSet()
     {
-        return $this->belongsTo(CreditCard::class);
+        return $this->belongsTo(CreditCardSet::class);
     }
 }

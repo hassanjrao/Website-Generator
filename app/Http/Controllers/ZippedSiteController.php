@@ -15,40 +15,19 @@ class ZippedSiteController extends Controller
 
     public function download($site)
     {
-        //Website Information
+
+
         $site = Site::findorfail($site);
-        $generalConfig =  [
-            'brand_name' => $site->name,
-            'website_url' => $site->url,
-            'email' => $site->email,
-            'descriptor' => $site->description,
-            'corp_name' => $site->corp_name,
-            'phone_number' => $site->phone_number,
-            'address' => $site->address,
-            'fulfillment' => $site->fulfillment,
-            'return_address' => $site->return_address,
-
-            'trial_period' => $site->trial_period,
-            'trial_period_breakdown' => $site->trial_period_breakdown,
-            'shipping_period' => $site->shipping_period,
-            'shipping_carrier' => $site->shipping_carrier,
-            'customer_service_hours' => $site->customer_service_hours,
-            'add_stylesheet' => $site->style_sheet,
-            'maximum_ticket_value' => $site->maximum_ticket_value,
-            'naming_convention' => [    //this is the billing model name
-                '1' => 'One Time Sale',              //this is for SS
-                '2' => 'Trial',            //this is for trial
-                '3' => 'Continuity'        //this is for continuity
-            ],
-            'product_count' => 0, //total products count
-        ];
-
 
         // website products
         $siteProductCategory = $site->siteProductCategory;
-        $products = $siteProductCategory->productCategory->products;
+
+        $products = $siteProductCategory->productCategory->products()->with(['sizes'])->get();
         $siteProducts = [];
         foreach ($products as $ind =>  $product) {
+
+            $productSizes = $product->sizes->pluck('name')->toArray();
+
 
             $pInd = $ind + 1;
 
@@ -89,17 +68,40 @@ class ZippedSiteController extends Controller
                 ),
                 'enableMaxqty' => $product->enable_max_quantity,               //1 for not display quantity increase/decrease button, any other number is the maximum qty customer can buy
                 'sizeOption' => $product->size_option == 1 ? 'yes' : 'no',              //if yes then how size options in product page
-                'size_option' => array(
-                    '0' => 'S',
-                    '1' => 'M',
-                    '2' => 'L',
-                    '3' => 'XL',
-                    '4' => '2XL',
-                    '5' => '3XL',
-                ),
+                'size_option' => $productSizes,
                 'status' => $product->status == 1 ? 'active' : 'inactive',               //if yes then how size options in product page
             ];
         }
+
+
+        //Website Information
+        $generalConfig =  [
+            'brand_name' => $site->name,
+            'website_url' => $site->url,
+            'email' => $site->email,
+            'descriptor' => $site->description,
+            'corp_name' => $site->corp_name,
+            'phone_number' => $site->phone_number,
+            'address' => $site->address,
+            'fulfillment' => $site->fulfillment,
+            'return_address' => $site->return_address,
+
+            'trial_period' => $site->trial_period,
+            'trial_period_breakdown' => $site->trial_period_breakdown,
+            'shipping_period' => $site->shipping_period,
+            'shipping_carrier' => $site->shipping_carrier,
+            'customer_service_hours' => $site->customer_service_hours,
+            'add_stylesheet' => $site->style_sheet,
+            'maximum_ticket_value' => $site->maximum_ticket_value,
+            'naming_convention' => [    //this is the billing model name
+                '1' => 'One Time Sale',              //this is for SS
+                '2' => 'Trial',            //this is for trial
+                '3' => 'Continuity'        //this is for continuity
+            ],
+            'product_count' => count($siteProducts),
+        ];
+
+
 
 
         //Website Content
@@ -123,6 +125,13 @@ class ZippedSiteController extends Controller
         $siteTemplate = $site->siteTemplate;
         $siteColorFont = $site->siteColorFont;
         $siteTermOther = $site->siteTermOther;
+        $sitePageLayouts = $site->sitePageLayouts()->with('pageLayout')->get();
+
+        $pageLayouts = [];
+        foreach ($sitePageLayouts as $pageLayout) {
+            $pageLayouts[] = $pageLayout->pageLayout->code;
+        }
+
 
         $pageConfig =  [
             'header_template' => $siteTemplate->header_template_id,             // choose 1-15
@@ -141,14 +150,7 @@ class ZippedSiteController extends Controller
             'relatedProducts_section' => $siteTemplate->related_product_section_id,        // choose 1-15
             // If you want to hide any section select 0
 
-            'indexSectionsOrder' => [ //just order the lines like you want it to be ordered
-                'productSection',
-                'aboutSection',
-                'contactSection',
-                'popularProductsection',
-                'ctaSection',
-                'featuresSection',
-            ],
+            'indexSectionsOrder' => $pageLayouts,
 
             'font' => $siteColorFont->font_family, // 1-Open Sans ; 2-Alegreya ; 3-Poppins ; 4-Roboto ; 5-Montserrat ; 6-Lato ; 7-Oswald ; 8-Raleway ;
             // 9-Mulish ; 10-Nunito ; 11-Assistant ; 12-Barlow ; 13-Rubik ; 14-Work Sans ; 15-Mukta
@@ -191,7 +193,7 @@ class ZippedSiteController extends Controller
 
             'showNavigationCart' => $siteTermOther->show_navigation_cart == 1  ? 'yes' : 'no', //yes displays it, no hides it
 
-            'showBillingColumnCheckoutPage' => 'no', //yes displays it, no hides it
+            'showBillingColumnCheckoutPage' => $siteTermOther->show_billing_column_checkout_page == 1 ? 'yes' : 'no', //yes displays it, no hides it
 
             'popularProducts' => [ //this toggles the popular products on the landing page
                 'displaypopularProducts' => $siteTermOther->show_popular_products == 1 ? 'yes' : 'no',
@@ -220,19 +222,22 @@ class ZippedSiteController extends Controller
 
         //Credit Card
 
-        $siteCreditCards = $site->siteCreditCards;
-        $creditCards = CreditCard::all();
+        $siteCreditCardSet = $site->siteCreditCardSet;
+
+
+        $creditCardSet = $siteCreditCardSet->creditCardSet;
+        $creditCardSetItems = $creditCardSet->creditCardSetItems;
+
+        // dd($creditCardSetItems);
+
         $card_type = array();
-        foreach ($creditCards as $creditCard) {
-            if($siteCreditCards->contains('credit_card_id', $creditCard->id)){
-                $card_type[strtolower($creditCard->name)] = 'yes';
-            }
-            else{
-                $card_type[strtolower($creditCard->name)] = 'no';
-            }
 
-
+        foreach ($creditCardSetItems as $creditCardSetItem) {
+            $card_type[strtolower($creditCardSetItem->name)] = 'yes';
         }
+
+
+
 
 
         //CRM settings
