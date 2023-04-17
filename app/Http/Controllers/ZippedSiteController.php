@@ -6,6 +6,7 @@ use App\Models\CreditCard;
 use App\Models\Site;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
 
 class ZippedSiteController extends Controller
@@ -283,7 +284,7 @@ class ZippedSiteController extends Controller
 
 
 
-        $this->generateZip($site, $projectName, $newProjectDestination);
+        return $this->generateZip($site, $projectName, $newProjectDestination);
 
 
 
@@ -302,6 +303,13 @@ class ZippedSiteController extends Controller
             $data = PHP_EOL . PHP_EOL . PHP_EOL . '$' . $key . ' = ' . $data . ';';
             fwrite($siteInfofile, $data);
         }
+
+        // also at the end of the file write require 'design_and_ajax.php';
+
+        $data = PHP_EOL . PHP_EOL . PHP_EOL . 'require \'design_and_ajax.php\';';
+
+        fwrite($siteInfofile, $data);
+
 
 
         fclose($siteInfofile);
@@ -345,21 +353,24 @@ class ZippedSiteController extends Controller
             // We're skipping all subfolders
             if (!$file->isDir()) {
                 $filePath     = $file->getRealPath();
+;
+
 
                 // extracting filename with substr/strlen
-                $relativePath = 'project/' . substr($filePath, strlen($path) + 1);
+                $relativePath =  substr($filePath, strlen($path) + 1);
+
 
                 $zip->addFile($filePath, $relativePath);
             }
         }
         $zip->close();
 
-        // store the zip file in the storage folder
-        Storage::put('zip-projects' . $zip_file, file_get_contents($zip_file));
+        $contents = file_get_contents($zip_file);
+
+        return response()->streamDownload(function () use ($contents) {
+            echo $contents;
+        }, $zip_file, ['Content-Type: application/zip']);
 
 
-
-
-        return response()->download($zip_file);
     }
 }

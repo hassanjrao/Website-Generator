@@ -4,10 +4,10 @@
         <v-container>
 
             <v-card>
-                <v-tabs background-color="deep-grey accent-4" center-active dark v-model="tab">
+                <v-tabs background-color="bg-default-darker" center-active dark v-model="tab">
                     <v-tab v-for="(tab, ind) in tabs" :key="ind"
                         :disabled="tab.label !== 'site_info' && !siteId ? true : false">
-                        {{ tab.text }}
+                        <v-icon small :color="tab.icon.color" class="mr-1">{{ tab.icon.icon }}</v-icon> {{ tab.text }}
                     </v-tab>
                 </v-tabs>
 
@@ -33,14 +33,10 @@
                                     :populartitles="populartitles" :contacttitles="contacttitles"
                                     :contactcontent="contactcontent" :loadinggifs="loadinggifs" :colorsfonts="colorsfonts"
                                     :creditcards="creditcards" :fontfamilies="fontfamilies"
-                                    @templateSubmitted="getTemplateSubmitted"
-                                    @layoutSubmitted="getLayoutSubmitted"
-                                    @contentSubmitted="getContentSubmitted"
-                                    @loadingGifsSubmitted="getLoadingGifsSubmitted"
+                                    @templateSubmitted="getTemplateSubmitted" @layoutSubmitted="getLayoutSubmitted"
+                                    @contentSubmitted="getContentSubmitted" @loadingGifsSubmitted="getLoadingGifsSubmitted"
                                     @colorFontSubmitted="getColorFontSubmitted"
-                                    @creditCardSubmitted="getCreditCardSubmitted"
-
-                                    />
+                                    @creditCardSubmitted="getCreditCardSubmitted" />
                             </v-card-text>
 
                             <v-card-text v-if="tab.label == 'others'">
@@ -217,27 +213,52 @@ export default {
                 {
                     label: 'site_info',
                     text: 'Site Information',
+                    // wait icon
+                    icon: {
+                        color: '',
+                        icon: 'mdi-clock-outline',
+                    },
                 },
                 {
                     label: 'products',
-                    text: 'Products'
+                    text: 'Products',
+                    icon: {
+                        color: '',
+                        icon: 'mdi-clock-outline',
+                    },
                 },
 
                 {
                     label: 'templates',
-                    text: 'Templates'
+                    text: 'Templates',
+                    icon: {
+                        color: '',
+                        icon: 'mdi-clock-outline',
+                    },
                 },
                 {
                     label: 'others',
-                    text: 'Others'
+                    text: 'Others',
+                    icon: {
+                        color: '',
+                        icon: 'mdi-clock-outline',
+                    },
                 },
                 {
                     label: 'crm',
-                    text: 'CRM'
+                    text: 'CRM',
+                    icon: {
+                        color: '',
+                        icon: 'mdi-clock-outline',
+                    },
                 },
                 {
                     label: 'generate_site',
-                    text: 'Generate Site'
+                    text: 'Generate Site',
+                    icon: {
+                        color: '',
+                        icon: 'mdi-clock-outline',
+                    },
                 },
             ],
             siteInfo: [],
@@ -252,19 +273,19 @@ export default {
             termsOthersSubmitted: false,
             crmSubmitted: false,
             siteContent: [],
-            stepsRequired:[
+            stepsRequired: [
                 {
-                    label :'site_info',
+                    label: 'site_info',
                     submitted: false,
                     message: 'Please complete the site information step'
                 },
                 {
-                    label :'products',
+                    label: 'products',
                     submitted: false,
                     message: 'Please complete the products step'
                 },
                 {
-                    label :'templates',
+                    label: 'templates',
                     submitted: false,
                     message: 'Please complete the template step'
                 },
@@ -319,9 +340,16 @@ export default {
             console.log(this.siteId);
 
             this.stepsRequired.forEach((step) => {
-                if(step.label === 'site_info'){
+                if (step.label === 'site_info') {
                     step.submitted = true;
                     step.message = 'Site information step completed';
+                }
+            })
+
+            this.tabs.forEach((tab) => {
+                if (tab.label === 'site_info') {
+                    tab.icon.icon = 'mdi-check-circle-outline';
+                    tab.icon.color = 'green';
                 }
             })
 
@@ -329,59 +357,75 @@ export default {
         ,
         getTemplateSubmitted(templateSubmitted) {
             this.templateSubmitted = templateSubmitted;
-            console.log("templateSubmitted "+this.templateSubmitted);
+            console.log("templateSubmitted " + this.templateSubmitted);
 
 
 
             this.stepsRequired.forEach((step) => {
-                if(step.label === 'templates'){
+                if (step.label === 'templates') {
                     step.submitted = true;
                     step.message = 'Template step completed';
                 }
             })
 
+
         },
         getProductsSubmitted(productsSubmitted) {
             this.productsSubmitted = productsSubmitted;
-           console.log("productsSubmitted "+this.productsSubmitted);
+            console.log("productsSubmitted " + this.productsSubmitted);
 
 
-           this.tab=2
+            this.tab = 2
             this.stepsRequired.forEach((step) => {
-                if(step.label === 'products'){
+                if (step.label === 'products') {
                     step.submitted = true;
                     step.message = 'Products step completed';
+                }
+            })
+
+            this.tabs.forEach((tab) => {
+                if (tab.label === 'products') {
+                    tab.icon.icon = 'mdi-check-circle-outline';
+                    tab.icon.color = 'green';
                 }
             })
         },
         getLayoutSubmitted(layoutSubmitted) {
             this.layoutSubmitted = layoutSubmitted;
-           console.log("layoutSubmitted "+this.layoutSubmitted);
+            console.log("layoutSubmitted " + this.layoutSubmitted);
 
             this.stepsRequired.forEach((step) => {
-                if(step.label === 'layout'){
+                if (step.label === 'layout') {
                     step.submitted = true;
                     step.message = 'Layout step completed';
+                }
+            })
+
+            this.tabs.forEach((tab) => {
+                if (tab.label === 'layout') {
+                    tab.icon.icon = 'mdi-check-circle-outline';
+                    tab.icon.color = 'green';
                 }
             })
         },
         getContentSubmitted(contentSubmitted) {
             this.contentSubmitted = contentSubmitted;
-            console.log("contentSubmitted "+this.contentSubmitted);
+            console.log("contentSubmitted " + this.contentSubmitted);
 
             this.stepsRequired.forEach((step) => {
-                if(step.label === 'content'){
+                if (step.label === 'content') {
                     step.submitted = true;
                     step.message = 'Content step completed';
                 }
             })
+
         },
         getLoadingGifsSubmitted(loadingGifsSubmitted) {
             this.loadingGifsSubmitted = loadingGifsSubmitted;
-           console.log("loadingGifsSubmitted "+this.loadingGifsSubmitted);
+            console.log("loadingGifsSubmitted " + this.loadingGifsSubmitted);
 
             this.stepsRequired.forEach((step) => {
-                if(step.label === 'loading_gifs'){
+                if (step.label === 'loading_gifs') {
                     step.submitted = true;
                     step.message = 'Loading gifs step completed';
                 }
@@ -389,10 +433,10 @@ export default {
         },
         getColorFontSubmitted(colorFontsSubmitted) {
             this.colorFontsSubmitted = colorFontsSubmitted;
-            console.log("colorFontsSubmitted "+this.colorFontsSubmitted);
+            console.log("colorFontsSubmitted " + this.colorFontsSubmitted);
 
             this.stepsRequired.forEach((step) => {
-                if(step.label === 'color_fonts'){
+                if (step.label === 'color_fonts') {
                     step.submitted = true;
                     step.message = 'Color and fonts step completed';
                 }
@@ -400,12 +444,12 @@ export default {
         },
         getCreditCardSubmitted(creditCardSubmitted) {
             this.creditCardSubmitted = creditCardSubmitted;
-            console.log("creditCardSubmitted "+this.creditCardSubmitted);
+            console.log("creditCardSubmitted " + this.creditCardSubmitted);
 
-            this.tab=3
+            this.tab = 3
 
             this.stepsRequired.forEach((step) => {
-                if(step.label === 'credit_card'){
+                if (step.label === 'credit_card') {
                     step.submitted = true;
                     step.message = 'Credit card step completed';
                 }
@@ -413,27 +457,41 @@ export default {
         },
         getTermsOthersSubmitted(termsOthersSubmitted) {
             this.termsOthersSubmitted = termsOthersSubmitted;
-            console.log("termsOthersSubmitted "+this.termsOthersSubmitted);
+            console.log("termsOthersSubmitted " + this.termsOthersSubmitted);
 
-            this.tab=4
+            this.tab = 4
 
             this.stepsRequired.forEach((step) => {
-                if(step.label === 'terms_others'){
+                if (step.label === 'terms_others') {
                     step.submitted = true;
                     step.message = 'Terms and others step completed';
+                }
+            })
+
+            this.tabs.forEach((tab) => {
+                if (tab.label === 'others') {
+                    tab.icon.icon = 'mdi-check-circle-outline';
+                    tab.icon.color = 'green';
                 }
             })
         },
         getCrmSubmitted(crmSubmitted) {
             this.crmSubmitted = crmSubmitted;
-            console.log("crmSubmitted "+this.crmSubmitted);
+            console.log("crmSubmitted " + this.crmSubmitted);
 
-            this.tab=5
+            this.tab = 5
 
             this.stepsRequired.forEach((step) => {
-                if(step.label === 'crm'){
+                if (step.label === 'crm') {
                     step.submitted = true;
                     step.message = 'Crm step completed';
+                }
+            })
+
+            this.tabs.forEach((tab) => {
+                if (tab.label === 'crm') {
+                    tab.icon.icon = 'mdi-check-circle-outline';
+                    tab.icon.color = 'green';
                 }
             })
         },
@@ -447,6 +505,23 @@ export default {
         CRM,
         Products,
         GenerateSite
+    },
+
+    watch: {
+        stepsRequired: {
+            handler: function (val) {
+                // if template, layout, content, loading gifs, color and fonts, credit card, are all submitted, then change the template tab to green
+                if (this.templateSubmitted && this.layoutSubmitted && this.contentSubmitted && this.loadingGifsSubmitted && this.colorFontsSubmitted && this.creditCardSubmitted) {
+                    this.tabs.forEach((tab) => {
+                        if (tab.label === 'templates') {
+                            tab.icon.icon = 'mdi-check-circle-outline';
+                            tab.icon.color = 'green';
+                        }
+                    })
+                }
+            },
+            deep: true
+        }
     },
 
     mounted() {

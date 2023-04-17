@@ -81,7 +81,7 @@
             'sidebar-dark page-header-dark dark-mode'   Enable dark mode (light sidebar/header is not supported with dark mode)
         -->
     <div id="page-container"
-        class="sidebar-o enable-page-overlay sidebar-dark side-scroll page-header-fixed main-content-narrow">
+        class="sidebar-o enable-page-overlay sidebar-dark side-scroll page-header-fixed ">
         <!-- Side Overlay-->
         <aside id="side-overlay" class="fs-sm">
             <!-- Side Header -->
@@ -500,12 +500,12 @@
         <footer id="page-footer" class="bg-body-light">
             <div class="content py-3">
                 <div class="row fs-sm">
-                    <div class="col-sm-6 order-sm-2 py-1 text-center text-sm-end">
+                    {{-- <div class="col-sm-6 order-sm-2 py-1 text-center text-sm-end">
                         Crafted with <i class="fa fa-heart text-danger"></i> by <a class="fw-semibold"
                             href="https://1.envato.market/ydb" target="_blank">pixelcave</a>
-                    </div>
+                    </div> --}}
                     <div class="col-sm-6 order-sm-1 py-1 text-center text-sm-start">
-                        <a class="fw-semibold" href="https://1.envato.market/AVD6j" target="_blank">OneUI</a> &copy;
+                        <a class="fw-semibold" href="https://1.envato.market/AVD6j" target="_blank">{{ config("app.name") }}</a> &copy;
                         <span data-toggle="year-copy"></span>
                     </div>
                 </div>
