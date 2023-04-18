@@ -388,12 +388,12 @@ class SiteController extends Controller
             [
                 'label' => 'Primary Color',
                 'name' => 'primary_color',
-                'value' => '#000000'
+                'value' => '#620000'
             ],
             [
                 'label' => 'Primary Text Color',
                 'name' => 'primary_text_color',
-                'value' => '#000000'
+                'value' => '#fff'
             ],
             [
                 'label' => 'Secondary Color',
@@ -403,52 +403,52 @@ class SiteController extends Controller
             [
                 'label' => 'Secondary Text Color',
                 'name' => 'secondary_text_color',
-                'value' => '#000000'
+                'value' => '#fff'
             ],
             [
                 'label' => 'Top bar BG Color',
                 'name' => 'top_bar_bg_color',
-                'value' => '#000000'
+                'value' => '#ffecea'
             ],
             [
                 'label' => 'Top bar Text Color',
                 'name' => 'top_bar_text_color',
-                'value' => '#000000'
+                'value' => '#444'
             ],
             [
                 'label' => 'Header BG Color',
                 'name' => 'header_bg_color',
-                'value' => '#000000'
+                'value' => '#fff'
             ],
             [
                 'label' => 'Header Text Color',
                 'name' => 'header_text_color',
-                'value' => '#000000'
+                'value' => '#222'
             ],
             [
                 'label' => 'Header Icon Color',
                 'name' => 'header_icon_color',
-                'value' => '#000000'
+                'value' => '#620000'
             ],
             [
                 'label' => 'Banner Overlay Color',
                 'name' => 'banner_overlay_color',
-                'value' => '#000000'
+                'value' => '#00000069'
             ],
             [
                 'label' => 'Banner Text Color',
                 'name' => 'banner_text_color',
-                'value' => '#000000'
+                'value' => '#fff'
             ],
             [
                 'label' => 'Button BG Color',
                 'name' => 'button_bg_color',
-                'value' => '#000000'
+                'value' => '#620000'
             ],
             [
                 'label' => 'Button Text Color',
                 'name' => 'button_text_color',
-                'value' => '#000000'
+                'value' => '#fff'
             ],
             [
                 'label' => 'Button Hover BG Color',
@@ -458,17 +458,17 @@ class SiteController extends Controller
             [
                 'label' => 'Button Hover Text Color',
                 'name' => 'button_hover_text_color',
-                'value' => '#000000'
+                'value' => '#fff'
             ],
             [
                 'label' => 'Footer BG Color',
                 'name' => 'footer_bg_color',
-                'value' => '#000000'
+                'value' => '#333'
             ],
             [
                 'label' => 'Footer Text Color',
                 'name' => 'footer_text_color',
-                'value' => '#000000'
+                'value' => '#fff'
             ]
         ];
 

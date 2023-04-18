@@ -6,7 +6,13 @@
         <v-card-title class="d-flex justify-content-between">
             <h6 class="headline mb-0">Layout</h6>
 
-            <v-btn color="primary" :loading="loading" @click="submitPageLayout">Submit</v-btn>
+
+            <div class="d-flex justify-content-center">
+                <v-btn color="secondary" class="mr-2" @click="randomize">Randomize</v-btn>
+
+
+                <v-btn color="primary" :loading="loading" @click="submitPageLayout">Submit</v-btn>
+            </div>
 
         </v-card-title>
 
@@ -20,15 +26,6 @@
 
             <v-row class="justify-content-around align-items-center">
 
-                <v-col cols="12" sm="6" md="4">
-                    <v-btn class="ma-2" color="secondary" @click="randomize()">
-                        Randomize
-                        <v-icon right dark>
-                            mdi-cached
-                        </v-icon>
-                    </v-btn>
-
-                </v-col>
 
                 <v-col cols="12" sm="6" md="4">
 
@@ -151,13 +148,13 @@ export default {
 
             axios.post('/sites/submit-site-page-layout', {
                 layout_items: layoutItemsIncludedOrdered,
-                site_id:this.siteId
+                site_id: this.siteId
             })
                 .then(response => {
                     console.log(response);
                     this.loading = false;
 
-                    this.showStatus(response.data.message,'success')
+                    this.showStatus(response.data.message, 'success')
 
 
                     this.$emit('layoutSubmitted', true)
@@ -166,7 +163,7 @@ export default {
                     console.log(error);
 
                     this.loading = false;
-                    this.showStatus(error.response.data.message,'error')
+                    this.showStatus(error.response.data.message, 'error')
                 });
 
 

@@ -6,7 +6,13 @@
         <v-card-title class="d-flex justify-content-between">
             <h6 class="headline mb-0">Colors & Fonts</h6>
 
-            <v-btn color="primary" :loading="loading" @click="submitSiteColorFont">Submit</v-btn>
+
+            <div class="d-flex justify-content-center">
+                <v-btn color="secondary" class="mr-2" @click="randomize">Randomize</v-btn>
+
+                <v-btn color="primary" :loading="loading" @click="submitSiteColorFont">Submit</v-btn>
+
+            </div>
 
         </v-card-title>
 
@@ -18,8 +24,8 @@
             <v-row>
 
                 <v-col class="shrink" cols="12" sm="6" md="6">
-                    <v-autocomplete label="Font Family" :items="fontfamilies" v-model="selectedFontFamily" required
-                      ></v-autocomplete>
+                    <v-autocomplete label="Font Family" :items="fontfamilies" v-model="selectedFontFamily"
+                        required></v-autocomplete>
 
                 </v-col>
             </v-row>
@@ -98,7 +104,7 @@ export default {
             mask: '!#XXXXXXXX',
             menu: false,
             colorsFonts: [],
-            selectedFontFamily:1,
+            selectedFontFamily: 1,
         }
     },
 
@@ -120,7 +126,17 @@ export default {
 
     methods: {
 
-        submitSiteColorFont(){
+        randomize(){
+
+            this.colorsFonts.forEach(colorfont => {
+                colorfont.value = '#'+Math.floor(Math.random()*16777215).toString(16);
+            });
+
+            this.selectedFontFamily = Math.floor(Math.random() * this.fontfamilies.length) + 1;
+
+        },
+
+        submitSiteColorFont() {
             this.loading = true;
             axios.post('/sites/submit-site-color-font', {
                 site_id: this.siteId,
@@ -129,13 +145,13 @@ export default {
             })
                 .then(response => {
                     this.loading = false;
-                    this.showStatus(response.data.message,'success');
+                    this.showStatus(response.data.message, 'success');
 
                     this.$emit('colorFontSubmitted', true)
                 })
                 .catch(error => {
                     this.loading = false;
-                    this.showStatus(error.response.data.message,'error');
+                    this.showStatus(error.response.data.message, 'error');
                 });
         }
 

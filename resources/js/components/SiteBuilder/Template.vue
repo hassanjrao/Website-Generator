@@ -30,7 +30,12 @@
                         <v-card-title class="d-flex justify-content-between">
                             <h6 class="headline mb-0">Template</h6>
 
-                            <v-btn color="primary" :loading="loading" @click="submitSiteTemplate">Submit</v-btn>
+                            <div class="d-flex justify-content-center">
+                                <v-btn color="secondary" class="mr-2" @click="randomize">Randomize</v-btn>
+
+                                <v-btn color="primary" :loading="loading" @click="submitSiteTemplate">Submit</v-btn>
+                            </div>
+
                         </v-card-title>
 
                         <v-card-text>
@@ -231,7 +236,7 @@
 
                     <v-card tile v-if="tab.label == 'layout'">
 
-                        <Layout :layouts="layouts" :site_id="siteId" @layoutSubmitted="getLayoutSubmitted"/>
+                        <Layout :layouts="layouts" :site_id="siteId" @layoutSubmitted="getLayoutSubmitted" />
 
                     </v-card>
 
@@ -241,31 +246,27 @@
                         <SiteContent :site_content="siteContent" :slogans="slogans" :taglines="taglines"
                             :aboutustitles="aboutustitles" :aboutuscontent="aboutuscontent" :shoptitles="shoptitles"
                             :buttonnames="buttonnames" :populartitles="populartitles" :contacttitles="contacttitles"
-                            :contactcontent="contactcontent" :site_id="siteId"
-                            @contentSubmitted="getContentSubmitted" />
-                            />
+                            :contactcontent="contactcontent" :site_id="siteId" @contentSubmitted="getContentSubmitted" />
+                        />
 
                     </v-card>
 
 
                     <v-card tile v-if="tab.label == 'loading_gifs'">
                         <LoadingGifs :site_id="siteId" :loadinggifs="loadinggifs"
-                            @loadingGifsSubmitted="getLoadingGifsSubmitted"
-                        />
+                            @loadingGifsSubmitted="getLoadingGifsSubmitted" />
                     </v-card>
 
 
                     <v-card tile v-if="tab.label == 'colors_fonts'">
                         <ColorsFonts :site_id="siteId" :colorsfonts="colorsfonts" :fontfamilies="fontfamilies"
-                            @colorFontSubmitted="getColorFontSubmitted"
-                        />
+                            @colorFontSubmitted="getColorFontSubmitted" />
                     </v-card>
 
 
                     <v-card tile v-if="tab.label == 'credit_cards'">
                         <CreditCards :site_id="siteId" :creditcards="creditcards"
-                            @creditCardSubmitted="getCreditCardSubmitted"
-                        />
+                            @creditCardSubmitted="getCreditCardSubmitted" />
                     </v-card>
 
 
@@ -574,6 +575,59 @@ export default {
 
     methods: {
 
+        randomize() {
+
+            // Header Template
+            let headerTemplate = this.headertemplates[Math.floor(Math.random() * this.headertemplates.length)];
+
+            this.selectedHeaderTemplate = headerTemplate.value;
+
+            // Hero Section
+            let heroSection = this.herosections[Math.floor(Math.random() * this.herosections.length)];
+            this.selectedHeroSection = heroSection.value;
+
+            // Product Section
+            let productSection = this.productsections[Math.floor(Math.random() * this.productsections.length)];
+            this.selectedProductSection = productSection.value;
+
+            // related product section
+            let relatedProductSection = this.relatedproductsections[Math.floor(Math.random() * this.relatedproductsections.length)];
+            this.selectedRelatedProductSection = relatedProductSection.value;
+
+            // About Section
+            let aboutSection = this.aboutsections[Math.floor(Math.random() * this.aboutsections.length)];
+            this.selectedAboutSection = aboutSection.value;
+
+            // Contact Section
+            let contactSection = this.contactsections[Math.floor(Math.random() * this.contactsections.length)];
+            this.selectedContactSection = contactSection.value;
+
+            // Popular Product Section
+            let popularProductSection = this.popularproductsections[Math.floor(Math.random() * this.popularproductsections.length)];
+            this.selectedPopularProductSection = popularProductSection.value;
+
+            // CTA Section
+            let ctaSection = this.ctasections[Math.floor(Math.random() * this.ctasections.length)];
+            this.selectedCtaSection = ctaSection.value;
+
+            // Feature Section
+            let featureSection = this.featuresections[Math.floor(Math.random() * this.featuresections.length)];
+            this.selectedFeatureSection = featureSection.value;
+
+            // Footer Template
+            let footerTemplate = this.footertemplates[Math.floor(Math.random() * this.footertemplates.length)];
+            this.selectedFooterTemplate = footerTemplate.value;
+
+            // Product Pages
+            let productPages = this.productpages[Math.floor(Math.random() * this.productpages.length)];
+            this.selectedProductPages = productPages.value;
+
+            // Checkout Pages
+            let checkoutPages = this.checkoutpages[Math.floor(Math.random() * this.checkoutpages.length)];
+            this.selectedCheckoutPages = checkoutPages.value;
+
+        },
+
         submitSiteTemplate() {
 
             this.$v.$touch();
@@ -611,7 +665,7 @@ export default {
 
                     this.$emit('templateSubmitted', true)
 
-                    this.tab=1
+                    this.tab = 1
                 })
                 .catch(error => {
                     console.log(error);
@@ -624,22 +678,22 @@ export default {
 
         getLayoutSubmitted(layoutSubmitted) {
             this.$emit('layoutSubmitted', layoutSubmitted)
-            this.tab=2
+            this.tab = 2
         },
 
         getContentSubmitted(contentSubmitted) {
             this.$emit('contentSubmitted', contentSubmitted)
-            this.tab=3
+            this.tab = 3
         },
 
         getLoadingGifsSubmitted(loadingGifsSubmitted) {
             this.$emit('loadingGifsSubmitted', loadingGifsSubmitted)
-            this.tab=4
+            this.tab = 4
         },
 
         getColorFontSubmitted(colorFontSubmitted) {
             this.$emit('colorFontSubmitted', colorFontSubmitted)
-            this.tab=5
+            this.tab = 5
         },
 
         getCreditCardSubmitted(creditCardSubmitted) {

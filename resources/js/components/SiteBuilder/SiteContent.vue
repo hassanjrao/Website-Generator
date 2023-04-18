@@ -6,8 +6,11 @@
         <v-card-title class="d-flex justify-content-between">
             <h6 class="headline mb-0">Site Content</h6>
 
-                <v-btn color="primary" :loading="loading" @click="submitSiteContent">Submit</v-btn>
+            <div class="d-flex justify-content-center">
+                <v-btn color="secondary" class="mr-2"  @click="randomize">Randomize</v-btn>
 
+                <v-btn color="primary" :loading="loading" @click="submitSiteContent">Submit</v-btn>
+            </div>
         </v-card-title>
 
         <!-- divider -->
@@ -258,6 +261,24 @@ export default {
 
 
     methods: {
+
+        randomize(){
+
+            this.selectedSlogan = this.slogans[Math.floor(Math.random() * this.slogans.length)].value
+            this.selectedTagline = this.taglines[Math.floor(Math.random() * this.taglines.length)].value
+            this.selectedAboutUsTitle = this.aboutustitles[Math.floor(Math.random() * this.aboutustitles.length)].value
+            this.selectedAboutUsContent = this.aboutuscontent[Math.floor(Math.random() * this.aboutuscontent.length)].value
+            this.selectedShopTitle = this.shoptitles[Math.floor(Math.random() * this.shoptitles.length)].value
+            this.selectedButtonName = this.buttonnames[Math.floor(Math.random() * this.buttonnames.length)].value
+            this.selectedPopularTitle = this.populartitles[Math.floor(Math.random() * this.populartitles.length)].value
+            this.selectedContactTitle = this.contacttitles[Math.floor(Math.random() * this.contacttitles.length)].value
+            this.selectedContactContent = this.contactcontent[Math.floor(Math.random() * this.contactcontent.length)].value
+
+        },
+
+        
+
+
         submitSiteContent() {
             this.$v.$touch()
             if (this.$v.$invalid) {

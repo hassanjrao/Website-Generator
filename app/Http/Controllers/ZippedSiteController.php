@@ -23,6 +23,7 @@ class ZippedSiteController extends Controller
         // website products
         $siteProductCategory = $site->siteProductCategory;
 
+
         $products = $siteProductCategory->productCategory->products()->with(['sizes'])->get();
         $siteProducts = [];
         foreach ($products as $ind =>  $product) {

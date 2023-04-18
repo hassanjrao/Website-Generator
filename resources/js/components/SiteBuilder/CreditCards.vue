@@ -6,7 +6,14 @@
         <v-card-title class="d-flex justify-content-between">
             <h6 class="headline mb-0">Credit Cards</h6>
 
-            <v-btn color="primary" :loading="loading" @click="submitCreditCards()">Submit</v-btn>
+
+            <div class="d-flex justify-content-center">
+                <v-btn color="secondary" class="mr-2" @click="randomize">Randomize</v-btn>
+
+
+                <v-btn color="primary" :loading="loading" @click="submitCreditCards()">Submit</v-btn>
+
+            </div>
 
         </v-card-title>
 
@@ -143,6 +150,16 @@ export default {
 
 
     methods: {
+
+        randomize() {
+            let random = Math.floor(Math.random() * this.creditcards.length) + 1;
+
+            if(random == this.selectedCreditCard) {
+                this.randomize();
+            } else {
+                this.selectedCreditCard = random;
+            }
+        },
 
         submitCreditCards() {
             this.$v.$touch();

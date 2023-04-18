@@ -6,7 +6,12 @@
         <v-card-title class="d-flex justify-content-between">
             <h6 class="headline mb-0">Loading Gifs</h6>
 
-            <v-btn color="primary" :loading="loading" @click="submitSiteLoadingGif">Submit</v-btn>
+            <div class="d-flex justify-content-center">
+                <v-btn color="secondary" class="mr-2"  @click="randomize">Randomize</v-btn>
+
+                <v-btn color="primary" :loading="loading" @click="submitSiteLoadingGif">Submit</v-btn>
+
+            </div>
 
         </v-card-title>
 
@@ -22,11 +27,11 @@
                     <v-radio v-for="loadinggif in loadinggifs" :key="loadinggif.id" :value="loadinggif.id" class="my-4">
                         <template v-slot:label>
 
-                                    <v-card>
-                                        <v-card-text>
-                                            <v-img :src="loadinggif.image" height="100px" width="100px"></v-img>
-                                        </v-card-text>
-                                    </v-card>
+                            <v-card>
+                                <v-card-text>
+                                    <v-img :src="loadinggif.image" height="100px" width="100px"></v-img>
+                                </v-card-text>
+                            </v-card>
 
 
                         </template>
@@ -74,7 +79,22 @@ export default {
 
 
     methods: {
-        submitSiteLoadingGif(){
+
+        randomize() {
+
+            let random=this.loadinggifs[Math.floor(Math.random()*this.loadinggifs.length)].id;
+
+            if(random==this.selectedLoadingGif){
+                this.randomize();
+            }else{
+                this.selectedLoadingGif=random;
+            }
+
+            console.log(this.selectedLoadingGif);
+
+        },
+
+        submitSiteLoadingGif() {
             this.loading = true;
             axios.post('/sites/submit-site-loading-gif', {
                 site_id: this.site_id,
