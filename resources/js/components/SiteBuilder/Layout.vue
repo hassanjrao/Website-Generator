@@ -128,6 +128,8 @@ export default {
         },
 
         submitPageLayout() {
+
+            this.loading = true;
             console.log('layoutItemIncluded', this.layoutItemsIncluded);
             console.log('layoutItems', this.layoutItems);
 
@@ -158,6 +160,8 @@ export default {
 
 
                     this.$emit('layoutSubmitted', true)
+
+                    this.$emit('includedLayoutItems', layoutItemsIncludedOrdered)
                 })
                 .catch(error => {
                     console.log(error);

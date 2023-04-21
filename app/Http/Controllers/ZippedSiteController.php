@@ -25,6 +25,7 @@ class ZippedSiteController extends Controller
 
 
         $products = $siteProductCategory->productCategory->products()->with(['sizes'])->get();
+
         $siteProducts = [];
         foreach ($products as $ind =>  $product) {
 
@@ -38,11 +39,11 @@ class ZippedSiteController extends Controller
                 'stickyId' => $product->sticky_id,
                 'name' => $product->name,
                 'description' => $product->description,
-                'image' => $product->image,
+                'image' => 'products/' . $product->image,
                 'show_ingredients' => $product->show_ingredients == 1 ? 'yes' : 'no',
                 'ingredients_image' => $product->ingredients_image,
                 'category' => $product->productCategory->name,
-                'billingModel' => $product->billing_model,              // 1=ss|2=trial|3=con|4=SS+trial|5=SS+con|6=trial+con|7= SS+trial+con
+                'billingModel' => $product->billing_model_id,              // 1=ss|2=trial|3=con|4=SS+trial|5=SS+con|6=trial+con|7= SS+trial+con
                 'ssPrice' => $product->ss_price,               //if ss
                 'ssShipping' => $product->ss_shipping,             //if ss
                 'ssMaxqty' => $product->ss_max_quantity,                  // 1 for disable qty, 2 for enable qty
@@ -74,6 +75,12 @@ class ZippedSiteController extends Controller
                 'status' => $product->status == 1 ? 'active' : 'inactive',               //if yes then how size options in product page
             ];
         }
+
+        $productImagesFiles = [];
+        foreach ($products as $product) {
+            $productImagesFiles[] = "product/images/" .$product->image;
+        }
+
 
 
         //Website Information
@@ -260,7 +267,7 @@ class ZippedSiteController extends Controller
             'gatewayId'                 => $advertisingCompany->gateway_id,
 
             //'shippingInsurancePrice'    => 1.00,
-            //'shippingInsuranceProductId'=> 123
+            //'shippingInsuranceProductId'=> 123                        
         ];
 
 
@@ -268,9 +275,57 @@ class ZippedSiteController extends Controller
         // make new project
         $siteName = str_replace(' ', '_', $site->name);
         $randNum = rand(1000, 9999);
-        $projectName = 'project_' . $site->id . '_' . $siteName . '_' . $randNum . '_' . time();
+        $projectName = $siteName . '_' . $randNum . '_' . time();
 
         $newProjectDestination = $this->copyProject($projectName);
+
+
+        $this->addFiles($newProjectDestination.'/bp_config/images/products',$productImagesFiles);
+
+        $siteImages=[];
+
+        if($siteTemplate->about_section_bg_image){
+            $siteImages[]=[
+                "path"=> "site-sections/about/".$siteTemplate->about_section_bg_image,
+                "name"=>"about",
+            ];
+        }
+
+        if($siteTemplate->cta_section_bg_image){
+            $siteImages[]=[
+                "path"=> "site-sections/cta/".$siteTemplate->cta_section_bg_image,
+                "name"=>"cta",
+            ];
+        }
+
+        if($siteTemplate->contact_section_bg_image){
+            $siteImages[]=[
+                "path"=> "site-sections/contact/".$siteTemplate->contact_section_bg_image,
+                "name"=>"contact",
+            ];
+        }
+
+        if($siteTemplate->hero_section_bg_image){
+            $siteImages[]=[
+                "path"=> "site-sections/hero/".$siteTemplate->hero_section_bg_image,
+                "name"=>"hero",
+            ];
+        }
+
+        if($siteTemplate->product_section_bg_image){
+            $siteImages[]=[
+                "path"=> "site-sections/product/".$siteTemplate->product_section_bg_image,
+                "name"=>"product",
+            ];
+        }
+
+      
+        
+        $this->addTemplateImages($newProjectDestination.'/img',$siteImages);
+
+
+
+
         $siteInfofile = $newProjectDestination . '\bp_config\site-info.php';
 
 
@@ -291,6 +346,12 @@ class ZippedSiteController extends Controller
 
         // dd($site);/
     }
+
+
+
+
+
+
 
     public function writeInFile($file, $dataArrays = [])
     {
@@ -320,9 +381,11 @@ class ZippedSiteController extends Controller
     public function copyProject($projectName)
     {
 
+
         // copy public/storage/project to public/storage/project{site_id}
 
         $source = public_path('storage\real-project');
+
 
 
         $destination = public_path('storage\projects\\' . $projectName);
@@ -332,6 +395,34 @@ class ZippedSiteController extends Controller
         // return path of the new project
 
         return $destination;
+    }
+
+    public function addFiles($destinationFolder, $filePaths=[])
+    {
+        foreach ($filePaths as $filePath) {
+            $filePath = public_path('storage\\'.$filePath);
+
+            // dd($filePath, $destinationFolder.'/4kmCP45l4trRW9eL6ALJ6wfmSa8JdScPXLO9GtUX.jpg');
+
+            copy($filePath, $destinationFolder.'/'.basename($filePath));
+
+        }
+    }
+
+    public function addTemplateImages($destinationFolder, $filePaths=[])
+    {
+        foreach ($filePaths as $filePathArr) {
+            $filePath = public_path('storage\\'.$filePathArr["path"]);
+
+
+            $fileExt = pathinfo($filePath, PATHINFO_EXTENSION);
+
+
+            // dd($filePath, $destinationFolder.'/4kmCP45l4trRW9eL6ALJ6wfmSa8JdScPXLO9GtUX.jpg');
+
+            copy($filePath, $destinationFolder.'/'.$filePathArr["name"].'.'.$fileExt);
+
+        }
     }
 
     public function generateZip($site, $projectName, $newProjectDestination)
@@ -353,8 +444,7 @@ class ZippedSiteController extends Controller
 
             // We're skipping all subfolders
             if (!$file->isDir()) {
-                $filePath     = $file->getRealPath();
-;
+                $filePath     = $file->getRealPath();;
 
 
                 // extracting filename with substr/strlen
@@ -371,7 +461,5 @@ class ZippedSiteController extends Controller
         return response()->streamDownload(function () use ($contents) {
             echo $contents;
         }, $zip_file, ['Content-Type: application/zip']);
-
-
     }
 }

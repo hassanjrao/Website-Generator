@@ -80,8 +80,7 @@
 
             'sidebar-dark page-header-dark dark-mode'   Enable dark mode (light sidebar/header is not supported with dark mode)
         -->
-    <div id="page-container"
-        class="sidebar-o enable-page-overlay sidebar-dark side-scroll page-header-fixed ">
+    <div id="page-container" class="sidebar-o enable-page-overlay sidebar-dark side-scroll page-header-fixed ">
         <!-- Side Overlay-->
         <aside id="side-overlay" class="fs-sm">
             <!-- Side Header -->
@@ -264,6 +263,23 @@
                                 href="{{ route('sites.index') }}">
                                 <i class="nav-main-link-icon si si-link"></i>
                                 <span class="nav-main-link-name">Sites</span>
+                            </a>
+                        </li>
+
+
+                        <li class="nav-main-item">
+                            <a class="nav-main-link{{ request()->segment(1) == 'product-categories' ? ' active' : '' }}"
+                                href="{{ route('product-categories.index') }}">
+                                <i class="nav-main-link-icon si si-link"></i>
+                                <span class="nav-main-link-name">Product Categories</span>
+                            </a>
+                        </li>
+
+                        <li class="nav-main-item">
+                            <a class="nav-main-link{{ request()->segment(1) == 'products' ? ' active' : '' }}"
+                                href="{{ route('products.index') }}">
+                                <i class="nav-main-link-icon si si-link"></i>
+                                <span class="nav-main-link-name">Products</span>
                             </a>
                         </li>
 
@@ -505,7 +521,8 @@
                             href="https://1.envato.market/ydb" target="_blank">pixelcave</a>
                     </div> --}}
                     <div class="col-sm-6 order-sm-1 py-1 text-center text-sm-start">
-                        <a class="fw-semibold" href="https://1.envato.market/AVD6j" target="_blank">{{ config("app.name") }}</a> &copy;
+                        <a class="fw-semibold" href="https://1.envato.market/AVD6j"
+                            target="_blank">{{ config('app.name') }}</a> &copy;
                         <span data-toggle="year-copy"></span>
                     </div>
                 </div>
@@ -542,7 +559,6 @@
     <!-- Page JS Code -->
     <script src="{{ asset('js/pages/tables_datatables.js') }}"></script>
 
-    <script src="https://cdn.ckeditor.com/ckeditor5/26.0.0/classic/ckeditor.js"></script>
 
     <script src="{{ asset('js/plugins/select2/js/select2.full.min.js') }}"></script>
 
@@ -574,6 +590,50 @@
     @yield('js_after')
 
     <script>
+        function showStatus(message, type = 'success', toast = true) {
+
+            if (type == "success") {
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                })
+
+                if (toast) {
+                    Toast.fire({
+                        icon: type,
+                        title: message,
+                    })
+                } else {
+                    Swal.fire({
+                        icon: type,
+                        title: message,
+                        allowOutsideClick: false,
+                        allowEscapeKey: false,
+                        allowEnterKey: false,
+                    })
+                }
+            } else if (type == "error") {
+
+                Swal.fire({
+                    icon: type,
+                    title: message,
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    allowEnterKey: false,
+                })
+
+
+            }
+
+        }
+
         function confirmDelete(id) {
             Swal.fire({
                 title: 'Are you sure?',

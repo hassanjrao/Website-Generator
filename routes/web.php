@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ProductCategoryController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SiteController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ZippedSiteController;
@@ -24,6 +26,10 @@ Route::middleware(["auth"])->group(function () {
     Route::get('/', [DashboardController::class,"index"])->name('dashboard.index');
 
     Route::resource('users', UserController::class);
+
+
+    Route::resource("product-categories", ProductCategoryController::class);
+    Route::resource("products", ProductController::class);
 
     // Route::get("sites/{site}/download", [SiteController::class,"download"])->name("sites.download");
     // Route::resource("sites", SiteController::class);

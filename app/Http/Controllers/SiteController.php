@@ -554,29 +554,35 @@ class SiteController extends Controller
             [
                 "id" => 1,
                 "name" => "Header",
+                "label" => "header",
                 "fixed" => true,
             ],
             [
                 "id" => 2,
                 "name" => "Hero Section",
+                "label" => "hero"
             ],
             [
                 "id" => 3,
                 "name" => "About Section",
+                "label" => "about_section",
             ],
             [
                 "id" => 4,
                 "name" => "Product Section",
+                "label" => "product_section",
             ],
 
             [
                 "id" => 5,
                 "name" => "Featured Products",
+                "label" => "featured_products",
             ],
 
             [
                 "id" => 6,
                 "name" => "Contact",
+                "label" => "contact",
             ],
 
             [
@@ -594,6 +600,7 @@ class SiteController extends Controller
             return [
                 "id" => $layouts->id,
                 "name" => $layouts->name,
+                "label" => $layouts->code,
                 "fixed" => $layouts->code == 'header' || $layouts->code == 'footer' ? true : false,
             ];
         });
@@ -919,17 +926,23 @@ class SiteController extends Controller
     public function submitSiteTemplate(Request $request)
     {
 
+
         $request->validate([
             "site_id" => "required|exists:sites,id",
             "header_template_id" => "required|exists:header_templates,id",
-            "hero_section_id" => "required|exists:hero_sections,id",
-            "product_section_id" => "required|exists:product_sections,id",
-            "related_product_section_id" => "required|exists:related_product_sections,id",
-            "about_section_id" => "required|exists:about_sections,id",
-            "contact_section_id" => "required|exists:contact_sections,id",
-            "popular_product_section_id" => "required|exists:popular_product_sections,id",
-            "cta_section_id" => "required|exists:cta_sections,id",
-            "feature_section_id" => "required|exists:feature_sections,id",
+            "hero_section_id" => "nullable|exists:hero_sections,id",
+            "hero_section_bg_image" => "nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048",
+            "product_section_id" => "nullable|exists:product_sections,id",
+            "product_section_bg_image" => "nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048",
+            "related_product_section_id" => "nullable|exists:related_product_sections,id",
+            "about_section_id" => "nullable|exists:about_sections,id",
+            "about_section_bg_image" => "nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048",
+            "contact_section_id" => "nullable|exists:contact_sections,id",
+            "contact_section_bg_image" => "nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048",
+            "popular_product_section_id" => "nullable|exists:popular_product_sections,id",
+            "cta_section_id" => "nullable|exists:cta_sections,id",
+            "cta_section_bg_image" => "nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048",
+            "feature_section_id" => "nullable|exists:feature_sections,id",
             "footer_template_id" => "required|exists:footer_templates,id",
             "product_page_id" => "required|exists:product_pages,id",
             "checkout_page_id" => "required|exists:checkout_pages,id",
@@ -962,6 +975,115 @@ class SiteController extends Controller
             $siteTemplate = SiteTemplate::create($siteTemplateData);
         }
 
+        if ($request->hasFile('hero_section_bg_image')) {
+
+            if($siteTemplate->hero_section_bg_image){
+                Storage::delete('site-sections/hero/'.$siteTemplate->hero_section_bg_image);
+            }
+
+
+            $heroImage = $request->file('hero_section_bg_image')->store('site-sections/hero');
+
+            $siteTemplate->update([
+                "hero_section_bg_image" => basename($heroImage)
+            ]);
+        }
+        else{
+            if($siteTemplate->hero_section_bg_image){
+                Storage::delete('site-sections/hero/'.$siteTemplate->hero_section_bg_image);
+            }
+            $siteTemplate->update([
+                "hero_section_bg_image" => null
+            ]);
+            
+        }
+
+        if ($request->hasFile('about_section_bg_image')) {
+
+            if($siteTemplate->about_section_bg_image){
+                Storage::delete('site-sections/about/'.$siteTemplate->about_section_bg_image);
+            }
+
+            $aboutImage = $request->file('about_section_bg_image')->store('site-sections/about');
+
+            $siteTemplate->update([
+                "about_section_bg_image" => basename($aboutImage)
+            ]);
+        }
+        else{
+            if($siteTemplate->about_section_bg_image){
+                Storage::delete('site-sections/about/'.$siteTemplate->about_section_bg_image);
+            }
+            $siteTemplate->update([
+                "about_section_bg_image" => null
+            ]);
+            
+        }
+
+        if ($request->hasFile('contact_section_bg_image')) {
+
+            if($siteTemplate->contact_section_bg_image){
+                Storage::delete('site-sections/contact/'.$siteTemplate->contact_section_bg_image);
+            }
+
+            $contactImage = $request->file('contact_section_bg_image')->store('site-sections/contact');
+
+            $siteTemplate->update([
+                "contact_section_bg_image" => basename($contactImage)
+            ]);
+        }
+        else{
+            if($siteTemplate->contact_section_bg_image){
+                Storage::delete('site-sections/contact/'.$siteTemplate->contact_section_bg_image);
+            }
+            $siteTemplate->update([
+                "contact_section_bg_image" => null
+            ]);
+        }
+
+        if ($request->hasFile('cta_section_bg_image')) {
+
+            if($siteTemplate->cta_section_bg_image){
+                Storage::delete('site-sections/cta/'.$siteTemplate->cta_section_bg_image);
+            }
+
+            $popularProductImage = $request->file('cta_section_bg_image')->store('site-sections/cta');
+
+            $siteTemplate->update([
+                "cta_section_bg_image" => basename($popularProductImage)
+            ]);
+        }
+        else{
+            if($siteTemplate->cta_section_bg_image){
+                Storage::delete('site-sections/cta/'.$siteTemplate->cta_section_bg_image);
+            }
+            $siteTemplate->update([
+                "cta_section_bg_image" => null
+            ]);
+        }
+
+        if($request->hasFile('product_section_bg_image')){
+
+            if($siteTemplate->product_section_bg_image){
+                Storage::delete('site-sections/product/'.$siteTemplate->product_section_bg_image);
+            }
+
+            $productImage = $request->file('product_section_bg_image')->store('site-sections/product');
+
+            $siteTemplate->update([
+                "product_section_bg_image" => basename($productImage)
+            ]);
+        }
+        else{
+            if($siteTemplate->product_section_bg_image){
+                Storage::delete('site-sections/product/'.$siteTemplate->product_section_bg_image);
+            }
+            $siteTemplate->update([
+                "product_section_bg_image" => null
+            ]);
+        }
+
+
         return response()->json([
             "message" => "Site Template Added Successfully",
             "data" => [
@@ -969,6 +1091,9 @@ class SiteController extends Controller
             ]
         ], 200);
     }
+
+
+
 
 
     public function submitSiteLoadingGif(Request $request)
