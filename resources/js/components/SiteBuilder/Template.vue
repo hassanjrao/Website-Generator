@@ -251,6 +251,16 @@
                                                         @blur="$v.heroSectionBgImage.$touch()"></v-file-input>
                                                 </v-col>
 
+                                                <v-col cols="12" sm="6" md="4"
+                                                    v-if="includedLayoutItems.includes('heroSection')">
+
+                                                    <v-file-input label="Hero Section Product Image" show-size
+                                                        truncate-length="15" required v-model="heroSectionProductImage"
+                                                        @input="$v.heroSectionProductImage.$touch()"
+                                                        :error-messages="heroSectionProductImageErrors"
+                                                        @blur="$v.heroSectionProductImage.$touch()"></v-file-input>
+                                                </v-col>
+
 
 
 
@@ -571,6 +581,11 @@ export default {
                 return this.includedLayoutItems.includes('heroSection')
             })
         },
+        heroSectionProductImage: {
+            requiredIf: requiredIf(function () {
+                return this.includedLayoutItems.includes('heroSection')
+            })
+        },
         productSectionBgImage: {
             requiredIf: requiredIf(function () {
                 return this.includedLayoutItems.includes('productSection')
@@ -600,6 +615,7 @@ export default {
             selectedHeaderTemplate: null,
             selectedHeroSection: null,
             heroSectionBgImage: null,
+            heroSectionProductImage:null,
             heroSectionBgImage: null,
             selectedProductSection: null,
             productSectionBgImage: null,
@@ -731,6 +747,12 @@ export default {
             !this.$v.heroSectionBgImage.requiredIf && errors.push('Hero Section Background Image is required.')
             return errors
         },
+        heroSectionProductImageErrors() {
+            const errors = []
+            if (!this.$v.heroSectionProductImage.$dirty) return errors
+            !this.$v.heroSectionProductImage.requiredIf && errors.push('Hero Section Product Image is required.')
+            return errors
+        },
         productSectionBgImageErrors() {
             const errors = []
             if (!this.$v.productSectionBgImage.$dirty) return errors
@@ -845,6 +867,7 @@ export default {
             if (this.selectedHeroSection) {
                 formData.append('hero_section_id', this.selectedHeroSection);
                 formData.append('hero_section_bg_image', this.heroSectionBgImage);
+                formData.append('hero_section_product_image', this.heroSectionProductImage);
             }
             if (this.selectedProductSection) {
                 formData.append('product_section_id', this.selectedProductSection);

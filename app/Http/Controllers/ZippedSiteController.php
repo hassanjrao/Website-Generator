@@ -224,7 +224,14 @@ class ZippedSiteController extends Controller
                 'require_generic_text_terms' => $siteTermOther->generic_terms == 1 ? 'yes' : "no",   //if set to no, then disable checkout page product terms checkboxes
                 'require_product_terms' => $siteTermOther->individual_product_terms == 1 ? 'yes' : "no",   //if set to no, then disable checkout page product terms checkboxes
                 'require_total_price_terms' => $siteTermOther->total_price_terms == 1 ? 'yes' : 'no'    //if set to no, then disable checkout page product terms checkboxes
-            )
+            ),
+
+            "about_section_bg_image" => $siteTemplate->about_section_bg_image,
+            "contact_section_bg_image" => $siteTemplate->contact_section_bg_image,
+            "product_section_bg_image" => $siteTemplate->product_section_bg_image,
+            "cta_section_bg_image" => $siteTemplate->cta_section_bg_image,
+            "hero_section_bg_image" => $siteTemplate->hero_section_bg_image,
+            "hero_section_product_image" => $siteTemplate->hero_section_product_image,
         ];
 
 
@@ -287,35 +294,43 @@ class ZippedSiteController extends Controller
         if($siteTemplate->about_section_bg_image){
             $siteImages[]=[
                 "path"=> "site-sections/about/".$siteTemplate->about_section_bg_image,
-                "name"=>"about",
+                "name"=>$siteTemplate->about_section_bg_image,
             ];
         }
 
         if($siteTemplate->cta_section_bg_image){
             $siteImages[]=[
                 "path"=> "site-sections/cta/".$siteTemplate->cta_section_bg_image,
-                "name"=>"cta",
+                "name"=>$siteTemplate->cta_section_bg_image,
             ];
         }
 
         if($siteTemplate->contact_section_bg_image){
             $siteImages[]=[
                 "path"=> "site-sections/contact/".$siteTemplate->contact_section_bg_image,
-                "name"=>"contact",
+                "name"=>$siteTemplate->contact_section_bg_image,
             ];
         }
 
         if($siteTemplate->hero_section_bg_image){
             $siteImages[]=[
                 "path"=> "site-sections/hero/".$siteTemplate->hero_section_bg_image,
-                "name"=>"hero",
+                "name"=>$siteTemplate->hero_section_bg_image
+            ];
+        }
+
+        
+        if($siteTemplate->hero_section_product_image){
+            $siteImages[]=[
+                "path"=> "site-sections/hero/".$siteTemplate->hero_section_product_image,
+                "name"=>$siteTemplate->hero_section_product_image
             ];
         }
 
         if($siteTemplate->product_section_bg_image){
             $siteImages[]=[
                 "path"=> "site-sections/product/".$siteTemplate->product_section_bg_image,
-                "name"=>"product",
+                "name"=>$siteTemplate->product_section_bg_image,
             ];
         }
 
@@ -415,12 +430,12 @@ class ZippedSiteController extends Controller
             $filePath = public_path('storage\\'.$filePathArr["path"]);
 
 
-            $fileExt = pathinfo($filePath, PATHINFO_EXTENSION);
+            // $fileExt = pathinfo($filePath, PATHINFO_EXTENSION);
 
 
             // dd($filePath, $destinationFolder.'/4kmCP45l4trRW9eL6ALJ6wfmSa8JdScPXLO9GtUX.jpg');
 
-            copy($filePath, $destinationFolder.'/'.$filePathArr["name"].'.'.$fileExt);
+            copy($filePath, $destinationFolder.'/'.$filePathArr["name"]);
 
         }
     }

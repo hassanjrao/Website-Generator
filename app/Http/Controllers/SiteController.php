@@ -932,6 +932,7 @@ class SiteController extends Controller
             "header_template_id" => "required|exists:header_templates,id",
             "hero_section_id" => "nullable|exists:hero_sections,id",
             "hero_section_bg_image" => "nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048",
+            "hero_section_product_image" => "nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048",
             "product_section_id" => "nullable|exists:product_sections,id",
             "product_section_bg_image" => "nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048",
             "related_product_section_id" => "nullable|exists:related_product_sections,id",
@@ -997,6 +998,28 @@ class SiteController extends Controller
             ]);
             
         }
+
+        if($request->hasFile('hero_section_product_image')){
+            if($siteTemplate->hero_section_product_image){
+                Storage::delete('site-sections/hero/'.$siteTemplate->hero_section_product_image);
+            }
+
+            $heroProductImage = $request->file('hero_section_product_image')->store('site-sections/hero');
+
+            $siteTemplate->update([
+                "hero_section_product_image" => basename($heroProductImage)
+            ]);
+        }
+        else{
+            if($siteTemplate->hero_section_product_image){
+                Storage::delete('site-sections/hero/'.$siteTemplate->hero_section_product_image);
+            }
+            $siteTemplate->update([
+                "hero_section_product_image" => null
+            ]);
+            
+        }
+
 
         if ($request->hasFile('about_section_bg_image')) {
 

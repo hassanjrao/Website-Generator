@@ -112,7 +112,7 @@
                     </v-col>
 
                     <v-col cols="12" sm="6" md="4">
-                        <v-text-field v-model="site_info.maximum_ticket_value" label="Maximum Ticket Value" required
+                        <v-text-field type="number" v-model.number="site_info.maximum_ticket_value" label="Maximum Ticket Value" required
                             @input="$v.site_info.maximum_ticket_value.$touch()"
                             :error-messages="maximumTicketValueErrors"></v-text-field>
                     </v-col>
@@ -196,7 +196,8 @@ export default {
                 required
             },
             maximum_ticket_value: {
-                required
+                required,
+
             }
         }
     },
