@@ -16,6 +16,10 @@ class ProductController extends Controller
      */
     public function index()
     {
+        if(auth()->user()->can('view products') == false){
+            return redirect()->back()->withToastError("You don't have permission to access this page");
+        }
+
         $products=Product::latest()->with(["productCategory","productShopOptions","sizes","billingModel"])->get();
 
         return view("products.index",compact("products"));
@@ -28,6 +32,10 @@ class ProductController extends Controller
      */
     public function create()
     {
+        if(auth()->user()->can('create products') == false){
+            return redirect()->back()->withToastError("You don't have permission to access this page");
+        }
+
         $productCategories=ProductCategory::all();
         $billingModels=BillingModel::all();
 
@@ -45,6 +53,9 @@ class ProductController extends Controller
     public function store(Request $request)
     {
 
+        if(auth()->user()->can('create products') == false){
+            return redirect()->back()->withToastError("You don't have permission to access this page");
+        }
 
         $request->validate([
             "product_category"=>"required|exists:product_categories,id",
@@ -135,6 +146,10 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
+        if(auth()->user()->can('edit products') == false){
+            return redirect()->back()->withToastError("You don't have permission to access this page");
+        }
+
         $productCategories=ProductCategory::all();
         $billingModels=BillingModel::all();
 
@@ -152,6 +167,10 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+        if(auth()->user()->can('edit products') == false){
+            return redirect()->back()->withToastError("You don't have permission to access this page");
+        }
 
         $request->validate([
             "product_category"=>"required|exists:product_categories,id",
@@ -235,6 +254,14 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if(auth()->user()->can('delete products') == false){
+            return redirect()->back()->withToastError("You don't have permission to access this page");
+        }
+
+        $product=Product::findOrFail($id);
+
+        $product->delete();
+
+        return redirect()->route("products.index")->withToastSuccess("Product Deleted Successfully");
     }
 }

@@ -20,9 +20,10 @@
 
 
 
-                <button type="button" class="btn btn-primary push" data-bs-toggle="modal"
-                    data-bs-target="#modal-block-popin">Add</button>
-
+                @can('create users')
+                    <button type="button" class="btn btn-primary push" data-bs-toggle="modal"
+                        data-bs-target="#modal-block-popin">Add</button>
+                @endcan
             </div>
 
             <div class="block-content block-content-full">
@@ -38,7 +39,10 @@
                                 <th>Role</th>
                                 <th>Created At</th>
                                 <th>Updated At</th>
+
+
                                 <th>Action</th>
+
 
                             </tr>
 
@@ -69,16 +73,20 @@
                                     <td>
                                         <div class="btn-group" role="group" aria-label="Horizontal Primary">
 
-                                            <a href="{{ route('users.edit', $user->id) }}"
-                                                class="btn btn-sm btn-alt-primary">Edit</a>
-                                            <form id="form-{{ $user->id }}"
-                                                action="{{ route('users.destroy', $user->id) }}" method="POST">
-                                                @method('DELETE')
-                                                @csrf
-                                                <input type="button" onclick="confirmDelete({{ $user->id }})"
-                                                    class="btn btn-sm btn-alt-danger" value="Delete">
+                                            @can('edit users')
+                                                <a href="{{ route('users.edit', $user->id) }}"
+                                                    class="btn btn-sm btn-alt-primary">Edit</a>
+                                            @endcan
+                                            @can('delete users')
+                                                <form id="form-{{ $user->id }}"
+                                                    action="{{ route('users.destroy', $user->id) }}" method="POST">
+                                                    @method('DELETE')
+                                                    @csrf
+                                                    <input type="button" onclick="confirmDelete({{ $user->id }})"
+                                                        class="btn btn-sm btn-alt-danger" value="Delete">
 
-                                            </form>
+                                                </form>
+                                            @endcan
                                         </div>
                                     </td>
 

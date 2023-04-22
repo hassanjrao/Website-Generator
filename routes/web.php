@@ -3,6 +3,7 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\RoleManagementController;
 use App\Http\Controllers\SiteController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ZippedSiteController;
@@ -30,6 +31,10 @@ Route::middleware(["auth"])->group(function () {
 
     Route::resource("product-categories", ProductCategoryController::class);
     Route::resource("products", ProductController::class);
+
+
+    Route::post("update-role-permissions", [RoleManagementController::class,"updateRolePermissions"])->name("roles.update-role-permissions");
+    Route::resource("roles", RoleManagementController::class);
 
     // Route::get("sites/{site}/download", [SiteController::class,"download"])->name("sites.download");
     // Route::resource("sites", SiteController::class);

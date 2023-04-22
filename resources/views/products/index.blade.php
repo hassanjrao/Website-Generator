@@ -19,9 +19,9 @@
                 </h3>
 
 
-
-                <a type="button" class="btn btn-primary push" href="{{ route('products.create') }}">Add</a>
-
+                @can('create products')
+                    <a type="button" class="btn btn-primary push" href="{{ route('products.create') }}">Add</a>
+                @endcan
             </div>
 
             <div class="block-content block-content-full">
@@ -72,7 +72,7 @@
                                     <td>{{ $product->sticky_id }}</td>
                                     <td>
                                         {{-- remove html tags --}}
-                                        {{ strip_tags(substr($product->description,1,50)) }}...
+                                        {{ strip_tags(substr($product->description, 1, 50)) }}...
                                     </td>
                                     {{-- <td>{{ $product->image }}</td> --}}
                                     <td>
@@ -100,8 +100,7 @@
                                     <td>{{ $product->continuity_shipping }}</td>
                                     <td>{{ $product->continuity_max_quantity }}</td>
                                     <td>
-                                        @if($product->straight_sale_multi_price)
-
+                                        @if ($product->straight_sale_multi_price)
                                             <span
                                                 class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill bg-success-light text-success">Yes</span>
                                         @else
@@ -110,8 +109,7 @@
                                         @endif
                                     </td>
                                     <td>
-                                        @if($product->enable_max_quantity)
-
+                                        @if ($product->enable_max_quantity)
                                             <span
                                                 class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill bg-success-light text-success">Yes</span>
                                         @else
@@ -120,7 +118,7 @@
                                         @endif
                                     </td>
                                     <td>
-                                        @if($product->size_option)
+                                        @if ($product->size_option)
                                             <span
                                                 class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill bg-success-light text-success">Yes</span>
                                         @else
@@ -129,7 +127,7 @@
                                         @endif
                                     </td>
                                     <td>
-                                        @if($product->status)
+                                        @if ($product->status)
                                             <span
                                                 class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill bg-success-light text-success">Yes</span>
                                         @else
@@ -144,16 +142,21 @@
                                     <td>
                                         <div class="btn-group" role="group" aria-label="Horizontal Primary">
 
-                                            <a href="{{ route('products.edit', $product->id) }}"
-                                                class="btn btn-sm btn-alt-primary">Edit</a>
-                                            <form id="form-{{ $product->id }}"
-                                                action="{{ route('products.destroy', $product->id) }}" method="POST">
-                                                @method('DELETE')
-                                                @csrf
-                                                <input type="button" onclick="confirmDelete({{ $product->id }})"
-                                                    class="btn btn-sm btn-alt-danger" value="Delete">
+                                            @can('edit products')
+                                                <a href="{{ route('products.edit', $product->id) }}"
+                                                    class="btn btn-sm btn-alt-primary">Edit</a>
+                                            @endcan
 
-                                            </form>
+                                            @can('delete products')
+                                                <form id="form-{{ $product->id }}"
+                                                    action="{{ route('products.destroy', $product->id) }}" method="POST">
+                                                    @method('DELETE')
+                                                    @csrf
+                                                    <input type="button" onclick="confirmDelete({{ $product->id }})"
+                                                        class="btn btn-sm btn-alt-danger" value="Delete">
+
+                                                </form>
+                                            @endcan
                                         </div>
                                     </td>
 

@@ -15,6 +15,12 @@ class ProductCategoryController extends Controller
      */
     public function index()
     {
+
+        if(auth()->user()->can('view categories') == false){
+            return redirect()->back()->withToastError("You don't have permission to access this page");
+        }
+
+
         $productCategories=ProductCategory::latest()->with(["advertisingCompany"])->get();
 
         return view("product-categories.index",compact("productCategories"));
@@ -27,6 +33,11 @@ class ProductCategoryController extends Controller
      */
     public function create()
     {
+
+        if(auth()->user()->can('create categories') == false){
+            return redirect()->back()->withToastError("You don't have permission to access this page");
+        }
+
         $productCategory=null;
 
         $advertisingCompanies=AdvertisingCompany::all();
@@ -42,6 +53,11 @@ class ProductCategoryController extends Controller
      */
     public function store(Request $request)
     {
+
+        if(auth()->user()->can('create categories') == false){
+            return redirect()->back()->withToastError("You don't have permission to access this page");
+        }
+
         $request->validate([
             "advertising_company"=>"required|exists:advertising_companies,id",
             "name"=>"required|string",
@@ -74,6 +90,11 @@ class ProductCategoryController extends Controller
      */
     public function edit($id)
     {
+
+        if(auth()->user()->can('edit categories') == false){
+            return redirect()->back()->withToastError("You don't have permission to access this page");
+        }
+
         $productCategory=ProductCategory::findOrFail($id);
 
         $advertisingCompanies=AdvertisingCompany::all();
@@ -90,6 +111,11 @@ class ProductCategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+        if(auth()->user()->can('edit categories') == false){
+            return redirect()->back()->withToastError("You don't have permission to access this page");
+        }
+
         $request->validate([
             "advertising_company"=>"required|exists:advertising_companies,id",
             "name"=>"required|string",
@@ -113,6 +139,11 @@ class ProductCategoryController extends Controller
      */
     public function destroy($id)
     {
+
+        if(auth()->user()->can('delete categories') == false){
+            return redirect()->back()->withToastError("You don't have permission to access this page");
+        }
+
         $productCategory=ProductCategory::findOrFail($id);
 
         $productCategory->delete();

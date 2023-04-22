@@ -248,7 +248,7 @@
                             </a>
                         </li>
 
-                        @if (auth()->user()->hasRole('super admin'))
+                        @if (auth()->user()->hasRole('super admin') || auth()->user()->can('view users'))
                             <li class="nav-main-item">
                                 <a class="nav-main-link{{ request()->segment(1) == 'users' ? ' active' : '' }}"
                                     href="{{ route('users.index') }}">
@@ -258,6 +258,7 @@
                             </li>
                         @endif
 
+                        @if (auth()->user()->hasRole('super admin') || auth()->user()->can('view sites'))
                         <li class="nav-main-item">
                             <a class="nav-main-link{{ request()->segment(1) == 'sites' ? ' active' : '' }}"
                                 href="{{ route('sites.index') }}">
@@ -266,22 +267,38 @@
                             </a>
                         </li>
 
+                        @endif
 
-                        <li class="nav-main-item">
-                            <a class="nav-main-link{{ request()->segment(1) == 'product-categories' ? ' active' : '' }}"
-                                href="{{ route('product-categories.index') }}">
-                                <i class="nav-main-link-icon si si-link"></i>
-                                <span class="nav-main-link-name">Product Categories</span>
-                            </a>
-                        </li>
+                        @if (auth()->user()->hasRole('super admin') || auth()->user()->can('view categories'))
+                            <li class="nav-main-item">
+                                <a class="nav-main-link{{ request()->segment(1) == 'product-categories' ? ' active' : '' }}"
+                                    href="{{ route('product-categories.index') }}">
+                                    <i class="nav-main-link-icon si si-link"></i>
+                                    <span class="nav-main-link-name">Product Categories</span>
+                                </a>
+                            </li>
+                        @endif
 
-                        <li class="nav-main-item">
-                            <a class="nav-main-link{{ request()->segment(1) == 'products' ? ' active' : '' }}"
-                                href="{{ route('products.index') }}">
-                                <i class="nav-main-link-icon si si-link"></i>
-                                <span class="nav-main-link-name">Products</span>
-                            </a>
-                        </li>
+                        @if (auth()->user()->hasRole('super admin') || auth()->user()->can('view products'))
+                            <li class="nav-main-item">
+                                <a class="nav-main-link{{ request()->segment(1) == 'products' ? ' active' : '' }}"
+                                    href="{{ route('products.index') }}">
+                                    <i class="nav-main-link-icon si si-link"></i>
+                                    <span class="nav-main-link-name">Products</span>
+                                </a>
+                            </li>
+                        @endif
+
+                        
+                        @if (auth()->user()->hasRole('super admin') || auth()->user()->can('view roles'))
+                            <li class="nav-main-item">
+                                <a class="nav-main-link{{ request()->segment(1) == 'roles' ? ' active' : '' }}"
+                                    href="{{ route('roles.index') }}">
+                                    <i class="nav-main-link-icon si si-link"></i>
+                                    <span class="nav-main-link-name">Role Management</span>
+                                </a>
+                            </li>
+                        @endif
 
                     </ul>
                 </div>

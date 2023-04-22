@@ -47,6 +47,12 @@ class SiteController extends Controller
 {
     public function index()
     {
+
+        if(auth()->user()->can('view sites') == false){
+            return redirect()->back()->withToastError("You don't have permission to access this page");
+        }
+
+
         $sites = Site::latest()
             ->with(['createdBy', 'updatedBy'])
             ->get();
@@ -56,6 +62,11 @@ class SiteController extends Controller
 
     public function create()
     {
+
+        if(auth()->user()->can('create sites') == false){
+            return redirect()->back()->withToastError("You don't have permission to access this page");
+        }
+
         $site = null;
 
         $slogans = $this->getSlogans();

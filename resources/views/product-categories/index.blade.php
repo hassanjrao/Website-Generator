@@ -19,9 +19,9 @@
                 </h3>
 
 
-
-                <a type="button" class="btn btn-primary push" href="{{ route("product-categories.create") }}">Add</a>
-
+                @can('create categories')
+                    <a type="button" class="btn btn-primary push" href="{{ route('product-categories.create') }}">Add</a>
+                @endcan
             </div>
 
             <div class="block-content block-content-full">
@@ -57,16 +57,22 @@
                                     <td>
                                         <div class="btn-group" role="group" aria-label="Horizontal Primary">
 
-                                            <a href="{{ route('product-categories.edit', $category->id) }}"
-                                                class="btn btn-sm btn-alt-primary">Edit</a>
-                                            <form id="form-{{ $category->id }}"
-                                                action="{{ route('product-categories.destroy', $category->id) }}" method="POST">
-                                                @method('DELETE')
-                                                @csrf
-                                                <input type="button" onclick="confirmDelete({{ $category->id }})"
-                                                    class="btn btn-sm btn-alt-danger" value="Delete">
+                                            @can('edit categories')
+                                                <a href="{{ route('product-categories.edit', $category->id) }}"
+                                                    class="btn btn-sm btn-alt-primary">Edit</a>
+                                            @endcan
 
-                                            </form>
+                                            @can('delete categories')
+                                                <form id="form-{{ $category->id }}"
+                                                    action="{{ route('product-categories.destroy', $category->id) }}"
+                                                    method="POST">
+                                                    @method('DELETE')
+                                                    @csrf
+                                                    <input type="button" onclick="confirmDelete({{ $category->id }})"
+                                                        class="btn btn-sm btn-alt-danger" value="Delete">
+
+                                                </form>
+                                            @endcan
                                         </div>
                                     </td>
 

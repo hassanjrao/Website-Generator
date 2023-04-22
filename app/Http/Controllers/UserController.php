@@ -10,7 +10,6 @@ class UserController extends Controller
 {
     public function __construct()
     {
-        $this->middleware("role:super admin");
     }
 
 
@@ -21,6 +20,12 @@ class UserController extends Controller
      */
     public function index()
     {
+
+        if(auth()->user()->can('view users') == false){
+            return redirect()->back()->withToastError("You don't have permission to access this page");
+        }
+
+
         $users= User::latest()->get();
 
 
@@ -82,6 +87,12 @@ class UserController extends Controller
      */
     public function edit($id)
     {
+
+        if(auth()->user()->can('edit users') == false){
+            return redirect()->back()->withToastError("You don't have permission to access this page");
+        }
+
+
         $user=User::findOrFail($id);
         $roles=Role::all();
 
@@ -97,6 +108,10 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+        if(auth()->user()->can('edit users') == false){
+            return redirect()->back()->withToastError("You don't have permission to access this page");
+        }
 
         $request->validate([
             "name"=>"required",
@@ -134,6 +149,11 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
+
+        if(auth()->user()->can('delete users') == false){
+            return redirect()->back()->withToastError("You don't have permission to access this page");
+        }
+
         $user=User::findOrFail($id);
         $user->delete();
 
