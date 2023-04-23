@@ -7,7 +7,7 @@
             <h6 class="headline mb-0">Generate Site</h6>
 
             <v-btn color="primary" :loading="loading" @click="generateSite"
-                :disabled="!stepsRequired.every(step => step.submitted)"
+                :disabled="!requiredSteps.every(step => step.submitted)"
             >Generate</v-btn>
 
         </v-card-title>
@@ -20,7 +20,7 @@
             <v-container>
 
                 <div>
-                    <v-alert dense outlined :type="step.submitted ? 'success':'error'" v-for="step in stepsRequired" :key="step.label">
+                    <v-alert dense outlined :type="step.submitted ? 'success':'error'" v-for="step in requiredSteps" :key="step.label">
                         {{ step.message }}
                     </v-alert>
 
@@ -62,6 +62,14 @@ export default {
         return {
             loading: false,
             siteId: null,
+            downloadAble:false,
+            requiredSteps:[],
+        }
+    },
+
+    watch: {
+        requiredSteps() {
+            console.log("steppss",this.requiredSteps);
         }
     },
 
@@ -78,8 +86,13 @@ export default {
 
         this.siteId = this.site_id;
 
-        console.log(this.stepsRequired);
+        this.requiredSteps = this.stepsRequired;
 
+        console.log(this.requiredSteps);
+
+    },
+    mounted() {
+        console.log("generate mounted");
     }
 }
 

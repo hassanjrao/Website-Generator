@@ -495,6 +495,21 @@ export default {
                 }
             })
         },
+
+        siteDownloadAble() {
+
+            axios.post('/sites/site-downloadable', {
+                site_id: this.siteId,
+            })
+                .then(response => {
+
+                    console.log("site downloadbled",response);
+
+                })
+                .catch(error => {
+                    console.log("site downloadbled error",error.response);
+                });
+        }
     },
 
     components: {
@@ -519,6 +534,17 @@ export default {
                         }
                     })
                 }
+
+                if (this.productsSubmitted && this.templateSubmitted && this.layoutSubmitted && this.contentSubmitted && this.loadingGifsSubmitted && this.colorFontsSubmitted && this.creditCardSubmitted && this.termsOthersSubmitted && this.crmSubmitted) {
+
+                    console.log("all steps completed");
+                    this.siteDownloadAble();
+                }
+                else {
+                    console.log("not all steps completed");
+                }
+
+
             },
             deep: true
         }

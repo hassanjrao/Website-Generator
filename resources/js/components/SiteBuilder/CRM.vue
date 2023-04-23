@@ -36,7 +36,7 @@
                         <v-row>
 
                             <v-col cols="12" sm="12" md="4" v-for="crmSetting in crmSettings" :key="crmSetting.label">
-                                <v-text-field :label="crmSetting.label" v-model="crmSetting.model"></v-text-field>
+                                <v-text-field readonly :label="crmSetting.label" v-model="crmSetting.model"></v-text-field>
                             </v-col>
 
                         </v-row>

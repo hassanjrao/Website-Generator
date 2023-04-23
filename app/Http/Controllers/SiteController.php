@@ -1007,7 +1007,7 @@ class SiteController extends Controller
             $siteTemplate->update([
                 "hero_section_bg_image" => null
             ]);
-            
+
         }
 
         if($request->hasFile('hero_section_product_image')){
@@ -1028,7 +1028,7 @@ class SiteController extends Controller
             $siteTemplate->update([
                 "hero_section_product_image" => null
             ]);
-            
+
         }
 
 
@@ -1051,7 +1051,7 @@ class SiteController extends Controller
             $siteTemplate->update([
                 "about_section_bg_image" => null
             ]);
-            
+
         }
 
         if ($request->hasFile('contact_section_bg_image')) {
@@ -1318,5 +1318,24 @@ class SiteController extends Controller
             "message" => "Site CRM settings added successfully",
 
         ], 200);
+    }
+
+    public function siteDownloadAble(Request $request){
+
+        $request->validate([
+            'site_id' => 'required|exists:sites,id',
+        ]);
+
+        $site = Site::find($request->site_id);
+
+        $site->download_able = 1;
+
+        $site->save();
+
+        return response()->json([
+            "message" => "Site download able added successfully",
+
+        ], 200);
+
     }
 }

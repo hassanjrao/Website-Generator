@@ -252,7 +252,8 @@
                             <li class="nav-main-item">
                                 <a class="nav-main-link{{ request()->segment(1) == 'users' ? ' active' : '' }}"
                                     href="{{ route('users.index') }}">
-                                    <i class="nav-main-link-icon si si-users"></i>
+
+                                    <i class=" nav-main-link-icon fa fa-users"></i>
                                     <span class="nav-main-link-name">Users</span>
                                 </a>
                             </li>
@@ -273,7 +274,8 @@
                             <li class="nav-main-item">
                                 <a class="nav-main-link{{ request()->segment(1) == 'product-categories' ? ' active' : '' }}"
                                     href="{{ route('product-categories.index') }}">
-                                    <i class="nav-main-link-icon si si-link"></i>
+
+                                    <i class="nav-main-link-icon fas fa-list"></i>
                                     <span class="nav-main-link-name">Product Categories</span>
                                 </a>
                             </li>
@@ -283,18 +285,22 @@
                             <li class="nav-main-item">
                                 <a class="nav-main-link{{ request()->segment(1) == 'products' ? ' active' : '' }}"
                                     href="{{ route('products.index') }}">
-                                    <i class="nav-main-link-icon si si-link"></i>
+
+                                    <i class="nav-main-link-icon fas fa-tags"></i>
+
                                     <span class="nav-main-link-name">Products</span>
                                 </a>
                             </li>
                         @endif
 
-                        
+
                         @if (auth()->user()->hasRole('super admin') || auth()->user()->can('view roles'))
                             <li class="nav-main-item">
                                 <a class="nav-main-link{{ request()->segment(1) == 'roles' ? ' active' : '' }}"
                                     href="{{ route('roles.index') }}">
-                                    <i class="nav-main-link-icon si si-link"></i>
+
+                                    <i class="nav-main-link-icon fas fa-user-tag"></i>
+
                                     <span class="nav-main-link-name">Role Management</span>
                                 </a>
                             </li>
@@ -554,7 +560,7 @@
 
             Core libraries and functionality
         -->
-    <script src="{{ asset('js/oneui.app.js') }}"></script>
+    {{-- <script src="{{ asset('js/oneui.app.js') }}"></script> --}}
 
     <!-- Laravel Scaffolding JS -->
     <!-- <script src="{{ asset('/js/laravel.app.js') }}"></script> -->
