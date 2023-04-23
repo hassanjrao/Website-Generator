@@ -90,7 +90,8 @@
                         <div class="row mb-4">
 
                             <div class="col-lg-12 ">
-                                <textarea name="description" id="editor" class="form-control" cols="30" rows="10">{{ $product->description }}</textarea>
+                                <label class="form-label" for="label">Description</label>
+                                <textarea name="description" id="editor" class="form-control" cols="30" rows="10">{{ $product && $product->description ? $product->description : '' }}</textarea>
                             </div>
 
                         </div>

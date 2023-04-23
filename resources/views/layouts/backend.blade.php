@@ -248,7 +248,8 @@
                             </a>
                         </li>
 
-                        @if (auth()->user()->hasRole('super admin') || auth()->user()->can('view users'))
+                        @if (auth()->user()->hasRole('super admin') ||
+                                auth()->user()->can('view users'))
                             <li class="nav-main-item">
                                 <a class="nav-main-link{{ request()->segment(1) == 'users' ? ' active' : '' }}"
                                     href="{{ route('users.index') }}">
@@ -259,18 +260,23 @@
                             </li>
                         @endif
 
-                        @if (auth()->user()->hasRole('super admin') || auth()->user()->can('view sites'))
-                        <li class="nav-main-item">
-                            <a class="nav-main-link{{ request()->segment(1) == 'sites' ? ' active' : '' }}"
-                                href="{{ route('sites.index') }}">
-                                <i class="nav-main-link-icon si si-link"></i>
-                                <span class="nav-main-link-name">Sites</span>
-                            </a>
-                        </li>
+                        @if (auth()->user()->hasRole('super admin') ||
+                                auth()->user()->can('view roles'))
+                            <li class="nav-main-item">
+                                <a class="nav-main-link{{ request()->segment(1) == 'roles' ? ' active' : '' }}"
+                                    href="{{ route('roles.index') }}">
 
+                                    <i class="nav-main-link-icon fas fa-user-tag"></i>
+
+                                    <span class="nav-main-link-name">Role Management</span>
+                                </a>
+                            </li>
                         @endif
 
-                        @if (auth()->user()->hasRole('super admin') || auth()->user()->can('view categories'))
+
+
+                        @if (auth()->user()->hasRole('super admin') ||
+                                auth()->user()->can('view categories'))
                             <li class="nav-main-item">
                                 <a class="nav-main-link{{ request()->segment(1) == 'product-categories' ? ' active' : '' }}"
                                     href="{{ route('product-categories.index') }}">
@@ -281,7 +287,8 @@
                             </li>
                         @endif
 
-                        @if (auth()->user()->hasRole('super admin') || auth()->user()->can('view products'))
+                        @if (auth()->user()->hasRole('super admin') ||
+                                auth()->user()->can('view products'))
                             <li class="nav-main-item">
                                 <a class="nav-main-link{{ request()->segment(1) == 'products' ? ' active' : '' }}"
                                     href="{{ route('products.index') }}">
@@ -293,18 +300,19 @@
                             </li>
                         @endif
 
-
-                        @if (auth()->user()->hasRole('super admin') || auth()->user()->can('view roles'))
+                        @if (auth()->user()->hasRole('super admin') ||
+                                auth()->user()->can('view sites'))
                             <li class="nav-main-item">
-                                <a class="nav-main-link{{ request()->segment(1) == 'roles' ? ' active' : '' }}"
-                                    href="{{ route('roles.index') }}">
-
-                                    <i class="nav-main-link-icon fas fa-user-tag"></i>
-
-                                    <span class="nav-main-link-name">Role Management</span>
+                                <a class="nav-main-link{{ request()->segment(1) == 'sites' ? ' active' : '' }}"
+                                    href="{{ route('sites.index') }}">
+                                    <i class="nav-main-link-icon si si-link"></i>
+                                    <span class="nav-main-link-name">Sites</span>
                                 </a>
                             </li>
                         @endif
+
+
+
 
                     </ul>
                 </div>
@@ -382,14 +390,20 @@
                             <div role="separator" class="dropdown-divider m-0"></div>
                             <div class="p-2">
 
-                                <a class="dropdown-item d-flex align-items-center justify-content-between"
-                                    onclick="document.getElementById('logout-form').submit()">
-                                    <span class="fs-sm fw-medium">Log Out</span>
+                                <a href="{{ route('profile.index') }}"
+                                    class="dropdown-item d-flex align-items-center justify-content-between">
+                                    <span class="fs-sm fw-medium">Profile</span>
                                 </a>
                                 <form action="{{ route('logout') }}" id="logout-form" method="POST">
                                     @csrf
 
                                 </form>
+
+
+                                <a class="dropdown-item d-flex align-items-center justify-content-between"
+                                    onclick="document.getElementById('logout-form').submit()">
+                                    <span class="fs-sm fw-medium">Log Out</span>
+                                </a>
                             </div>
                         </div>
                     </div>

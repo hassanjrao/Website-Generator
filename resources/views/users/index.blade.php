@@ -36,7 +36,7 @@
                                 <th>#</th>
                                 <th>Name</th>
                                 <th>Email</th>
-                                <th>Role</th>
+                                <th>Roles</th>
                                 <th>Created At</th>
                                 <th>Updated At</th>
 
@@ -58,9 +58,12 @@
                                     <td>
 
 
-                                        @if ($user->roles->first())
-                                            <span
-                                                class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill bg-success-light text-success">{{ ucfirst($user->roles->first()->name) }}</span>
+                                        @if ($user->roles)
+                                            @foreach ($user->roles as $role)
+                                                <span
+                                                    class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill bg-success-light text-success">{{ ucfirst($role->name) }}</span>
+
+                                            @endforeach
                                         @else
                                             <span
                                                 class="fs-xs fw-semibold d-inline-block py-1 px-3 rounded-pill bg-danger-light text-danger">{{ ucfirst('No Role') }}</span>
@@ -148,6 +151,19 @@
                                                     <label class="form-label" for="label">Password</label>
                                                     <input type="password" class="form-control" id="password"
                                                         name="password">
+                                                </div>
+
+
+                                                <div class="col-12">
+                                                    <label class="form-label" for="label">Roles</label>
+
+                                                    <select class="form-select" name="roles[]" id="roles" multiple>
+                                                        @foreach ($roles as $role)
+                                                            <option value="{{ $role->name }}">{{ $role->name }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+
                                                 </div>
 
 

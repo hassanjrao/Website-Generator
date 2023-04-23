@@ -1,6 +1,6 @@
 @extends('layouts.backend')
 
-@section('page-title', 'Edit User')
+@section('page-title', 'Profie')
 @section('content')
 
     <!-- Page Content -->
@@ -8,12 +8,12 @@
 
         <div class="block block-rounded">
             <div class="block-header block-header-default d-flex">
-                <h3 class="block-title">Edit User: {{ $user->name }}</h3>
+                <h3 class="block-title"> {{ $user->name }}</h3>
 
 
             </div>
             <div class="block-content">
-                <form action="{{ route('users.update', $user->id) }}" method="POST"
+                <form action="{{ route('profile.update', $user->id) }}" method="POST"
                     enctype="multipart/form-data">
 
                     @csrf
@@ -29,17 +29,10 @@
                                     <input required type="text" value="{{ $user->name }}" class="form-control"
                                         id="name" name="name">
                                 </div>
-
                                 <div class="col-6">
-                                    <label class="form-label" for="label">Roles</label>
-                                    <select name="roles[]" id="roles" class="form-control" multiple>
-                                        @foreach ($roles as $role)
-                                            <option value="{{ $role->name }}"
-                                                {{ $user->roles->pluck('id')->contains($role->id) ? 'selected' : '' }}>
-                                                {{ $role->name }}</option>
-                                        @endforeach
-
-                                    </select>
+                                    <label class="form-label" for="label">email</label>
+                                    <input required type="text" value="{{ $user->email }}" class="form-control"
+                                        id="email" name="email">
                                 </div>
 
 
@@ -47,15 +40,17 @@
 
                             <div class="row mb-4">
                                 <div class="col-6">
-                                    <label class="form-label" for="label">Email</label>
-                                    <input required type="text" value="{{ $user->email }}" class="form-control"
-                                        id="email" name="email">
+                                    <label class="form-label" for="label">Old Password</label>
+                                    <input type="password"  class="form-control"
+                                        id="old_password" name="old_password">
+
                                 </div>
                                 <div class="col-6">
                                     <label class="form-label" for="label">Password</label>
                                     <input type="password"  class="form-control"
                                         id="password" name="password">
                                 </div>
+
 
                             </div>
 

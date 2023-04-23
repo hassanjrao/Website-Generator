@@ -28,8 +28,10 @@ class UserController extends Controller
 
         $users= User::latest()->get();
 
+        $roles=Role::all();
 
-        return view('users.index',compact('users'));
+
+        return view('users.index',compact('users','roles'));
     }
 
     /**
@@ -55,6 +57,8 @@ class UserController extends Controller
             "name"=>"required",
             "email"=>"required|email|unique:users,email",
             "password"=>"required|min:8",
+            "roles"=>"required",
+            "roles.*"=>"required|exists:roles,name"
         ]);
 
         $user=User::create([
@@ -63,7 +67,7 @@ class UserController extends Controller
             "password"=>bcrypt($request->password)
         ]);
 
-        $user->assignRole("admin");
+        $user->assignRole($request->roles);
 
         return redirect()->back()->with("success","User created successfully");
     }
@@ -116,6 +120,8 @@ class UserController extends Controller
         $request->validate([
             "name"=>"required",
             "email"=>"required|email|unique:users,email,".$id,
+            "roles"=>"required",
+            "roles.*"=>"required|exists:roles,name"
         ]);
 
         $user=User::findOrFail($id);
@@ -135,7 +141,7 @@ class UserController extends Controller
             "email"=>$request->email,
         ]);
 
-        $user->syncRoles("admin");
+        $user->syncRoles($request->roles);
 
         return redirect()->route("users.index")->with("success","User updated successfully");
 

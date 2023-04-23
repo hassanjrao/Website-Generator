@@ -3,6 +3,7 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleManagementController;
 use App\Http\Controllers\SiteController;
 use App\Http\Controllers\UserController;
@@ -36,8 +37,7 @@ Route::middleware(["auth"])->group(function () {
     Route::post("update-role-permissions", [RoleManagementController::class,"updateRolePermissions"])->name("roles.update-role-permissions");
     Route::resource("roles", RoleManagementController::class);
 
-    // Route::get("sites/{site}/download", [SiteController::class,"download"])->name("sites.download");
-    // Route::resource("sites", SiteController::class);
+    Route::resource("profile", ProfileController::class);
 
     Route::prefix("sites")->group(function () {
 

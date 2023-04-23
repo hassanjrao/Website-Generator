@@ -11,15 +11,51 @@ use Spatie\Permission\Models\Role;
 
 class DashboardController extends Controller
 {
-    public function index(){
-
-        $sites=Site::all()->count();
-        $users=User::all()->count();
-        $products=Product::all()->count();
-        $productCategories=ProductCategory::all()->count();
-        $roles=Role::all()->count();
+    public function index()
+    {
 
 
-        return view('dashboard.index',compact('sites','users','products','productCategories','roles'));
+        if (auth()->user()->can('view sites')) {
+            $sites = Site::all()->count();
+        } else {
+            $sites = 0;
+        }
+
+        if (auth()->user()->can('view users')) {
+
+            $users = User::all()->count();
+        } else {
+            $users = 0;
+        }
+
+        if (auth()->user()->can('view products')) {
+
+            $products = Product::all()->count();
+        } else {
+            $products = 0;
+        }
+
+        if (auth()->user()->can('view categories')) {
+
+            $productCategories = ProductCategory::all()->count();
+        } else {
+            $productCategories = 0;
+        }
+
+
+        if (auth()->user()->can('view roles')) {
+
+
+            $roles = Role::all()->count();
+        } else {
+            $roles = 0;
+        }
+
+
+
+
+
+
+        return view('dashboard.index', compact('sites', 'users', 'products', 'productCategories', 'roles'));
     }
 }
