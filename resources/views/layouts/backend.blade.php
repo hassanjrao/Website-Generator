@@ -280,7 +280,7 @@
                 <div class="d-flex align-items-center">
                     <!-- User Dropdown -->
                     <div class="dropdown d-inline-block ms-2">
-                        <button type="button" class="btn btn-sm btn-alt-secondary d-flex align-items-center"
+                        <button type="button" class="btn btn-sm btn-alt-secondary d-flex align-items-center show"
                             id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false">
                             <img class="rounded-circle" src="{{ asset('media/avatars/avatar10.jpg') }}"
@@ -288,7 +288,7 @@
                             <span class="d-none d-sm-inline-block ms-2">{{ auth()->user()->name }}</span>
                             <i class="fa fa-fw fa-angle-down d-none d-sm-inline-block ms-1 mt-1"></i>
                         </button>
-                        <div class="dropdown-menu dropdown-menu-md dropdown-menu-end p-0 border-0"
+                        <div class="dropdown-menu dropdown-menu-md dropdown-menu-end p-0 border-0 "
                             aria-labelledby="page-header-user-dropdown">
                             <div class="p-3 text-center bg-body-light border-bottom rounded-top">
                                 <img class="img-avatar img-avatar48 img-avatar-thumb"
@@ -416,6 +416,8 @@
                     </button> --}}
                     <!-- END Toggle Side Overlay -->
                 </div>
+
+
                 <!-- END Right Section -->
             </div>
             <!-- END Header Content -->
