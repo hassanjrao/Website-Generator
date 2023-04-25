@@ -359,6 +359,11 @@ class ZippedSiteController extends Controller
             return $this->generateZip($site, $projectName, $newProjectDestination);
         } catch (\Exception $e) {
 
+            dd([
+                "message" => $e->getMessage(),
+                "trace" => $e->getTraceAsString(),
+            ]);
+
             return redirect()->back()->with('errors',$e->getMessage());
 
         }
