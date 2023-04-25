@@ -377,6 +377,8 @@ class ZippedSiteController extends Controller
     public function writeInFile($file, $dataArrays = [])
     {
 
+        dd($file, $dataArrays);
+
         // open the file using the fopen() function
 
         $siteInfofile = fopen($file, 'a') or die("can't open file");
