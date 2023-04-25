@@ -20,7 +20,7 @@ class ProductSeeder extends Seeder
             //Product Array - paste under this line
 
             array(
-            
+
                 'sticky_id' => 232,
                 'name' => 'Mini USB Lamp',
                 'description' => 'Eye-caring USB Light:Energy efficient LED beads,soft light protect your vision from injury
@@ -35,7 +35,7 @@ class ProductSeeder extends Seeder
                 'show_ingredients' => 1,
                 'ingredients_image' => 'ingredients/keto.jpg',
                 'product_category_id' => '1',
-                'billing_model' => '5',              // 1=ss|2=trial|3=con|4=SS+trial|5=SS+con|6=trial+con|7= SS+trial+con
+                'billing_model_id' => '5',              // 1=ss|2=trial|3=con|4=SS+trial|5=SS+con|6=trial+con|7= SS+trial+con
                 'ss_price' => '91.95',               //if ss
                 'ss_shipping' => '0.00',             //if ss
                 'ss_max_quantity' => '1',                  // 1 for disable qty, 2 for enable qty
@@ -56,7 +56,7 @@ class ProductSeeder extends Seeder
                 'updated_at' => now(),
             ),
             array(
-            
+
                 'stickyId' => 233,
                 'name' => 'Webcam Cover (3 Pack)',
                 'description' => 'Covers your webcam when not in use and prevents webcam hackers from spying on you. Slides open when you need to use your webcam. Locks in place to ensure cover does not slide open.

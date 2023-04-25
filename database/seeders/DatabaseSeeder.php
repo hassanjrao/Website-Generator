@@ -18,6 +18,8 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             UserSeeder::class,
             SloganSeeder::class,
+
+            BillingModelSeeder::class,
             TaglineSeeder::class,
             AboutUsTitleSeeder::class,
             AboutUsDescriptionSeeder::class,
@@ -47,7 +49,6 @@ class DatabaseSeeder extends Seeder
             PageLayoutSeeder::class,
             SizeSeeder::class,
             ProductSizeSeeder::class,
-            BillingModelSeeder::class,
         ]);
     }
 }
