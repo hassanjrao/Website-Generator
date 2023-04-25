@@ -79,7 +79,7 @@ class ZippedSiteController extends Controller
 
             $productImagesFiles = [];
             foreach ($products as $product) {
-                $productImagesFiles[] = "product/images/" . $product->image;
+                $productImagesFiles[] = "product".DIRECTORY_SEPARATOR."images".DIRECTORY_SEPARATOR . $product->image;
             }
 
 
@@ -288,34 +288,34 @@ class ZippedSiteController extends Controller
             $newProjectDestination = $this->copyProject($projectName);
 
 
-            $this->addFiles($newProjectDestination . '/bp_config/images/products', $productImagesFiles);
+            $this->addFiles($newProjectDestination . DIRECTORY_SEPARATOR.'bp_config'.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.'products', $productImagesFiles);
 
             $siteImages = [];
 
             if ($siteTemplate->about_section_bg_image) {
                 $siteImages[] = [
-                    "path" => "site-sections/about/" . $siteTemplate->about_section_bg_image,
+                    "path" => "site-sections".DIRECTORY_SEPARATOR."about".DIRECTORY_SEPARATOR . $siteTemplate->about_section_bg_image,
                     "name" => $siteTemplate->about_section_bg_image,
                 ];
             }
 
             if ($siteTemplate->cta_section_bg_image) {
                 $siteImages[] = [
-                    "path" => "site-sections/cta/" . $siteTemplate->cta_section_bg_image,
+                    "path" => "site-sections".DIRECTORY_SEPARATOR."cta".DIRECTORY_SEPARATOR . $siteTemplate->cta_section_bg_image,
                     "name" => $siteTemplate->cta_section_bg_image,
                 ];
             }
 
             if ($siteTemplate->contact_section_bg_image) {
                 $siteImages[] = [
-                    "path" => "site-sections/contact/" . $siteTemplate->contact_section_bg_image,
+                    "path" => "site-sections".DIRECTORY_SEPARATOR."contact".DIRECTORY_SEPARATOR . $siteTemplate->contact_section_bg_image,
                     "name" => $siteTemplate->contact_section_bg_image,
                 ];
             }
 
             if ($siteTemplate->hero_section_bg_image) {
                 $siteImages[] = [
-                    "path" => "site-sections/hero/" . $siteTemplate->hero_section_bg_image,
+                    "path" => "site-sections".DIRECTORY_SEPARATOR."hero".DIRECTORY_SEPARATOR . $siteTemplate->hero_section_bg_image,
                     "name" => $siteTemplate->hero_section_bg_image
                 ];
             }
@@ -323,26 +323,26 @@ class ZippedSiteController extends Controller
 
             if ($siteTemplate->hero_section_product_image) {
                 $siteImages[] = [
-                    "path" => "site-sections/hero/" . $siteTemplate->hero_section_product_image,
+                    "path" => "site-sections".DIRECTORY_SEPARATOR."hero".DIRECTORY_SEPARATOR . $siteTemplate->hero_section_product_image,
                     "name" => $siteTemplate->hero_section_product_image
                 ];
             }
 
             if ($siteTemplate->product_section_bg_image) {
                 $siteImages[] = [
-                    "path" => "site-sections/product/" . $siteTemplate->product_section_bg_image,
+                    "path" => "site-sections".DIRECTORY_SEPARATOR."product".DIRECTORY_SEPARATOR . $siteTemplate->product_section_bg_image,
                     "name" => $siteTemplate->product_section_bg_image,
                 ];
             }
 
 
 
-            $this->addTemplateImages($newProjectDestination . '/img', $siteImages);
+            $this->addTemplateImages($newProjectDestination . DIRECTORY_SEPARATOR . 'img', $siteImages);
 
 
 
 
-            $siteInfofile = $newProjectDestination . '\bp_config\site-info.php';
+            $siteInfofile = $newProjectDestination . DIRECTORY_SEPARATOR.'bp_config'.DIRECTORY_SEPARATOR.'site-info.php';
 
 
             $this->writeInFile($siteInfofile, [
