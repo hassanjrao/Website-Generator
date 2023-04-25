@@ -359,11 +359,6 @@ class ZippedSiteController extends Controller
             return $this->generateZip($site, $projectName, $newProjectDestination);
         } catch (\Exception $e) {
 
-            dd([
-                "message" => $e->getMessage(),
-                "trace" => $e->getTraceAsString(),
-            ]);
-
             return redirect()->back()->with('errors',$e->getMessage());
 
         }
@@ -452,7 +447,7 @@ class ZippedSiteController extends Controller
     public function generateZip($site, $projectName, $newProjectDestination)
     {
 
-        $zip_file = "project.zip";
+        $zip_file = "{$projectName}.zip";
         $zip = new \ZipArchive();
         $zip->open($zip_file, \ZipArchive::CREATE | \ZipArchive::OVERWRITE);
 
