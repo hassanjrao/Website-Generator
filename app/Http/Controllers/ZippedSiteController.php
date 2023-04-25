@@ -447,7 +447,7 @@ class ZippedSiteController extends Controller
     public function generateZip($site, $projectName, $newProjectDestination)
     {
 
-        $zip_file = "{$projectName}.zip";
+        $zip_file = "project.zip";
         $zip = new \ZipArchive();
         $zip->open($zip_file, \ZipArchive::CREATE | \ZipArchive::OVERWRITE);
 
