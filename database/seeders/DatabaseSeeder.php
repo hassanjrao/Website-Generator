@@ -44,8 +44,9 @@ class DatabaseSeeder extends Seeder
             RelatedProductSectionSeeder::class,
             SortProductBysSeeder::class,
             AdvertisingCompanySeeder::class,
-            ProductSeeder::class,
             ProductCategorySeeder::class,
+            ProductSeeder::class,
+            
             PageLayoutSeeder::class,
             SizeSeeder::class,
             ProductSizeSeeder::class,
