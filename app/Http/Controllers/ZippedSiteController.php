@@ -405,11 +405,11 @@ class ZippedSiteController extends Controller
 
         // copy public/storage/project to public/storage/project{site_id}
 
-        $source = public_path('storage/real-project');
+        $source = public_path('storage\real-project');
 
 
 
-        $destination = public_path('storage/projects/' . $projectName);
+        $destination = public_path('storage\projects\\' . $projectName);
 
         File::copyDirectory($source, $destination);
 
@@ -421,7 +421,7 @@ class ZippedSiteController extends Controller
     public function addFiles($destinationFolder, $filePaths = [])
     {
         foreach ($filePaths as $filePath) {
-            $filePath = public_path('storage/' . $filePath);
+            $filePath = public_path('storage\\' . $filePath);
 
             // dd($filePath, $destinationFolder.'/4kmCP45l4trRW9eL6ALJ6wfmSa8JdScPXLO9GtUX.jpg');
 
@@ -432,7 +432,7 @@ class ZippedSiteController extends Controller
     public function addTemplateImages($destinationFolder, $filePaths = [])
     {
         foreach ($filePaths as $filePathArr) {
-            $filePath = public_path('storage/' . $filePathArr["path"]);
+            $filePath = public_path('storage\\' . $filePathArr["path"]);
 
 
             // $fileExt = pathinfo($filePath, PATHINFO_EXTENSION);
