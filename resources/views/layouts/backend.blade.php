@@ -252,6 +252,11 @@
                                             <span class="nav-main-link-name">Footers</span>
                                         </a>
                                     </li>
+                                    <li class="nav-main-item">
+                                        <a class="nav-main-link {{ request()->segment(2) == 'hero-sections' ? ' active' : '' }}" href="{{ route("hero-sections.index") }}">
+                                            <span class="nav-main-link-name">Hero Section</span>
+                                        </a>
+                                    </li>
                                 </ul>
                             </li>
                         @endif

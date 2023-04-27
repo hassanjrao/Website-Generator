@@ -4,6 +4,7 @@ use App\Http\Controllers\AdvertisingCompanyController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FooterTemplateController;
 use App\Http\Controllers\HeaderTemplateController;
+use App\Http\Controllers\HeroSectionController;
 use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
@@ -49,6 +50,7 @@ Route::middleware(["auth"])->group(function () {
 
         Route::resource("headers",HeaderTemplateController::class);
         Route::resource("footers",FooterTemplateController::class);
+        Route::resource("hero-sections",HeroSectionController::class);
 
 
     });
