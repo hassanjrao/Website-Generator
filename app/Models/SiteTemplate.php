@@ -15,4 +15,8 @@ class SiteTemplate extends Model
     {
         return $this->belongsTo(Site::class);
     }
+
+    public function headerTemplate(){
+        return $this->belongsTo(HeaderTemplate::class);
+    }
 }

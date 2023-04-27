@@ -182,6 +182,18 @@
                             </li>
                         @endif
 
+                        @if (auth()->user()->hasRole('super admin') ||
+                                auth()->user()->can('view advertising companies'))
+                            <li class="nav-main-item">
+                                <a class="nav-main-link{{ request()->segment(1) == 'advertising-companies' ? ' active' : '' }}"
+                                    href="{{ route('advertising-companies.index') }}">
+
+                                    <i class="fas fa-building nav-main-link-icon"></i>
+                                    <span class="nav-main-link-name">Advertising Companies</span>
+                                </a>
+                            </li>
+                        @endif
+
 
 
                         @if (auth()->user()->hasRole('super admin') ||
@@ -220,6 +232,24 @@
                             </li>
                         @endif
 
+
+                        @if (auth()->user()->hasRole('super admin') ||
+                                auth()->user()->can('view sites'))
+                            <li class="nav-main-item {{ request()->segment(1) == 'templates' ? ' open' : '' }}">
+                                <a class="nav-main-link {{ request()->segment(1) == 'templates' ? ' active' : '' }} nav-main-link-submenu" data-toggle="submenu"
+                                    aria-haspopup="true" aria-expanded="false" href="#">
+                                    <i class="nav-main-link-icon si si-energy"></i>
+                                    <span class="nav-main-link-name">Templates</span>
+                                </a>
+                                <ul class="nav-main-submenu">
+                                    <li class="nav-main-item">
+                                        <a class="nav-main-link active {{ request()->segment(2) == 'headers' ? ' active' : '' }}" href="{{ route("headers.index") }}">
+                                            <span class="nav-main-link-name">Headers</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        @endif
 
 
 
@@ -515,7 +545,7 @@
     <script src="{{ mix('js/app.js') }}"></script>
 
 
-    {{-- <script src="{{ asset('js/oneui.app.js') }}"></script> --}}
+    <script src="{{ asset('js/oneui.app.js') }}"></script>
 
 
     <!-- Page JS Helpers (Flatpickr + BS Datepicker + BS Maxlength + Select2 + Masked Inputs + Ion Range Slider + BS Colorpicker plugins) -->

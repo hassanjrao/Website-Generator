@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\AdvertisingCompanyController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FooterTemplateController;
+use App\Http\Controllers\HeaderTemplateController;
 use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
@@ -29,6 +32,8 @@ Route::middleware(["auth"])->group(function () {
 
     Route::resource('users', UserController::class);
 
+    Route::resource("advertising-companies",AdvertisingCompanyController::class);
+
 
     Route::resource("product-categories", ProductCategoryController::class);
     Route::resource("products", ProductController::class);
@@ -38,6 +43,27 @@ Route::middleware(["auth"])->group(function () {
     Route::resource("roles", RoleManagementController::class);
 
     Route::resource("profile", ProfileController::class);
+
+
+    Route::prefix("templates")->group(function(){
+
+        Route::resource("headers",HeaderTemplateController::class);
+        Route::resource("footers",FooterTemplateController::class);
+
+
+    });
+
+
+
+
+
+
+
+
+
+
+
+
 
     Route::prefix("sites")->group(function () {
 

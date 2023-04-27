@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AdvertisingCompany;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\Site;
@@ -44,11 +45,15 @@ class DashboardController extends Controller
 
 
         if (auth()->user()->can('view roles')) {
-
-
             $roles = Role::all()->count();
         } else {
             $roles = 0;
+        }
+
+        if (auth()->user()->can('view advertising companies')) {
+            $advertisingCompanies = AdvertisingCompany::all()->count();
+        } else {
+            $advertisingCompanies = 0;
         }
 
 
@@ -56,6 +61,6 @@ class DashboardController extends Controller
 
 
 
-        return view('dashboard.index', compact('sites', 'users', 'products', 'productCategories', 'roles'));
+        return view('dashboard.index', compact('sites', 'users', 'products', 'productCategories', 'roles', 'advertisingCompanies'));
     }
 }

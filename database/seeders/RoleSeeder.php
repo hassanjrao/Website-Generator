@@ -53,6 +53,13 @@ class RoleSeeder extends Seeder
         Permission::firstOrCreate(["name" => "delete categories"]);
 
 
+        // advertising companies management permissions
+        Permission::firstOrCreate(["name" => "view advertising companies"]);
+        Permission::firstOrCreate(["name" => "create advertising companies"]);
+        Permission::firstOrCreate(["name" => "edit advertising companies"]);
+        Permission::firstOrCreate(["name" => "delete advertising companies"]);
+
+
         // assign permissions to roles
 
         // super admin
@@ -75,12 +82,17 @@ class RoleSeeder extends Seeder
         $superAdmin->givePermissionTo("create products");
         $superAdmin->givePermissionTo("edit products");
         $superAdmin->givePermissionTo("delete products");
-        
+
         $superAdmin->givePermissionTo("view categories");
         $superAdmin->givePermissionTo("create categories");
         $superAdmin->givePermissionTo("edit categories");
         $superAdmin->givePermissionTo("delete categories");
-        
+
+        $superAdmin->givePermissionTo("view advertising companies");
+        $superAdmin->givePermissionTo("create advertising companies");
+        $superAdmin->givePermissionTo("edit advertising companies");
+        $superAdmin->givePermissionTo("delete advertising companies");
+
 
     }
 }

@@ -77,10 +77,6 @@ class ZippedSiteController extends Controller
                 ];
             }
 
-            $productImagesFiles = [];
-            foreach ($products as $product) {
-                $productImagesFiles[] = "product".DIRECTORY_SEPARATOR."images".DIRECTORY_SEPARATOR . $product->image;
-            }
 
 
 
@@ -143,8 +139,10 @@ class ZippedSiteController extends Controller
             }
 
 
+
+
             $pageConfig =  [
-                'header_template' => $siteTemplate->header_template_id,             // choose 1-15
+                'header_template' => $siteTemplate->headerTemplate->file_name,             // choose 1-15
                 'hero_section' => $siteTemplate->hero_section_id,                // choose 1-15
                 'product_section' => $siteTemplate->product_section_id,              // choose 1-15
                 'about_section' => $siteTemplate->about_section_id,               // choose 1-15
@@ -288,7 +286,20 @@ class ZippedSiteController extends Controller
             $newProjectDestination = $this->copyProject($projectName);
 
 
+            // add product images
+            $productImagesFiles = [];
+            foreach ($products as $product) {
+                $productImagesFiles[] = "product".DIRECTORY_SEPARATOR."images".DIRECTORY_SEPARATOR . $product->image;
+            }
             $this->addFiles($newProjectDestination . DIRECTORY_SEPARATOR.'bp_config'.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.'products', $productImagesFiles);
+
+
+            // add header template file
+            $headerFile=[$siteTemplate->headerTemplate->file];
+            $this->addFiles($newProjectDestination . DIRECTORY_SEPARATOR.'bp_config'.DIRECTORY_SEPARATOR.'includes'.DIRECTORY_SEPARATOR.'templates'.DIRECTORY_SEPARATOR.'headers', $headerFile);
+
+
+
 
             $siteImages = [];
 
@@ -334,8 +345,6 @@ class ZippedSiteController extends Controller
                     "name" => $siteTemplate->product_section_bg_image,
                 ];
             }
-
-
 
             $this->addTemplateImages($newProjectDestination . DIRECTORY_SEPARATOR . 'img', $siteImages);
 
@@ -406,7 +415,7 @@ class ZippedSiteController extends Controller
 
         // copy public/storage/project to public/storage/project{site_id}
 
-        $source = public_path('storage'.DIRECTORY_SEPARATOR.'real-project');
+        $source = public_path('real-project');
 
 
 
@@ -419,7 +428,7 @@ class ZippedSiteController extends Controller
         return $destination;
     }
 
-    public function addFiles($destinationFolder, $filePaths = [])
+     public function addFiles($destinationFolder, $filePaths = [])
     {
         foreach ($filePaths as $filePath) {
             $filePath = public_path('storage'. DIRECTORY_SEPARATOR . $filePath);

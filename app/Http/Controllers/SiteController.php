@@ -759,7 +759,7 @@ class SiteController extends Controller
 
     public function headerTemplates()
     {
-        $headerTemplates = HeaderTemplate::all();
+        $headerTemplates = HeaderTemplate::whereNotNull("file")->get();
         return $headerTemplates;
     }
 
