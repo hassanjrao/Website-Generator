@@ -307,8 +307,8 @@ if (isset($_POST['firstName'])) {
     <!-- New Error Popup Modal -->
 
     <?php
-    if (file_exists('bp_config/includes/templates/footer/footer' . $pageConfig['footer_template'] . '.php')) {
-        require 'bp_config/includes/templates/footer/footer' . $pageConfig['footer_template'] . '.php';
+    if (file_exists('bp_config/includes/templates/footers/' . $pageConfig['footer_template'] )) {
+        require 'bp_config/includes/templates/footers/' . $pageConfig['footer_template'] ;
     }
     ?>
 

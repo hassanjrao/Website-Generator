@@ -25,6 +25,7 @@ class ZippedSiteController extends Controller
             $siteProductCategory = $site->siteProductCategory;
 
 
+
             $products = $siteProductCategory->productCategory->products()->with(['sizes'])->get();
 
             $siteProducts = [];
@@ -150,7 +151,7 @@ class ZippedSiteController extends Controller
                 'popularProducts_section' => $siteTemplate->popular_product_section_id,       // choose 1-15
                 'cta_section' => $siteTemplate->cta_section_id,                // choose 1-15
                 'features_section' => $siteTemplate->feature_section_id,              // choose 1-15
-                'footer_template' => $siteTemplate->footer_template_id,              // choose 1-15
+                'footer_template' => $siteTemplate->footerTemplate->file_name,              // choose 1-15
 
                 'product_page' => $siteTemplate->product_page_id,                // choose 1-15
                 'checkout_page' => $siteTemplate->checkout_page_id,               // choose 1-15
@@ -298,6 +299,9 @@ class ZippedSiteController extends Controller
             $headerFile=[$siteTemplate->headerTemplate->file];
             $this->addFiles($newProjectDestination . DIRECTORY_SEPARATOR.'bp_config'.DIRECTORY_SEPARATOR.'includes'.DIRECTORY_SEPARATOR.'templates'.DIRECTORY_SEPARATOR.'headers', $headerFile);
 
+            // add footer template file
+            $footerFile=[$siteTemplate->footerTemplate->file];
+            $this->addFiles($newProjectDestination . DIRECTORY_SEPARATOR.'bp_config'.DIRECTORY_SEPARATOR.'includes'.DIRECTORY_SEPARATOR.'templates'.DIRECTORY_SEPARATOR.'footers', $footerFile);
 
 
 

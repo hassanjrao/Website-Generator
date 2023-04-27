@@ -1,5 +1,5 @@
 @extends('layouts.backend')
-@section('page-title', 'Header Template')
+@section('page-title', 'Footer Template')
 @section('css_before')
     <!-- Page JS Plugins CSS -->
 
@@ -15,12 +15,12 @@
         <div class="block block-rounded">
             <div class="block-header block-header-default">
                 <h3 class="block-title">
-                    Header Template
+                    Footer Template
                 </h3>
 
 
                 @can('create categories')
-                    <a type="button" class="btn btn-primary push" href="{{ route('headers.create') }}">Add</a>
+                    <a type="button" class="btn btn-primary push" href="{{ route('footers.create') }}">Add</a>
                 @endcan
             </div>
 
@@ -43,37 +43,37 @@
                         </thead>
 
                         <tbody>
-                            @foreach ($headers as $ind => $header)
+                            @foreach ($footers as $ind => $footer)
                                 <tr>
 
                                     <td>{{ $ind + 1 }}</td>
-                                    <td>{{ $header->name }}</td>
+                                    <td>{{ $footer->name }}</td>
                                     <td>
 
-                                        <a href="{{ asset('storage/' . $header->file) }}" download>
+                                        <a href="{{ asset('storage/' . $footer->file) }}" download>
                                             <i class="fa fa-download" aria-hidden="true"></i>
-                                            {{ $header->file }}
+                                            {{ $footer->file }}
                                         </a>
                                     </td>
 
-                                    <td>{{ $header->created_at }}</td>
-                                    <td>{{ $header->updated_at }}</td>
+                                    <td>{{ $footer->created_at }}</td>
+                                    <td>{{ $footer->updated_at }}</td>
 
                                     <td>
                                         <div class="btn-group" role="group" aria-label="Horizontal Primary">
 
                                             @can('edit categories')
-                                                <a href="{{ route('headers.edit', $header->id) }}"
+                                                <a href="{{ route('footers.edit', $footer->id) }}"
                                                     class="btn btn-sm btn-alt-primary">Edit</a>
                                             @endcan
 
                                             @can('delete categories')
-                                                <form id="form-{{ $header->id }}"
-                                                    action="{{ route('headers.destroy', $header->id) }}"
+                                                <form id="form-{{ $footer->id }}"
+                                                    action="{{ route('footers.destroy', $footer->id) }}"
                                                     method="POST">
                                                     @method('DELETE')
                                                     @csrf
-                                                    <input type="button" onclick="confirmDelete({{ $header->id }})"
+                                                    <input type="button" onclick="confirmDelete({{ $footer->id }})"
                                                         class="btn btn-sm btn-alt-danger" value="Delete">
 
                                                 </form>

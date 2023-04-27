@@ -654,7 +654,7 @@ class SiteController extends Controller
 
     public function getFooterTemplates()
     {
-        $footerTemplates = FooterTemplate::all();
+        $footerTemplates = FooterTemplate::whereNotNull("file")->get();
         return $footerTemplates;
     }
 
@@ -918,6 +918,7 @@ class SiteController extends Controller
         ];
 
         $siteProductCategory = SiteProductCategory::where("site_id", $request->site_id)->first();
+
 
         if ($siteProductCategory) {
             $siteProductCategory->update($data);

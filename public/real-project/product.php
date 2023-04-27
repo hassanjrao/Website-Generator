@@ -226,8 +226,8 @@ if (file_exists('bp_config/includes/templates/headers/' . $pageConfig['header_te
 
 
         <?php
-            if (file_exists('bp_config/includes/templates/footer/footer' . $pageConfig['footer_template'] . '.php')) {
-                require 'bp_config/includes/templates/footer/footer' . $pageConfig['footer_template'] . '.php';
+            if (file_exists('bp_config/includes/templates/footers/' . $pageConfig['footer_template'] )) {
+                require 'bp_config/includes/templates/footers/' . $pageConfig['footer_template'] ;
             }
         ?>
       <!-- <p id="loading-indicator" data-before="Product is already added in cart" style="display:none;"></p> -->

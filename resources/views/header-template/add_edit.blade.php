@@ -58,7 +58,7 @@
                                 @endif
 
                                 <label class="form-label" for="label">File <span class="text-danger">{{ $header && $header->file ? "" : "*" }}</span></label>
-                                <input  {{ $header && $header->file ? "" : "*" }} type="file" value="{{ $header ? $header->file : null }}"
+                                <input  {{ $header && $header->file ? "" : "required" }} type="file" value="{{ $header ? $header->file : null }}"
                                     class="form-control" id="file" name="file" placeholder="Enter file">
                                 <span class="text-danger" id="file_error"></span>
                             </div>

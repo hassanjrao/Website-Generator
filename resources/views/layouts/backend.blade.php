@@ -243,8 +243,13 @@
                                 </a>
                                 <ul class="nav-main-submenu">
                                     <li class="nav-main-item">
-                                        <a class="nav-main-link active {{ request()->segment(2) == 'headers' ? ' active' : '' }}" href="{{ route("headers.index") }}">
+                                        <a class="nav-main-link {{ request()->segment(2) == 'headers' ? ' active' : '' }}" href="{{ route("headers.index") }}">
                                             <span class="nav-main-link-name">Headers</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-main-item">
+                                        <a class="nav-main-link {{ request()->segment(2) == 'footers' ? ' active' : '' }}" href="{{ route("footers.index") }}">
+                                            <span class="nav-main-link-name">Footers</span>
                                         </a>
                                     </li>
                                 </ul>

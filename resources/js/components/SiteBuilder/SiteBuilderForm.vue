@@ -262,7 +262,7 @@ export default {
                 },
             ],
             siteInfo: [],
-            siteId: 1,
+            siteId: null,
             productsSubmitted: false,
             templateSubmitted: false,
             layoutSubmitted: false,

@@ -19,4 +19,8 @@ class SiteTemplate extends Model
     public function headerTemplate(){
         return $this->belongsTo(HeaderTemplate::class);
     }
+
+    public function footerTemplate(){
+        return $this->belongsTo(FooterTemplate::class);
+    }
 }

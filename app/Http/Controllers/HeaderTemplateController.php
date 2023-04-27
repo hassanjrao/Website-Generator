@@ -45,8 +45,6 @@ class HeaderTemplateController extends Controller
         ]);
 
         $fileName="header_".time()."_". $request->file("file")->getClientOriginalName();
-
-
         $filePath = $request->file("file")->storeAs("templates/headers", $fileName, "public");
 
         HeaderTemplate::create([

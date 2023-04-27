@@ -14,7 +14,9 @@ class FooterTemplateController extends Controller
      */
     public function index()
     {
-        $footers=FooterTemplate::latest()->get();
+        $footers = FooterTemplate::latest()->get();
+
+        return view("footer-template.index", compact("footers"));
     }
 
     /**
@@ -24,7 +26,9 @@ class FooterTemplateController extends Controller
      */
     public function create()
     {
-        //
+        $footer = null;
+
+        return view("footer-template.add_edit", compact("footer"));
     }
 
     /**
@@ -35,7 +39,20 @@ class FooterTemplateController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            "name" => "required",
+            "file" => "required"
+        ]);
+
+        $fileName = "footer_" . time() . "_" . $request->file("file")->getClientOriginalName();
+        $filePath = $request->file("file")->storeAs("templates/footers", $fileName, "public");
+
+        FooterTemplate::create([
+            "name" => $request->name,
+            "file" => $filePath
+        ]);
+
+        return redirect()->route("footers.index")->withToastSuccess("Footer Template Created Successfully");
     }
 
     /**
@@ -57,7 +74,9 @@ class FooterTemplateController extends Controller
      */
     public function edit($id)
     {
-        //
+        $footer = FooterTemplate::findOrFail($id);
+
+        return view("footer-template.add_edit", compact("footer"));
     }
 
     /**
@@ -69,7 +88,28 @@ class FooterTemplateController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            "name"=>"required",
+            "file"=>"nullable|file"
+        ]);
+
+        $footer = FooterTemplate::findOrFail($id);
+
+        if($request->hasFile("file")){
+            $fileName="footer_".time()."_". $request->file("file")->getClientOriginalName();
+            $filePath = $request->file("file")->storeAs("templates/footers", $fileName, "public");
+
+            $footer->update([
+                "file"=>$filePath
+            ]);
+
+        }
+
+        $footer->update([
+            "name"=>$request->name
+        ]);
+
+        return redirect()->route("footers.index")->withToastSuccess("Footer Template Updated Successfully");
     }
 
     /**
