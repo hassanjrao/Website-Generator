@@ -287,7 +287,6 @@ class ZippedSiteController extends Controller
 
             $newProjectDestination = $this->copyProject($projectName);
 
-            dd($newProjectDestination);
 
 
             // add product images
