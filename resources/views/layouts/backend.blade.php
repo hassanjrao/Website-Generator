@@ -236,30 +236,60 @@
                         @if (auth()->user()->hasRole('super admin') ||
                                 auth()->user()->can('view sites'))
                             <li class="nav-main-item {{ request()->segment(1) == 'templates' ? ' open' : '' }}">
-                                <a class="nav-main-link {{ request()->segment(1) == 'templates' ? ' active' : '' }} nav-main-link-submenu" data-toggle="submenu"
-                                    aria-haspopup="true" aria-expanded="false" href="#">
+                                <a class="nav-main-link {{ request()->segment(1) == 'templates' ? ' active' : '' }} nav-main-link-submenu"
+                                    data-toggle="submenu" aria-haspopup="true" aria-expanded="false" href="#">
                                     <i class="nav-main-link-icon si si-energy"></i>
                                     <span class="nav-main-link-name">Templates</span>
                                 </a>
                                 <ul class="nav-main-submenu">
                                     <li class="nav-main-item">
-                                        <a class="nav-main-link {{ request()->segment(2) == 'headers' ? ' active' : '' }}" href="{{ route("headers.index") }}">
+                                        <a class="nav-main-link {{ request()->segment(2) == 'headers' ? ' active' : '' }}"
+                                            href="{{ route('headers.index') }}">
                                             <span class="nav-main-link-name">Headers</span>
                                         </a>
                                     </li>
                                     <li class="nav-main-item">
-                                        <a class="nav-main-link {{ request()->segment(2) == 'footers' ? ' active' : '' }}" href="{{ route("footers.index") }}">
+                                        <a class="nav-main-link {{ request()->segment(2) == 'footers' ? ' active' : '' }}"
+                                            href="{{ route('footers.index') }}">
                                             <span class="nav-main-link-name">Footers</span>
                                         </a>
                                     </li>
                                     <li class="nav-main-item">
-                                        <a class="nav-main-link {{ request()->segment(2) == 'hero-sections' ? ' active' : '' }}" href="{{ route("hero-sections.index") }}">
+                                        <a class="nav-main-link {{ request()->segment(2) == 'hero-sections' ? ' active' : '' }}"
+                                            href="{{ route('hero-sections.index') }}">
                                             <span class="nav-main-link-name">Hero Section</span>
                                         </a>
                                     </li>
                                     <li class="nav-main-item">
-                                        <a class="nav-main-link {{ request()->segment(2) == 'about-sections' ? ' active' : '' }}" href="{{ route("about-sections.index") }}">
+                                        <a class="nav-main-link {{ request()->segment(2) == 'about-sections' ? ' active' : '' }}"
+                                            href="{{ route('about-sections.index') }}">
                                             <span class="nav-main-link-name">About Section</span>
+                                        </a>
+                                    </li>
+
+                                    <li class="nav-main-item">
+                                        <a class="nav-main-link {{ request()->segment(2) == 'product-sections' ? ' active' : '' }}"
+                                            href="{{ route('product-sections.index') }}">
+                                            <span class="nav-main-link-name">Product Section</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-main-item">
+                                        <a class="nav-main-link {{ request()->segment(2) == 'related-product-sections' ? ' active' : '' }}"
+                                            href="{{ route('related-product-sections.index') }}">
+                                            <span class="nav-main-link-name">Related Product Section</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-main-item">
+                                        <a class="nav-main-link {{ request()->segment(2) == 'popular-product-sections' ? ' active' : '' }}"
+                                            href="{{ route('popular-product-sections.index') }}">
+                                            <span class="nav-main-link-name">Popular Product Section</span>
+                                        </a>
+                                    </li>
+
+                                    <li class="nav-main-item">
+                                        <a class="nav-main-link {{ request()->segment(2) == 'cta-sections' ? ' active' : '' }}"
+                                            href="{{ route('cta-sections.index') }}">
+                                            <span class="nav-main-link-name">CTA Section</span>
                                         </a>
                                     </li>
                                 </ul>

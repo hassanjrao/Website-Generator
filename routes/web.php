@@ -2,13 +2,17 @@
 
 use App\Http\Controllers\AboutSectionController;
 use App\Http\Controllers\AdvertisingCompanyController;
+use App\Http\Controllers\CtaSectionController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FooterTemplateController;
 use App\Http\Controllers\HeaderTemplateController;
 use App\Http\Controllers\HeroSectionController;
+use App\Http\Controllers\PopularProductSectionController;
 use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProductSectionController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RelatedProductSectionController;
 use App\Http\Controllers\RoleManagementController;
 use App\Http\Controllers\SiteController;
 use App\Http\Controllers\UserController;
@@ -53,6 +57,10 @@ Route::middleware(["auth"])->group(function () {
         Route::resource("footers",FooterTemplateController::class);
         Route::resource("hero-sections",HeroSectionController::class);
         Route::resource("about-sections",AboutSectionController::class);
+        Route::resource("product-sections",ProductSectionController::class);
+        Route::resource("related-product-sections",RelatedProductSectionController::class);
+        Route::resource("popular-product-sections",PopularProductSectionController::class);
+        Route::resource("cta-sections",CtaSectionController::class);
 
 
     });

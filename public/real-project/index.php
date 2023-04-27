@@ -193,8 +193,8 @@
       ?>
 
       <?php
-      if (file_exists('bp_config/includes/templates/product_section_templates/product_section' . $pageConfig['product_section'] . '.php')) {
-          require 'bp_config/includes/templates/product_section_templates/product_section' . $pageConfig['product_section'] . '.php';
+      if (file_exists('bp_config/includes/templates/product_section_templates/' . $pageConfig['product_section'])) {
+          require 'bp_config/includes/templates/product_section_templates/' . $pageConfig['product_section'];
       }
       ?>
 
@@ -205,8 +205,8 @@
       ?>
 
       <?php
-      if (file_exists('bp_config/includes/templates/cta_templates/cta_section' . $pageConfig['cta_section'] . '.php')) {
-          require 'bp_config/includes/templates/cta_templates/cta_section' . $pageConfig['cta_section'] . '.php';
+      if (file_exists('bp_config/includes/templates/cta_templates/'.  $pageConfig['cta_section'])) {
+          require 'bp_config/includes/templates/cta_templates/'.  $pageConfig['cta_section'];
       }
       ?>
 
@@ -217,8 +217,8 @@
       ?>
 
       <?php
-      if (file_exists('bp_config/includes/templates/popular_section_templates/popular_section' . $pageConfig['popularProducts_section'] . '.php')) {
-          require 'bp_config/includes/templates/popular_section_templates/popular_section' . $pageConfig['popularProducts_section'] . '.php';
+      if (file_exists('bp_config/includes/templates/popular_section_templates/' . $pageConfig['popularProducts_section'] )) {
+          require 'bp_config/includes/templates/popular_section_templates/' . $pageConfig['popularProducts_section'] ;
       }
       ?>
 

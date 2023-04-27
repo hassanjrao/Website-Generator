@@ -636,7 +636,7 @@ class SiteController extends Controller
 
     public function getRelatedProductSections()
     {
-        $relatedProductSections = RelatedProductSection::all();
+        $relatedProductSections = RelatedProductSection::whereNotNull("file")->get();
         return $relatedProductSections;
     }
 
@@ -666,14 +666,14 @@ class SiteController extends Controller
 
     public function getCtaSections()
     {
-        $ctaSections = CtaSection::all();
+        $ctaSections = CtaSection::whereNotNull("file")->get();
         return $ctaSections;
     }
 
 
     public function getPopularProductSections()
     {
-        $popularProductSections = PopularProductSection::all();
+        $popularProductSections = PopularProductSection::whereNotNull("file")->get();
         return $popularProductSections;
     }
 
@@ -685,19 +685,19 @@ class SiteController extends Controller
 
     public function getAboutSections()
     {
-        $aboutSections = AboutSection::all();
+        $aboutSections = AboutSection::whereNotNull("file")->get();
         return $aboutSections;
     }
 
     public function getProductSections()
     {
-        $productSections = ProductSection::all();
+        $productSections = ProductSection::whereNotNull("file")->get();
         return $productSections;
     }
 
     public function getHeroSections()
     {
-        $heroSections = HeroSection::all();
+        $heroSections = HeroSection::whereNotNull("file")->get();
         return $heroSections;
     }
 

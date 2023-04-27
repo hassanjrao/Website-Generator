@@ -146,17 +146,18 @@ class ZippedSiteController extends Controller
                 'header_template' => $siteTemplate->headerTemplate->file_name,
                 'hero_section' => $siteTemplate->heroSection->file_name,
                 'about_section' => $siteTemplate->aboutSection->file_name,
-                'product_section' => $siteTemplate->product_section_id,
+                'product_section' => $siteTemplate->productSection->file_name,
+                'popularProducts_section' => $siteTemplate->popularProductSection->file_name,
+                'relatedProducts_section' => $siteTemplate->relatedProductSection->file_name,
+                'cta_section' => $siteTemplate->ctaSection->file_name,
+
                 'contact_section' => $siteTemplate->contact_section_id,
-                'popularProducts_section' => $siteTemplate->popular_product_section_id,
-                'cta_section' => $siteTemplate->cta_section_id,
                 'features_section' => $siteTemplate->feature_section_id,
                 'footer_template' => $siteTemplate->footerTemplate->file_name,
 
                 'product_page' => $siteTemplate->product_page_id,
                 'checkout_page' => $siteTemplate->checkout_page_id,
 
-                'relatedProducts_section' => $siteTemplate->related_product_section_id,
                 // If you want to hide any section select 0
 
                 'indexSectionsOrder' => $pageLayouts,
@@ -310,6 +311,24 @@ class ZippedSiteController extends Controller
             // add about section template file
             $aboutSectionFile=[$siteTemplate->aboutSection->file];
             $this->addFiles($newProjectDestination . DIRECTORY_SEPARATOR.'bp_config'.DIRECTORY_SEPARATOR.'includes'.DIRECTORY_SEPARATOR.'templates'.DIRECTORY_SEPARATOR.'about_templates', $aboutSectionFile);
+
+            // add product section template file
+            $productSectionFile=[$siteTemplate->productSection->file];
+            $this->addFiles($newProjectDestination . DIRECTORY_SEPARATOR.'bp_config'.DIRECTORY_SEPARATOR.'includes'.DIRECTORY_SEPARATOR.'templates'.DIRECTORY_SEPARATOR.'product_section_templates', $productSectionFile);
+
+            // add related products section template file
+            $relatedProductsSectionFile=[$siteTemplate->relatedProductSection->file];
+            $this->addFiles($newProjectDestination . DIRECTORY_SEPARATOR.'bp_config'.DIRECTORY_SEPARATOR.'includes'.DIRECTORY_SEPARATOR.'templates'.DIRECTORY_SEPARATOR.'related_products_templates', $relatedProductsSectionFile);
+
+            // add popular products section template file
+            $popularProductsSectionFile=[$siteTemplate->popularProductSection->file];
+            $this->addFiles($newProjectDestination . DIRECTORY_SEPARATOR.'bp_config'.DIRECTORY_SEPARATOR.'includes'.DIRECTORY_SEPARATOR.'templates'.DIRECTORY_SEPARATOR.'popular_section_templates', $popularProductsSectionFile);
+
+            // add cta section template file
+            $ctaSectionFile=[$siteTemplate->ctaSection->file];
+            $this->addFiles($newProjectDestination . DIRECTORY_SEPARATOR.'bp_config'.DIRECTORY_SEPARATOR.'includes'.DIRECTORY_SEPARATOR.'templates'.DIRECTORY_SEPARATOR.'cta_templates', $ctaSectionFile);
+
+
 
             $siteImages = [];
 

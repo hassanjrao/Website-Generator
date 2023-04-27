@@ -35,4 +35,24 @@ class SiteTemplate extends Model
     {
         return $this->belongsTo(AboutSection::class)->withTrashed();
     }
+
+    public function productSection()
+    {
+        return $this->belongsTo(ProductSection::class)->withTrashed();
+    }
+
+    public function relatedProductSection()
+    {
+        return $this->belongsTo(RelatedProductSection::class)->withTrashed();
+    }
+
+    public function popularProductSection()
+    {
+        return $this->belongsTo(PopularProductSection::class)->withTrashed();
+    }
+
+    public function ctaSection()
+    {
+        return $this->belongsTo(CtaSection::class)->withTrashed();
+    }
 }

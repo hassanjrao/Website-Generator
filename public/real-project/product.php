@@ -219,8 +219,8 @@ if (file_exists('bp_config/includes/templates/headers/' . $pageConfig['header_te
         ?>
 
         <?php
-            if (file_exists('bp_config/includes/templates/related_products_templates/related_products' . $pageConfig['relatedProducts_section'] . '.php')) {
-                require 'bp_config/includes/templates/related_products_templates/related_products' . $pageConfig['relatedProducts_section'] . '.php';
+            if (file_exists('bp_config/includes/templates/related_products_templates/' . $pageConfig['relatedProducts_section'] )) {
+                require 'bp_config/includes/templates/related_products_templates/' . $pageConfig['relatedProducts_section'] ;
             }
         ?>
 

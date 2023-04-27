@@ -177,8 +177,8 @@ if (file_exists('bp_config/includes/templates/headers/' . $pageConfig['header_te
    </script>
 
     <?php
-      if (file_exists('bp_config/includes/templates/product_section_templates/product_section' . $pageConfig['product_section'] . '.php')) {
-          require 'bp_config/includes/templates/product_section_templates/product_section' . $pageConfig['product_section'] . '.php';
+      if (file_exists('bp_config/includes/templates/product_section_templates/' . $pageConfig['product_section'])) {
+          require 'bp_config/includes/templates/product_section_templates/' . $pageConfig['product_section'];
       }
       ?>
 
