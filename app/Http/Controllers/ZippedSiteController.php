@@ -143,20 +143,20 @@ class ZippedSiteController extends Controller
 
 
             $pageConfig =  [
-                'header_template' => $siteTemplate->headerTemplate->file_name,             // choose 1-15
-                'hero_section' => $siteTemplate->hero_section_id,                // choose 1-15
-                'product_section' => $siteTemplate->product_section_id,              // choose 1-15
-                'about_section' => $siteTemplate->about_section_id,               // choose 1-15
-                'contact_section' => $siteTemplate->contact_section_id,              // choose 1-15
-                'popularProducts_section' => $siteTemplate->popular_product_section_id,       // choose 1-15
-                'cta_section' => $siteTemplate->cta_section_id,                // choose 1-15
-                'features_section' => $siteTemplate->feature_section_id,              // choose 1-15
-                'footer_template' => $siteTemplate->footerTemplate->file_name,              // choose 1-15
+                'header_template' => $siteTemplate->headerTemplate->file_name,
+                'hero_section' => $siteTemplate->heroSection->file_name,
+                'about_section' => $siteTemplate->aboutSection->file_name,
+                'product_section' => $siteTemplate->product_section_id,
+                'contact_section' => $siteTemplate->contact_section_id,
+                'popularProducts_section' => $siteTemplate->popular_product_section_id,
+                'cta_section' => $siteTemplate->cta_section_id,
+                'features_section' => $siteTemplate->feature_section_id,
+                'footer_template' => $siteTemplate->footerTemplate->file_name,
 
-                'product_page' => $siteTemplate->product_page_id,                // choose 1-15
-                'checkout_page' => $siteTemplate->checkout_page_id,               // choose 1-15
+                'product_page' => $siteTemplate->product_page_id,
+                'checkout_page' => $siteTemplate->checkout_page_id,
 
-                'relatedProducts_section' => $siteTemplate->related_product_section_id,        // choose 1-15
+                'relatedProducts_section' => $siteTemplate->related_product_section_id,
                 // If you want to hide any section select 0
 
                 'indexSectionsOrder' => $pageLayouts,
@@ -303,7 +303,13 @@ class ZippedSiteController extends Controller
             $footerFile=[$siteTemplate->footerTemplate->file];
             $this->addFiles($newProjectDestination . DIRECTORY_SEPARATOR.'bp_config'.DIRECTORY_SEPARATOR.'includes'.DIRECTORY_SEPARATOR.'templates'.DIRECTORY_SEPARATOR.'footers', $footerFile);
 
+            // add hero section template file
+            $heroSectionFile=[$siteTemplate->heroSection->file];
+            $this->addFiles($newProjectDestination . DIRECTORY_SEPARATOR.'bp_config'.DIRECTORY_SEPARATOR.'includes'.DIRECTORY_SEPARATOR.'templates'.DIRECTORY_SEPARATOR.'hero_section_templates', $heroSectionFile);
 
+            // add about section template file
+            $aboutSectionFile=[$siteTemplate->aboutSection->file];
+            $this->addFiles($newProjectDestination . DIRECTORY_SEPARATOR.'bp_config'.DIRECTORY_SEPARATOR.'includes'.DIRECTORY_SEPARATOR.'templates'.DIRECTORY_SEPARATOR.'about_templates', $aboutSectionFile);
 
             $siteImages = [];
 

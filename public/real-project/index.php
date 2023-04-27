@@ -181,14 +181,14 @@
       <?php $products = Helper::sortProducts($products, $pageConfig['sortProducts']); ?>
 
       <?php
-      if (file_exists('bp_config/includes/templates/hero_section_templates/hero_section' . $pageConfig['hero_section'] . '.php')) {
-          require 'bp_config/includes/templates/hero_section_templates/hero_section' . $pageConfig['hero_section'] . '.php';
+      if (file_exists('bp_config/includes/templates/hero_section_templates/' . $pageConfig['hero_section'] )) {
+          require 'bp_config/includes/templates/hero_section_templates/' . $pageConfig['hero_section'] ;
       }
       ?>
 
       <?php
-      if (file_exists('bp_config/includes/templates/about_templates/about_section' . $pageConfig['about_section'] . '.php')) {
-          require 'bp_config/includes/templates/about_templates/about_section' . $pageConfig['about_section'] . '.php';
+      if (file_exists('bp_config/includes/templates/about_templates/' . $pageConfig['about_section'] )) {
+          require 'bp_config/includes/templates/about_templates/' . $pageConfig['about_section'] ;
       }
       ?>
 

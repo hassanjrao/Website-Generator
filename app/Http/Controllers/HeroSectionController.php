@@ -130,6 +130,14 @@ class HeroSectionController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $heroSection = HeroSection::findOrFail($id);
+
+        if($heroSection->file){
+            Storage::delete($heroSection->file);
+        }
+
+        $heroSection->delete();
+
+        return redirect()->route("hero-sections.index")->withToastSuccess("Hero Section Template Deleted Successfully");
     }
 }

@@ -4,7 +4,7 @@
     $addEdit = isset($footer) ? 'Edit' : 'Add';
     $addUpdate = isset($footer) ? 'Update' : 'Add';
 @endphp
-@section('page-title', $addEdit . ' header')
+@section('page-title', $addEdit . ' Footer')
 @section('content')
 
     <!-- Page Content -->

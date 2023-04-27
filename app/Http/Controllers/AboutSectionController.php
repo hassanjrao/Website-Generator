@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\FooterTemplate;
+use App\Models\AboutSection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-class FooterTemplateController extends Controller
+class AboutSectionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +15,9 @@ class FooterTemplateController extends Controller
      */
     public function index()
     {
-        $footers = FooterTemplate::latest()->get();
+        $aboutSections = AboutSection::latest()->get();
 
-        return view("footer-template.index", compact("footers"));
+        return view("about-sections.index", compact("aboutSections"));
     }
 
     /**
@@ -27,9 +27,9 @@ class FooterTemplateController extends Controller
      */
     public function create()
     {
-        $footer = null;
+        $aboutSection = null;
 
-        return view("footer-template.add_edit", compact("footer"));
+        return view("about-sections.add_edit", compact("aboutSection"));
     }
 
     /**
@@ -42,18 +42,18 @@ class FooterTemplateController extends Controller
     {
         $request->validate([
             "name" => "required",
-            "file" => "required"
+            "file" => "required|file"
         ]);
 
-        $fileName = "footer_" . time() . "_" . $request->file("file")->getClientOriginalName();
-        $filePath = $request->file("file")->storeAs("templates/footers", $fileName, "public");
+        $fileName = "about_" . time() . "_" . $request->file("file")->getClientOriginalName();
+        $filePath = $request->file("file")->storeAs("templates/about-sections", $fileName);
 
-        FooterTemplate::create([
+        AboutSection::create([
             "name" => $request->name,
             "file" => $filePath
         ]);
 
-        return redirect()->route("footers.index")->withToastSuccess("Footer Template Created Successfully");
+        return redirect()->route("about-sections.index")->withToastSuccess("About Section Template Created Successfully");
     }
 
     /**
@@ -75,9 +75,9 @@ class FooterTemplateController extends Controller
      */
     public function edit($id)
     {
-        $footer = FooterTemplate::findOrFail($id);
+        $aboutSection = AboutSection::findOrFail($id);
 
-        return view("footer-template.add_edit", compact("footer"));
+        return view("about-sections.add_edit", compact("aboutSection"));
     }
 
     /**
@@ -94,29 +94,29 @@ class FooterTemplateController extends Controller
             "file"=>"nullable|file"
         ]);
 
-        $footer = FooterTemplate::findOrFail($id);
+        $aboutSection = AboutSection::findOrFail($id);
 
         if($request->hasFile("file")){
 
-            if($footer->file){
-                Storage::disk("public")->delete($footer->file);
+            if($aboutSection->file){
+                Storage::delete($aboutSection->file);
             }
 
+            $fileName = "about_" . time() . "_" . $request->file("file")->getClientOriginalName();
+            $filePath = $request->file("file")->storeAs("templates/about-sections", $fileName);
 
-            $fileName="footer_".time()."_". $request->file("file")->getClientOriginalName();
-            $filePath = $request->file("file")->storeAs("templates/footers", $fileName, "public");
-
-            $footer->update([
-                "file"=>$filePath
+            $aboutSection->update([
+                "file" => $filePath
             ]);
-
         }
 
-        $footer->update([
-            "name"=>$request->name
+        $aboutSection->update([
+            "name" => $request->name
         ]);
 
-        return redirect()->route("footers.index")->withToastSuccess("Footer Template Updated Successfully");
+        return redirect()->route("about-sections.index")->withToastSuccess("About Section Template Updated Successfully");
+
+
     }
 
     /**
@@ -127,16 +127,14 @@ class FooterTemplateController extends Controller
      */
     public function destroy($id)
     {
-        $footerTemplate=FooterTemplate::findOrFail($id);
+        $aboutSection = AboutSection::findOrFail($id);
 
-        if($footerTemplate->file){
-            Storage::delete($footerTemplate->file);
+        if($aboutSection->file){
+            Storage::delete($aboutSection->file);
         }
 
-        $footerTemplate->delete();
+        $aboutSection->delete();
 
-        return redirect()->route("footers.index")->withToastSuccess("Footer Template Deleted Successfully");
-
-
+        return redirect()->route("about-sections.index")->withToastSuccess("About Section Template Deleted Successfully");
     }
 }

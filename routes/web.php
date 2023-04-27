@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AboutSectionController;
 use App\Http\Controllers\AdvertisingCompanyController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FooterTemplateController;
@@ -51,6 +52,7 @@ Route::middleware(["auth"])->group(function () {
         Route::resource("headers",HeaderTemplateController::class);
         Route::resource("footers",FooterTemplateController::class);
         Route::resource("hero-sections",HeroSectionController::class);
+        Route::resource("about-sections",AboutSectionController::class);
 
 
     });

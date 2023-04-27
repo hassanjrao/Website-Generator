@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\HeaderTemplate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class HeaderTemplateController extends Controller
 {
@@ -97,6 +98,11 @@ class HeaderTemplateController extends Controller
         $header=HeaderTemplate::findOrFail($id);
 
         if($request->hasFile("file")){
+
+            if($header->file){
+                Storage::delete($header->file);
+            }
+
             $fileName="header_".time()."_". $request->file("file")->getClientOriginalName();
             $filePath = $request->file("file")->storeAs("templates/headers", $fileName, "public");
 
@@ -123,6 +129,14 @@ class HeaderTemplateController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $headerTemplate=HeaderTemplate::findOrFail($id);
+
+        if($headerTemplate->file){
+            Storage::delete($headerTemplate->file);
+        }
+
+        $headerTemplate->delete();
+
+        return redirect()->route("headers.index")->withToastSuccess("Header Template Deleted Successfully");
     }
 }
