@@ -19,7 +19,7 @@
                 </h3>
 
 
-                @can('create categories')
+                @can('create product sections')
                     <a type="button" class="btn btn-primary push" href="{{ route('product-sections.create') }}">Add</a>
                 @endcan
             </div>
@@ -62,12 +62,12 @@
                                     <td>
                                         <div class="btn-group" role="group" aria-label="Horizontal Primary">
 
-                                            @can('edit categories')
+                                            @can('edit product sections')
                                                 <a href="{{ route('product-sections.edit', $productSection->id) }}"
                                                     class="btn btn-sm btn-alt-primary">Edit</a>
                                             @endcan
 
-                                            @can('delete categories')
+                                            @can('delete product sections')
                                                 <form id="form-{{ $productSection->id }}"
                                                     action="{{ route('product-sections.destroy', $productSection->id) }}"
                                                     method="POST">

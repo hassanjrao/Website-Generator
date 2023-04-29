@@ -60,6 +60,67 @@ class RoleSeeder extends Seeder
         Permission::firstOrCreate(["name" => "delete advertising companies"]);
 
 
+        // headers manangement permissions
+        Permission::firstOrCreate(["name" => "view headers"]);
+        Permission::firstOrCreate(["name" => "create headers"]);
+        Permission::firstOrCreate(["name" => "edit headers"]);
+        Permission::firstOrCreate(["name" => "delete headers"]);
+
+        // footers manangement permissions
+        Permission::firstOrCreate(["name" => "view footers"]);
+        Permission::firstOrCreate(["name" => "create footers"]);
+        Permission::firstOrCreate(["name" => "edit footers"]);
+        Permission::firstOrCreate(["name" => "delete footers"]);
+
+        // hero sections manangement permissions
+        Permission::firstOrCreate(["name" => "view hero sections"]);
+        Permission::firstOrCreate(["name" => "create hero sections"]);
+        Permission::firstOrCreate(["name" => "edit hero sections"]);
+        Permission::firstOrCreate(["name" => "delete hero sections"]);
+
+        // about sections manangement permissions
+        Permission::firstOrCreate(["name" => "view about sections"]);
+        Permission::firstOrCreate(["name" => "create about sections"]);
+        Permission::firstOrCreate(["name" => "edit about sections"]);
+        Permission::firstOrCreate(["name" => "delete about sections"]);
+
+        // product sections manangement permissions
+        Permission::firstOrCreate(["name" => "view product sections"]);
+        Permission::firstOrCreate(["name" => "create product sections"]);
+        Permission::firstOrCreate(["name" => "edit product sections"]);
+        Permission::firstOrCreate(["name" => "delete product sections"]);
+
+        // related products sections manangement permissions
+        Permission::firstOrCreate(["name" => "view related product sections"]);
+        Permission::firstOrCreate(["name" => "create related product sections"]);
+        Permission::firstOrCreate(["name" => "edit related product sections"]);
+        Permission::firstOrCreate(["name" => "delete related product sections"]);
+
+        // popular products sections manangement permissions
+        Permission::firstOrCreate(["name" => "view popular product sections"]);
+        Permission::firstOrCreate(["name" => "create popular product sections"]);
+        Permission::firstOrCreate(["name" => "edit popular product sections"]);
+        Permission::firstOrCreate(["name" => "delete popular product sections"]);
+
+        // cta sections manangement permissions
+        Permission::firstOrCreate(["name" => "view cta sections"]);
+        Permission::firstOrCreate(["name" => "create cta sections"]);
+        Permission::firstOrCreate(["name" => "edit cta sections"]);
+        Permission::firstOrCreate(["name" => "delete cta sections"]);
+
+        // contact sections manangement permissions
+        Permission::firstOrCreate(["name" => "view contact sections"]);
+        Permission::firstOrCreate(["name" => "create contact sections"]);
+        Permission::firstOrCreate(["name" => "edit contact sections"]);
+        Permission::firstOrCreate(["name" => "delete contact sections"]);
+
+        // features sections manangement permissions
+        Permission::firstOrCreate(["name" => "view feature sections"]);
+        Permission::firstOrCreate(["name" => "create feature sections"]);
+        Permission::firstOrCreate(["name" => "edit feature sections"]);
+        Permission::firstOrCreate(["name" => "delete feature sections"]);
+
+
         // assign permissions to roles
 
         // super admin
@@ -92,6 +153,60 @@ class RoleSeeder extends Seeder
         $superAdmin->givePermissionTo("create advertising companies");
         $superAdmin->givePermissionTo("edit advertising companies");
         $superAdmin->givePermissionTo("delete advertising companies");
+
+        $superAdmin->givePermissionTo("view headers");
+        $superAdmin->givePermissionTo("create headers");
+        $superAdmin->givePermissionTo("edit headers");
+        $superAdmin->givePermissionTo("delete headers");
+
+        $superAdmin->givePermissionTo("view footers");
+        $superAdmin->givePermissionTo("create footers");
+        $superAdmin->givePermissionTo("edit footers");
+        $superAdmin->givePermissionTo("delete footers");
+
+        $superAdmin->givePermissionTo("view hero sections");
+        $superAdmin->givePermissionTo("create hero sections");
+        $superAdmin->givePermissionTo("edit hero sections");
+        $superAdmin->givePermissionTo("delete hero sections");
+
+        $superAdmin->givePermissionTo("view about sections");
+        $superAdmin->givePermissionTo("create about sections");
+        $superAdmin->givePermissionTo("edit about sections");
+        $superAdmin->givePermissionTo("delete about sections");
+
+        $superAdmin->givePermissionTo("view product sections");
+        $superAdmin->givePermissionTo("create product sections");
+        $superAdmin->givePermissionTo("edit product sections");
+        $superAdmin->givePermissionTo("delete product sections");
+
+        $superAdmin->givePermissionTo("view related product sections");
+        $superAdmin->givePermissionTo("create related product sections");
+        $superAdmin->givePermissionTo("edit related product sections");
+        $superAdmin->givePermissionTo("delete related product sections");
+
+        $superAdmin->givePermissionTo("view popular product sections");
+        $superAdmin->givePermissionTo("create popular product sections");
+        $superAdmin->givePermissionTo("edit popular product sections");
+        $superAdmin->givePermissionTo("delete popular product sections");
+
+        $superAdmin->givePermissionTo("view cta sections");
+        $superAdmin->givePermissionTo("create cta sections");
+        $superAdmin->givePermissionTo("edit cta sections");
+        $superAdmin->givePermissionTo("delete cta sections");
+
+        $superAdmin->givePermissionTo("view contact sections");
+        $superAdmin->givePermissionTo("create contact sections");
+        $superAdmin->givePermissionTo("edit contact sections");
+        $superAdmin->givePermissionTo("delete contact sections");
+
+        $superAdmin->givePermissionTo("view feature sections");
+        $superAdmin->givePermissionTo("create feature sections");
+        $superAdmin->givePermissionTo("edit feature sections");
+        $superAdmin->givePermissionTo("delete feature sections");
+
+        
+
+
 
 
     }

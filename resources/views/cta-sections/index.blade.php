@@ -19,7 +19,7 @@
                 </h3>
 
 
-                @can('create categories')
+                @can('create cta sections')
                     <a type="button" class="btn btn-primary push" href="{{ route('cta-sections.create') }}">Add</a>
                 @endcan
             </div>
@@ -62,12 +62,12 @@
                                     <td>
                                         <div class="btn-group" role="group" aria-label="Horizontal Primary">
 
-                                            @can('edit categories')
+                                            @can('edit cta sections')
                                                 <a href="{{ route('cta-sections.edit', $ctaSection->id) }}"
                                                     class="btn btn-sm btn-alt-primary">Edit</a>
                                             @endcan
 
-                                            @can('delete categories')
+                                            @can('delete cta sections')
                                                 <form id="form-{{ $ctaSection->id }}"
                                                     action="{{ route('cta-sections.destroy', $ctaSection->id) }}"
                                                     method="POST">

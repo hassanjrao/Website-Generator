@@ -15,6 +15,9 @@ class AboutSectionController extends Controller
      */
     public function index()
     {
+        if (!auth()->user()->can('view about sections')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $aboutSections = AboutSection::latest()->get();
 
         return view("about-sections.index", compact("aboutSections"));
@@ -27,6 +30,9 @@ class AboutSectionController extends Controller
      */
     public function create()
     {
+        if (!auth()->user()->can('create about sections')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $aboutSection = null;
 
         return view("about-sections.add_edit", compact("aboutSection"));
@@ -40,6 +46,9 @@ class AboutSectionController extends Controller
      */
     public function store(Request $request)
     {
+        if (!auth()->user()->can('create about sections')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $request->validate([
             "name" => "required",
             "file" => "required|file"
@@ -75,6 +84,9 @@ class AboutSectionController extends Controller
      */
     public function edit($id)
     {
+        if (!auth()->user()->can('edit about sections')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $aboutSection = AboutSection::findOrFail($id);
 
         return view("about-sections.add_edit", compact("aboutSection"));
@@ -89,6 +101,9 @@ class AboutSectionController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if (!auth()->user()->can('edit about sections')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $request->validate([
             "name"=>"required",
             "file"=>"nullable|file"
@@ -107,7 +122,7 @@ class AboutSectionController extends Controller
 
             $aboutSection->update([
                 "file" => $filePath
-            ]);                                     
+            ]);
         }
 
         $aboutSection->update([
@@ -127,6 +142,9 @@ class AboutSectionController extends Controller
      */
     public function destroy($id)
     {
+        if (!auth()->user()->can('delete about sections')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $aboutSection = AboutSection::findOrFail($id);
 
         if($aboutSection->file){

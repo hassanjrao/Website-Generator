@@ -15,6 +15,9 @@ class ContactSectionController extends Controller
      */
     public function index()
     {
+        if (!auth()->user()->can('view contact sections')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $contactSections = ContactSection::latest()->get();
 
         return view("contact-sections.index", compact("contactSections"));
@@ -27,6 +30,9 @@ class ContactSectionController extends Controller
      */
     public function create()
     {
+        if (!auth()->user()->can('create contact sections')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $contactSection = null;
 
         return view("contact-sections.add_edit", compact("contactSection"));
@@ -40,6 +46,9 @@ class ContactSectionController extends Controller
      */
     public function store(Request $request)
     {
+        if (!auth()->user()->can('create contact sections')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $request->validate([
             "name" => "required",
             "file" => "required|file"
@@ -75,6 +84,9 @@ class ContactSectionController extends Controller
      */
     public function edit($id)
     {
+        if (!auth()->user()->can('edit contact sections')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $contactSection = ContactSection::findOrFail($id);
 
         return view("contact-sections.add_edit", compact("contactSection"));
@@ -89,6 +101,9 @@ class ContactSectionController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if (!auth()->user()->can('edit contact sections')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $request->validate([
             "name"=>"required",
             "file"=>"nullable|file"
@@ -127,6 +142,9 @@ class ContactSectionController extends Controller
      */
     public function destroy($id)
     {
+        if (!auth()->user()->can('delete contact sections')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $contactSection = ContactSection::findOrFail($id);
 
         if($contactSection->file){

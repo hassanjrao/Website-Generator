@@ -15,6 +15,9 @@ class FeatureSectionController extends Controller
      */
     public function index()
     {
+        if (!auth()->user()->can('view feature sections')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $featureSections = FeatureSection::latest()->get();
 
         return view("feature-sections.index", compact("featureSections"));
@@ -27,6 +30,10 @@ class FeatureSectionController extends Controller
      */
     public function create()
     {
+
+        if (!auth()->user()->can('create feature sections')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $featureSection = null;
 
         return view("feature-sections.add_edit", compact("featureSection"));
@@ -40,6 +47,10 @@ class FeatureSectionController extends Controller
      */
     public function store(Request $request)
     {
+
+        if (!auth()->user()->can('create feature sections')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $request->validate([
             "name" => "required",
             "file" => "required|file"
@@ -75,6 +86,10 @@ class FeatureSectionController extends Controller
      */
     public function edit($id)
     {
+
+        if (!auth()->user()->can('edit feature sections')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $featureSection = FeatureSection::findOrFail($id);
 
         return view("feature-sections.add_edit", compact("featureSection"));
@@ -89,6 +104,10 @@ class FeatureSectionController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+        if (!auth()->user()->can('edit feature sections')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $request->validate([
             "name"=>"required",
             "file"=>"nullable|file"
@@ -127,6 +146,10 @@ class FeatureSectionController extends Controller
      */
     public function destroy($id)
     {
+
+        if (!auth()->user()->can('delete feature sections')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $featureSection = FeatureSection::findOrFail($id);
 
         if($featureSection->file){

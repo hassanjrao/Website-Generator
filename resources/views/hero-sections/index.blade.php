@@ -19,7 +19,7 @@
                 </h3>
 
 
-                @can('create categories')
+                @can('create hero sections')
                     <a type="button" class="btn btn-primary push" href="{{ route('hero-sections.create') }}">Add</a>
                 @endcan
             </div>
@@ -62,12 +62,12 @@
                                     <td>
                                         <div class="btn-group" role="group" aria-label="Horizontal Primary">
 
-                                            @can('edit categories')
+                                            @can('edit hero sections')
                                                 <a href="{{ route('hero-sections.edit', $heroSection->id) }}"
                                                     class="btn btn-sm btn-alt-primary">Edit</a>
                                             @endcan
 
-                                            @can('delete categories')
+                                            @can('delete hero sections')
                                                 <form id="form-{{ $heroSection->id }}"
                                                     action="{{ route('hero-sections.destroy', $heroSection->id) }}"
                                                     method="POST">

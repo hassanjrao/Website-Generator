@@ -15,6 +15,9 @@ class CtaSectionController extends Controller
      */
     public function index()
     {
+        if (!auth()->user()->can('view cta sections')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $ctaSections = CtaSection::latest()->get();
 
         return view("cta-sections.index", compact("ctaSections"));
@@ -27,6 +30,9 @@ class CtaSectionController extends Controller
      */
     public function create()
     {
+        if (!auth()->user()->can('create cta sections')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $ctaSection = null;
 
         return view("cta-sections.add_edit", compact("ctaSection"));
@@ -40,6 +46,9 @@ class CtaSectionController extends Controller
      */
     public function store(Request $request)
     {
+        if (!auth()->user()->can('create cta sections')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $request->validate(
             [
                 "name" => "required",
@@ -79,6 +88,9 @@ class CtaSectionController extends Controller
      */
     public function edit($id)
     {
+        if (!auth()->user()->can('edit cta sections')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $ctaSection = CtaSection::findOrFail($id);
 
         return view("cta-sections.add_edit", compact("ctaSection"));
@@ -93,6 +105,9 @@ class CtaSectionController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if (!auth()->user()->can('edit cta sections')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $request->validate([
             "name" => "required",
             "file" => "nullable|file",
@@ -105,7 +120,7 @@ class CtaSectionController extends Controller
                 Storage::delete($ctaSection->file);
             }
 
-                                                                
+
             $fileName = "cta_" . time() . "_" . $request->file("file")->getClientOriginalName();
             $filePath = $request->file("file")->storeAs("templates/cta-sections", $fileName);
 
@@ -129,6 +144,9 @@ class CtaSectionController extends Controller
      */
     public function destroy($id)
     {
+        if (!auth()->user()->can('delete cta sections')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $ctaSection = CtaSection::findOrFail($id);
 
         if ($ctaSection->file) {

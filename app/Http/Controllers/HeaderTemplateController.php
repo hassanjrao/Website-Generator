@@ -15,6 +15,10 @@ class HeaderTemplateController extends Controller
      */
     public function index()
     {
+        if(!auth()->user()->can('view headers')){
+            return abort(403,"You don't have permission to access this page");
+        }
+
         $headers = HeaderTemplate::latest()->get();
 
         return view("header-template.index", compact("headers"));
@@ -27,6 +31,9 @@ class HeaderTemplateController extends Controller
      */
     public function create()
     {
+        if(!auth()->user()->can('create headers')){
+            return abort(403,"You don't have permission to access this page");
+        }
         $header = null;
 
         return view("header-template.add_edit", compact("header"));
@@ -40,6 +47,10 @@ class HeaderTemplateController extends Controller
      */
     public function store(Request $request)
     {
+        if(!auth()->user()->can('create headers')){
+            return abort(403,"You don't have permission to access this page");
+        }
+
         $request->validate([
             "name" => "required",
             "file" => "required|file",
@@ -76,6 +87,9 @@ class HeaderTemplateController extends Controller
      */
     public function edit($id)
     {
+        if(!auth()->user()->can('edit headers')){
+            return abort(403,"You don't have permission to access this page");
+        }
         $header=HeaderTemplate::findOrFail($id);
 
         return view("header-template.add_edit",compact("header"));
@@ -90,6 +104,9 @@ class HeaderTemplateController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if(!auth()->user()->can('edit headers')){
+            return abort(403,"You don't have permission to access this page");
+        }
         $request->validate([
             "name"=>"required",
             "file"=>"nullable|file",
@@ -129,6 +146,9 @@ class HeaderTemplateController extends Controller
      */
     public function destroy($id)
     {
+        if(!auth()->user()->can('delete headers')){
+            return abort(403,"You don't have permission to access this page");
+        }
         $headerTemplate=HeaderTemplate::findOrFail($id);
 
         if($headerTemplate->file){

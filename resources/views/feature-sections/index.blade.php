@@ -19,9 +19,9 @@
                 </h3>
 
 
-                {{-- @can('create categories') --}}
+                @can('create feature sections')
                     <a type="button" class="btn btn-primary push" href="{{ route('feature-sections.create') }}">Add</a>
-                {{-- @endcan --}}
+                @endcan
             </div>
 
             <div class="block-content block-content-full">
@@ -62,12 +62,12 @@
                                     <td>
                                         <div class="btn-group" role="group" aria-label="Horizontal Primary">
 
-                                            @can('edit categories')
+                                            @can('edit feature sections')
                                                 <a href="{{ route('feature-sections.edit', $featureSection->id) }}"
                                                     class="btn btn-sm btn-alt-primary">Edit</a>
                                             @endcan
 
-                                            @can('delete categories')
+                                            @can('delete feature sections')
                                                 <form id="form-{{ $featureSection->id }}"
                                                     action="{{ route('feature-sections.destroy', $featureSection->id) }}"
                                                     method="POST">

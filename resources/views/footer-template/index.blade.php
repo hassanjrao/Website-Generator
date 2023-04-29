@@ -19,7 +19,7 @@
                 </h3>
 
 
-                @can('create categories')
+                @can('create footers')
                     <a type="button" class="btn btn-primary push" href="{{ route('footers.create') }}">Add</a>
                 @endcan
             </div>
@@ -62,12 +62,12 @@
                                     <td>
                                         <div class="btn-group" role="group" aria-label="Horizontal Primary">
 
-                                            @can('edit categories')
+                                            @can('edit footers')
                                                 <a href="{{ route('footers.edit', $footer->id) }}"
                                                     class="btn btn-sm btn-alt-primary">Edit</a>
                                             @endcan
 
-                                            @can('delete categories')
+                                            @can('delete footers')
                                                 <form id="form-{{ $footer->id }}"
                                                     action="{{ route('footers.destroy', $footer->id) }}"
                                                     method="POST">

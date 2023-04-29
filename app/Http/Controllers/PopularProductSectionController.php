@@ -15,6 +15,9 @@ class PopularProductSectionController extends Controller
      */
     public function index()
     {
+        if (!auth()->user()->can('view popular product sections')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $popularProductSections = PopularProductSection::latest()->get();
 
         return view("popular-product-sections.index", compact("popularProductSections"));
@@ -27,6 +30,10 @@ class PopularProductSectionController extends Controller
      */
     public function create()
     {
+        if (!auth()->user()->can('create popular product sections')) {
+            return abort(403, "You don't have permission to access this page");
+        }
+
         $popularProductSection = null;
 
         return view("popular-product-sections.add_edit", compact("popularProductSection"));
@@ -40,6 +47,9 @@ class PopularProductSectionController extends Controller
      */
     public function store(Request $request)
     {
+        if (!auth()->user()->can('create popular product sections')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $request->validate(
             [
                 "name" => "required",
@@ -79,6 +89,9 @@ class PopularProductSectionController extends Controller
      */
     public function edit($id)
     {
+        if (!auth()->user()->can('edit popular product sections')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $popularProductSection = PopularProductSection::findOrFail($id);
 
         return view("popular-product-sections.add_edit", compact("popularProductSection"));
@@ -93,6 +106,9 @@ class PopularProductSectionController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if (!auth()->user()->can('edit popular product sections')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $request->validate(
             [
 
@@ -138,6 +154,9 @@ class PopularProductSectionController extends Controller
      */
     public function destroy($id)
     {
+        if (!auth()->user()->can('delete popular product sections')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $popularProductSection = PopularProductSection::findOrFail($id);
 
         if($popularProductSection->file){

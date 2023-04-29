@@ -15,6 +15,9 @@ class HeroSectionController extends Controller
      */
     public function index()
     {
+        if (!auth()->user()->can('view hero sections')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $heroSections = HeroSection::latest()->get();
 
         return view("hero-sections.index", compact("heroSections"));
@@ -27,6 +30,9 @@ class HeroSectionController extends Controller
      */
     public function create()
     {
+        if (!auth()->user()->can('create hero sections')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $heroSection = null;
 
         return view("hero-sections.add_edit", compact("heroSection"));
@@ -40,6 +46,9 @@ class HeroSectionController extends Controller
      */
     public function store(Request $request)
     {
+        if (!auth()->user()->can('create hero sections')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $request->validate([
             "name" => "required",
             "file" => "required|file"
@@ -75,6 +84,9 @@ class HeroSectionController extends Controller
      */
     public function edit($id)
     {
+        if (!auth()->user()->can('edit hero sections')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $heroSection = HeroSection::findOrFail($id);
 
         return view("hero-sections.add_edit", compact("heroSection"));
@@ -89,6 +101,9 @@ class HeroSectionController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if (!auth()->user()->can('edit hero sections')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $request->validate([
 
             "name" => "required",
@@ -130,6 +145,9 @@ class HeroSectionController extends Controller
      */
     public function destroy($id)
     {
+        if (!auth()->user()->can('delete hero sections')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $heroSection = HeroSection::findOrFail($id);
 
         if($heroSection->file){

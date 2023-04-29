@@ -15,6 +15,10 @@ class ProductSectionController extends Controller
      */
     public function index()
     {
+        if (!auth()->user()->can('view product sections')) {
+            return abort(403, "You don't have permission to access this page");
+        }
+
         $productSections = ProductSection::latest()->get();
 
         return view("product-sections.index", compact("productSections"));
@@ -27,6 +31,9 @@ class ProductSectionController extends Controller
      */
     public function create()
     {
+        if (!auth()->user()->can('create product sections')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $productSection = null;
 
         return view("product-sections.add_edit", compact("productSection"));
@@ -40,6 +47,9 @@ class ProductSectionController extends Controller
      */
     public function store(Request $request)
     {
+        if (!auth()->user()->can('create product sections')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $request->validate(
             [
                 "name" => "required",
@@ -79,6 +89,9 @@ class ProductSectionController extends Controller
      */
     public function edit($id)
     {
+        if (!auth()->user()->can('edit product sections')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $productSection = ProductSection::findOrFail($id);
 
         return view("product-sections.add_edit", compact("productSection"));
@@ -93,6 +106,9 @@ class ProductSectionController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if (!auth()->user()->can('edit product sections')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $request->validate([
             "name" => "required",
             "file" => "nullable|file",
@@ -128,6 +144,9 @@ class ProductSectionController extends Controller
      */
     public function destroy($id)
     {
+        if (!auth()->user()->can('delete product sections')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $productSection = ProductSection::findOrFail($id);
 
         if ($productSection->file) {

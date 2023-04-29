@@ -15,6 +15,9 @@ class RelatedProductSectionController extends Controller
      */
     public function index()
     {
+        if (!auth()->user()->can('view related product sections')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $relatedProductSections = RelatedProductSection::latest()->get();
 
         return view("related-product-sections.index", compact("relatedProductSections"));
@@ -27,6 +30,9 @@ class RelatedProductSectionController extends Controller
      */
     public function create()
     {
+        if (!auth()->user()->can('create related product sections')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $relatedProductSection = null;
 
         return view("related-product-sections.add_edit", compact("relatedProductSection"));
@@ -40,6 +46,9 @@ class RelatedProductSectionController extends Controller
      */
     public function store(Request $request)
     {
+        if (!auth()->user()->can('create related product sections')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $request->validate(
             [
                 "name" => "required",
@@ -79,6 +88,9 @@ class RelatedProductSectionController extends Controller
      */
     public function edit($id)
     {
+        if (!auth()->user()->can('edit related product sections')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $relatedProductSection = RelatedProductSection::findOrFail($id);
 
         return view("related-product-sections.add_edit", compact("relatedProductSection"));
@@ -93,6 +105,9 @@ class RelatedProductSectionController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if (!auth()->user()->can('edit related product sections')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $request->validate(
             [
 
@@ -138,6 +153,9 @@ class RelatedProductSectionController extends Controller
      */
     public function destroy($id)
     {
+        if (!auth()->user()->can('delete related product sections')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $relatedProductSection = RelatedProductSection::findOrFail($id);
 
         if($relatedProductSection->file){
@@ -145,7 +163,7 @@ class RelatedProductSectionController extends Controller
         }
 
         $relatedProductSection->delete();
-                          
+
         return redirect()->route("related-product-sections.index")->withToastSuccess("Related Product Section Template Deleted Successfully");
     }
 }

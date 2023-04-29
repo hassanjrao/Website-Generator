@@ -87,14 +87,14 @@ class RoleManagementController extends Controller
 
         $permissions = Permission::all();
 
-        // 
+        //
 
         // get last string from permission name and group them by it
 
         $permissions = $permissions->groupBy(function ($permission) use ($role) {
             $permissionName = explode(" ", $permission->name);
             $permission->hasPermission = $role->hasPermissionTo($permission->name);
-            return $permissionName[count($permissionName) - 1];
+            return $permissionName[1];
         });
 
 
@@ -139,8 +139,8 @@ class RoleManagementController extends Controller
         $role = Role::findorFail($request->role_id);
 
 
-        
-        
+
+
 
 
         $request_keys = array_keys($request->all());

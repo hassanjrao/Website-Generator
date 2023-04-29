@@ -15,6 +15,9 @@ class FooterTemplateController extends Controller
      */
     public function index()
     {
+        if (!auth()->user()->can('view footers')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $footers = FooterTemplate::latest()->get();
 
         return view("footer-template.index", compact("footers"));
@@ -27,6 +30,9 @@ class FooterTemplateController extends Controller
      */
     public function create()
     {
+        if (!auth()->user()->can('create footers')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $footer = null;
 
         return view("footer-template.add_edit", compact("footer"));
@@ -40,6 +46,10 @@ class FooterTemplateController extends Controller
      */
     public function store(Request $request)
     {
+        if (!auth()->user()->can('create footers')) {
+            return abort(403, "You don't have permission to access this page");
+        }
+
         $request->validate([
             "name" => "required",
             "file" => "required"
@@ -75,6 +85,9 @@ class FooterTemplateController extends Controller
      */
     public function edit($id)
     {
+        if (!auth()->user()->can('edit footers')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $footer = FooterTemplate::findOrFail($id);
 
         return view("footer-template.add_edit", compact("footer"));
@@ -89,31 +102,33 @@ class FooterTemplateController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if (!auth()->user()->can('edit footers')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $request->validate([
-            "name"=>"required",
-            "file"=>"nullable|file"
+            "name" => "required",
+            "file" => "nullable|file"
         ]);
 
         $footer = FooterTemplate::findOrFail($id);
 
-        if($request->hasFile("file")){
+        if ($request->hasFile("file")) {
 
-            if($footer->file){
+            if ($footer->file) {
                 Storage::disk("public")->delete($footer->file);
             }
 
 
-            $fileName="footer_".time()."_". $request->file("file")->getClientOriginalName();
+            $fileName = "footer_" . time() . "_" . $request->file("file")->getClientOriginalName();
             $filePath = $request->file("file")->storeAs("templates/footers", $fileName, "public");
 
             $footer->update([
-                "file"=>$filePath
+                "file" => $filePath
             ]);
-
         }
 
         $footer->update([
-            "name"=>$request->name
+            "name" => $request->name
         ]);
 
         return redirect()->route("footers.index")->withToastSuccess("Footer Template Updated Successfully");
@@ -127,16 +142,17 @@ class FooterTemplateController extends Controller
      */
     public function destroy($id)
     {
-        $footerTemplate=FooterTemplate::findOrFail($id);
+        if (!auth()->user()->can('delete footers')) {
+            return abort(403, "You don't have permission to access this page");
+        }
+        $footerTemplate = FooterTemplate::findOrFail($id);
 
-        if($footerTemplate->file){
+        if ($footerTemplate->file) {
             Storage::delete($footerTemplate->file);
         }
 
         $footerTemplate->delete();
 
         return redirect()->route("footers.index")->withToastSuccess("Footer Template Deleted Successfully");
-
-
     }
 }
