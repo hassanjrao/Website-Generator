@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\AboutSection;
+use App\Models\FeatureSection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-class AboutSectionController extends Controller
+class FeatureSectionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +15,9 @@ class AboutSectionController extends Controller
      */
     public function index()
     {
-        $aboutSections = AboutSection::latest()->get();
+        $featureSections = FeatureSection::latest()->get();
 
-        return view("about-sections.index", compact("aboutSections"));
+        return view("feature-sections.index", compact("featureSections"));
     }
 
     /**
@@ -27,9 +27,9 @@ class AboutSectionController extends Controller
      */
     public function create()
     {
-        $aboutSection = null;
+        $featureSection = null;
 
-        return view("about-sections.add_edit", compact("aboutSection"));
+        return view("feature-sections.add_edit", compact("featureSection"));
     }
 
     /**
@@ -45,15 +45,15 @@ class AboutSectionController extends Controller
             "file" => "required|file"
         ]);
 
-        $fileName = "about_" . time() . "_" . $request->file("file")->getClientOriginalName();
-        $filePath = $request->file("file")->storeAs("templates/about-sections", $fileName);
+        $fileName = "feature_" . time() . "_" . $request->file("file")->getClientOriginalName();
+        $filePath = $request->file("file")->storeAs("templates/feature-sections", $fileName);
 
-        AboutSection::create([
+        FeatureSection::create([
             "name" => $request->name,
             "file" => $filePath
         ]);
 
-        return redirect()->route("about-sections.index")->withToastSuccess("About Section Template Created Successfully");
+        return redirect()->route("feature-sections.index")->withToastSuccess("feature Section Template Created Successfully");
     }
 
     /**
@@ -75,9 +75,9 @@ class AboutSectionController extends Controller
      */
     public function edit($id)
     {
-        $aboutSection = AboutSection::findOrFail($id);
+        $featureSection = FeatureSection::findOrFail($id);
 
-        return view("about-sections.add_edit", compact("aboutSection"));
+        return view("feature-sections.add_edit", compact("featureSection"));
     }
 
     /**
@@ -94,27 +94,27 @@ class AboutSectionController extends Controller
             "file"=>"nullable|file"
         ]);
 
-        $aboutSection = AboutSection::findOrFail($id);
+        $featureSection = FeatureSection::findOrFail($id);
 
         if($request->hasFile("file")){
 
-            if($aboutSection->file){
-                Storage::delete($aboutSection->file);
+            if($featureSection->file){
+                Storage::delete($featureSection->file);
             }
 
-            $fileName = "about_" . time() . "_" . $request->file("file")->getClientOriginalName();
-            $filePath = $request->file("file")->storeAs("templates/about-sections", $fileName);
+            $fileName = "feature_" . time() . "_" . $request->file("file")->getClientOriginalName();
+            $filePath = $request->file("file")->storeAs("templates/feature-sections", $fileName);
 
-            $aboutSection->update([
+            $featureSection->update([
                 "file" => $filePath
-            ]);                                     
+            ]);
         }
 
-        $aboutSection->update([
+        $featureSection->update([
             "name" => $request->name
         ]);
 
-        return redirect()->route("about-sections.index")->withToastSuccess("About Section Template Updated Successfully");
+        return redirect()->route("feature-sections.index")->withToastSuccess("feature Section Template Updated Successfully");
 
 
     }
@@ -127,14 +127,14 @@ class AboutSectionController extends Controller
      */
     public function destroy($id)
     {
-        $aboutSection = AboutSection::findOrFail($id);
+        $featureSection = FeatureSection::findOrFail($id);
 
-        if($aboutSection->file){
-            Storage::delete($aboutSection->file);
+        if($featureSection->file){
+            Storage::delete($featureSection->file);
         }
 
-        $aboutSection->delete();
+        $featureSection->delete();
 
-        return redirect()->route("about-sections.index")->withToastSuccess("About Section Template Deleted Successfully");
+        return redirect()->route("feature-sections.index")->withToastSuccess("feature Section Template Deleted Successfully");
     }
 }

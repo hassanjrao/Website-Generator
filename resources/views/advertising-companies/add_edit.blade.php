@@ -18,7 +18,7 @@
                 <a href="{{ route('advertising-companies.index') }}" class="btn btn-primary push">All Advertising
                     Companies</a>
 
-
+                                                                            
             </div>
             <div class="block-content">
 

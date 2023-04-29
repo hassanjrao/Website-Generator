@@ -292,6 +292,18 @@
                                             <span class="nav-main-link-name">CTA Section</span>
                                         </a>
                                     </li>
+                                    <li class="nav-main-item">
+                                        <a class="nav-main-link {{ request()->segment(2) == 'contact-sections' ? ' active' : '' }}"
+                                            href="{{ route('contact-sections.index') }}">
+                                            <span class="nav-main-link-name">Contact Section</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-main-item">
+                                        <a class="nav-main-link {{ request()->segment(2) == 'feature-sections' ? ' active' : '' }}"
+                                            href="{{ route('feature-sections.index') }}">
+                                            <span class="nav-main-link-name">Feature Section</span>
+                                        </a>
+                                    </li>
                                 </ul>
                             </li>
                         @endif

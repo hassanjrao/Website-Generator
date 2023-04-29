@@ -105,6 +105,7 @@ class CtaSectionController extends Controller
                 Storage::delete($ctaSection->file);
             }
 
+                                                                
             $fileName = "cta_" . time() . "_" . $request->file("file")->getClientOriginalName();
             $filePath = $request->file("file")->storeAs("templates/cta-sections", $fileName);
 

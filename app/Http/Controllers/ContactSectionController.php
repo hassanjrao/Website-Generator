@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\AboutSection;
+use App\Models\ContactSection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-class AboutSectionController extends Controller
+class ContactSectionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +15,9 @@ class AboutSectionController extends Controller
      */
     public function index()
     {
-        $aboutSections = AboutSection::latest()->get();
+        $contactSections = ContactSection::latest()->get();
 
-        return view("about-sections.index", compact("aboutSections"));
+        return view("contact-sections.index", compact("contactSections"));
     }
 
     /**
@@ -27,9 +27,9 @@ class AboutSectionController extends Controller
      */
     public function create()
     {
-        $aboutSection = null;
+        $contactSection = null;
 
-        return view("about-sections.add_edit", compact("aboutSection"));
+        return view("contact-sections.add_edit", compact("contactSection"));
     }
 
     /**
@@ -45,15 +45,15 @@ class AboutSectionController extends Controller
             "file" => "required|file"
         ]);
 
-        $fileName = "about_" . time() . "_" . $request->file("file")->getClientOriginalName();
-        $filePath = $request->file("file")->storeAs("templates/about-sections", $fileName);
+        $fileName = "contact_" . time() . "_" . $request->file("file")->getClientOriginalName();
+        $filePath = $request->file("file")->storeAs("templates/contact-sections", $fileName);
 
-        AboutSection::create([
+        ContactSection::create([
             "name" => $request->name,
             "file" => $filePath
         ]);
 
-        return redirect()->route("about-sections.index")->withToastSuccess("About Section Template Created Successfully");
+        return redirect()->route("contact-sections.index")->withToastSuccess("contact Section Template Created Successfully");
     }
 
     /**
@@ -75,9 +75,9 @@ class AboutSectionController extends Controller
      */
     public function edit($id)
     {
-        $aboutSection = AboutSection::findOrFail($id);
+        $contactSection = ContactSection::findOrFail($id);
 
-        return view("about-sections.add_edit", compact("aboutSection"));
+        return view("contact-sections.add_edit", compact("contactSection"));
     }
 
     /**
@@ -94,27 +94,27 @@ class AboutSectionController extends Controller
             "file"=>"nullable|file"
         ]);
 
-        $aboutSection = AboutSection::findOrFail($id);
+        $contactSection = ContactSection::findOrFail($id);
 
         if($request->hasFile("file")){
 
-            if($aboutSection->file){
-                Storage::delete($aboutSection->file);
+            if($contactSection->file){
+                Storage::delete($contactSection->file);
             }
 
-            $fileName = "about_" . time() . "_" . $request->file("file")->getClientOriginalName();
-            $filePath = $request->file("file")->storeAs("templates/about-sections", $fileName);
+            $fileName = "contact_" . time() . "_" . $request->file("file")->getClientOriginalName();
+            $filePath = $request->file("file")->storeAs("templates/contact-sections", $fileName);
 
-            $aboutSection->update([
+            $contactSection->update([
                 "file" => $filePath
-            ]);                                     
+            ]);
         }
 
-        $aboutSection->update([
+        $contactSection->update([
             "name" => $request->name
         ]);
 
-        return redirect()->route("about-sections.index")->withToastSuccess("About Section Template Updated Successfully");
+        return redirect()->route("contact-sections.index")->withToastSuccess("contact Section Template Updated Successfully");
 
 
     }
@@ -127,14 +127,14 @@ class AboutSectionController extends Controller
      */
     public function destroy($id)
     {
-        $aboutSection = AboutSection::findOrFail($id);
+        $contactSection = ContactSection::findOrFail($id);
 
-        if($aboutSection->file){
-            Storage::delete($aboutSection->file);
+        if($contactSection->file){
+            Storage::delete($contactSection->file);
         }
 
-        $aboutSection->delete();
+        $contactSection->delete();
 
-        return redirect()->route("about-sections.index")->withToastSuccess("About Section Template Deleted Successfully");
+        return redirect()->route("contact-sections.index")->withToastSuccess("contact Section Template Deleted Successfully");
     }
 }

@@ -145,7 +145,7 @@ class RelatedProductSectionController extends Controller
         }
 
         $relatedProductSection->delete();
-
+                          
         return redirect()->route("related-product-sections.index")->withToastSuccess("Related Product Section Template Deleted Successfully");
     }
 }

@@ -25,7 +25,7 @@ class PopularProductSectionSeeder extends Seeder
             ];
 
         }
-
+                          
         PopularProductSection::insert($templates);
     }
 }

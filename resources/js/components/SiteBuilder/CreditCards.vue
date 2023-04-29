@@ -97,7 +97,7 @@
                                     </v-row>
 
                                     <!-- <v-img :src="creditCard.image" height="100px" width="100px"></v-img> -->
-                                </v-card-text>
+                                </v-card-text>                                       
                             </v-card>
 
 

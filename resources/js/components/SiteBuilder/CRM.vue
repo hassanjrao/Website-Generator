@@ -28,7 +28,7 @@
                             v-model="selectedAdvertisingCompany" required @input="$v.selectedAdvertisingCompany.$touch()"
                             :error-messages="selectedAdvertisingCompanyErrors"
                             @blur="$v.selectedAdvertisingCompany.$touch()"></v-autocomplete>
-
+                            
                     </v-col>
 
                     <v-col cols="12" sm="8" md="8" v-if="selectedAdvertisingCompany">

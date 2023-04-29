@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('cta_sections', function (Blueprint $table) {
-
+                                                                                                       
             $table->string("file")->nullable()->after("name");
             $table->softDeletes()->after("file");
 
@@ -31,7 +31,7 @@ return new class extends Migration
         Schema::table('cta_sections', function (Blueprint $table) {
             $table->dropColumn("file");
             $table->dropSoftDeletes();
-            
+
         });
     }
 };

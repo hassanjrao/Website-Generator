@@ -55,4 +55,13 @@ class SiteTemplate extends Model
     {
         return $this->belongsTo(CtaSection::class)->withTrashed();
     }
+
+    public function contactSection(){
+        return $this->belongsTo(ContactSection::class)->withTrashed();
+    }
+
+
+    public function featureSection(){
+        return $this->belongsTo(FeatureSection::class)->withTrashed();
+    }
 }

@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\AboutSectionController;
 use App\Http\Controllers\AdvertisingCompanyController;
+use App\Http\Controllers\ContactSectionController;
 use App\Http\Controllers\CtaSectionController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FeatureSectionController;
 use App\Http\Controllers\FooterTemplateController;
 use App\Http\Controllers\HeaderTemplateController;
 use App\Http\Controllers\HeroSectionController;
@@ -61,6 +63,8 @@ Route::middleware(["auth"])->group(function () {
         Route::resource("related-product-sections",RelatedProductSectionController::class);
         Route::resource("popular-product-sections",PopularProductSectionController::class);
         Route::resource("cta-sections",CtaSectionController::class);
+        Route::resource("contact-sections",ContactSectionController::class);
+        Route::resource("feature-sections",FeatureSectionController::class);
 
 
     });

@@ -199,8 +199,8 @@
       ?>
 
       <?php
-      if (file_exists('bp_config/includes/templates/contact_templates/contact_section' . $pageConfig['contact_section'] . '.php')) {
-          require 'bp_config/includes/templates/contact_templates/contact_section' . $pageConfig['contact_section'] . '.php';
+      if (file_exists('bp_config/includes/templates/contact_templates/' . $pageConfig['contact_section'])) {
+          require 'bp_config/includes/templates/contact_templates/' . $pageConfig['contact_section'];
       }
       ?>
 
@@ -211,8 +211,8 @@
       ?>
 
       <?php
-      if (file_exists('bp_config/includes/templates/features_templates/features_section' . $pageConfig['features_section'] . '.php')) {
-          require 'bp_config/includes/templates/features_templates/features_section' . $pageConfig['features_section'] . '.php';
+      if (file_exists('bp_config/includes/templates/features_templates/' . $pageConfig['features_section'])) {
+          require 'bp_config/includes/templates/features_templates/' . $pageConfig['features_section'];
       }
       ?>
 

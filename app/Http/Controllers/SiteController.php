@@ -660,7 +660,7 @@ class SiteController extends Controller
 
     public function getFeatureSections()
     {
-        $featureSections = FeatureSection::all();
+        $featureSections = FeatureSection::whereNotNull("file")->get();
         return $featureSections;
     }
 
@@ -679,7 +679,7 @@ class SiteController extends Controller
 
     public function getContactSections()
     {
-        $contactSections = ContactSection::all();
+        $contactSections = ContactSection::whereNotNull("file")->get();
         return $contactSections;
     }
 

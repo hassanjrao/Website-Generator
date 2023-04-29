@@ -13,11 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('popular_product_sections', function (Blueprint $table) {
-
+        Schema::table('contact_sections', function (Blueprint $table) {
             $table->string("file")->nullable()->after("name");
             $table->softDeletes()->after("file");
-                 
         });
     }
 
@@ -28,7 +26,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('popular_product_sections', function (Blueprint $table) {
+        Schema::table('contact_sections', function (Blueprint $table) {
             $table->dropColumn("file");
             $table->dropSoftDeletes();
 
