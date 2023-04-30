@@ -1,9 +1,14 @@
 <?php
 
 use App\Http\Controllers\AboutSectionController;
+use App\Http\Controllers\AboutUsDescriptionController;
+use App\Http\Controllers\AboutUsTitleController;
 use App\Http\Controllers\AdvertisingCompanyController;
+use App\Http\Controllers\ButtonTitleController;
 use App\Http\Controllers\CheckoutPageController;
+use App\Http\Controllers\ContactDescriptionController;
 use App\Http\Controllers\ContactSectionController;
+use App\Http\Controllers\ContactTitleController;
 use App\Http\Controllers\CtaSectionController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FeatureSectionController;
@@ -11,6 +16,7 @@ use App\Http\Controllers\FooterTemplateController;
 use App\Http\Controllers\HeaderTemplateController;
 use App\Http\Controllers\HeroSectionController;
 use App\Http\Controllers\PopularProductSectionController;
+use App\Http\Controllers\PopularTitleController;
 use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductPageController;
@@ -18,7 +24,10 @@ use App\Http\Controllers\ProductSectionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RelatedProductSectionController;
 use App\Http\Controllers\RoleManagementController;
+use App\Http\Controllers\ShopTitleController;
 use App\Http\Controllers\SiteController;
+use App\Http\Controllers\SloganController;
+use App\Http\Controllers\TagLineController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ZippedSiteController;
 use Illuminate\Support\Facades\Auth;
@@ -77,6 +86,17 @@ Route::middleware(["auth"])->group(function () {
 
 
 
+    Route::prefix("content")->group(function(){
+        Route::resource("slogans",SloganController::class);
+        Route::resource("tag-lines",TagLineController::class);
+        Route::resource("about-us-titles",AboutUsTitleController::class);
+        Route::resource("about-us-descriptions",AboutUsDescriptionController::class);
+        Route::resource("shop-titles",ShopTitleController::class);
+        Route::resource("button-titles",ButtonTitleController::class);
+        Route::resource("popular-titles",PopularTitleController::class);
+        Route::resource("contact-titles",ContactTitleController::class);
+        Route::resource("contact-descriptions",ContactDescriptionController::class);
+    });
 
 
 

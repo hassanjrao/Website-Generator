@@ -338,12 +338,11 @@
 
                         @if (auth()->user()->hasRole('super admin') ||
                                 auth()->user()->can('view product pages') ||
-                                auth()->user()->can('view checkout pages')
-                                )
+                                auth()->user()->can('view checkout pages'))
                             <li class="nav-main-item {{ request()->segment(1) == 'pages' ? ' open' : '' }}">
                                 <a class="nav-main-link {{ request()->segment(1) == 'pages' ? ' active' : '' }} nav-main-link-submenu"
                                     data-toggle="submenu" aria-haspopup="true" aria-expanded="false" href="#">
-                                    
+
                                     <i class="nav-main-link-icon fas fa-pager"></i>
                                     <span class="nav-main-link-name">Pages</span>
                                 </a>
@@ -363,6 +362,105 @@
                                             <a class="nav-main-link {{ request()->segment(2) == 'checkout-pages' ? ' active' : '' }}"
                                                 href="{{ route('checkout-pages.index') }}">
                                                 <span class="nav-main-link-name">Checkout</span>
+                                            </a>
+                                        </li>
+                                    @endcan
+
+
+                                </ul>
+
+                            </li>
+                        @endif
+
+                        @if (auth()->user()->hasRole('super admin') ||
+                                auth()->user()->can('view product pages') ||
+                                auth()->user()->can('view checkout pages'))
+                            <li class="nav-main-item {{ request()->segment(1) == 'content' ? ' open' : '' }}">
+                                <a class="nav-main-link {{ request()->segment(1) == 'content' ? ' active' : '' }} nav-main-link-submenu"
+                                    data-toggle="submenu" aria-haspopup="true" aria-expanded="false" href="#">
+
+                                    <i class="nav-main-link-icon fas fa-pager"></i>
+                                    <span class="nav-main-link-name">Content</span>
+                                </a>
+                                <ul class="nav-main-submenu">
+
+                                    @can('view product pages')
+                                        <li class="nav-main-item">
+                                            <a class="nav-main-link {{ request()->segment(2) == 'slogans' ? ' active' : '' }}"
+                                                href="{{ route('slogans.index') }}">
+                                                <span class="nav-main-link-name">Slogans</span>
+                                            </a>
+                                        </li>
+                                    @endcan
+
+                                    @can('view checkout pages')
+                                        <li class="nav-main-item">
+                                            <a class="nav-main-link {{ request()->segment(2) == 'tag-lines' ? ' active' : '' }}"
+                                                href="{{ route('tag-lines.index') }}">
+                                                <span class="nav-main-link-name">Tag Lines</span>
+                                            </a>
+                                        </li>
+                                    @endcan
+
+                                    @can('view checkout pages')
+                                        <li class="nav-main-item">
+                                            <a class="nav-main-link {{ request()->segment(2) == 'about-us-titles' ? ' active' : '' }}"
+                                                href="{{ route('about-us-titles.index') }}">
+                                                <span class="nav-main-link-name">About Us Titles</span>
+                                            </a>
+                                        </li>
+                                    @endcan
+
+                                    @can('view checkout pages')
+                                        <li class="nav-main-item">
+                                            <a class="nav-main-link {{ request()->segment(2) == 'about-us-descriptions' ? ' active' : '' }}"
+                                                href="{{ route('about-us-descriptions.index') }}">
+                                                <span class="nav-main-link-name">About Us Descriptions</span>
+                                            </a>
+                                        </li>
+                                    @endcan
+
+                                    @can('view checkout pages')
+                                        <li class="nav-main-item">
+                                            <a class="nav-main-link {{ request()->segment(2) == 'shop-titles' ? ' active' : '' }}"
+                                                href="{{ route('shop-titles.index') }}">
+                                                <span class="nav-main-link-name">Shop Titles</span>
+                                            </a>
+                                        </li>
+                                    @endcan
+
+                                    @can('view checkout pages')
+                                        <li class="nav-main-item">
+                                            <a class="nav-main-link {{ request()->segment(2) == 'button-titles' ? ' active' : '' }}"
+                                                href="{{ route('button-titles.index') }}">
+                                                <span class="nav-main-link-name">Button Titles</span>
+                                            </a>
+                                        </li>
+                                    @endcan
+
+                                    @can('view checkout pages')
+                                        <li class="nav-main-item">
+                                            <a class="nav-main-link {{ request()->segment(2) == 'popular-titles' ? ' active' : '' }}"
+                                                href="{{ route('popular-titles.index') }}">
+                                                <span class="nav-main-link-name">Popular Titles</span>
+                                            </a>
+                                        </li>
+                                    @endcan
+
+                                    @can('view checkout pages')
+                                        <li class="nav-main-item">
+                                            <a class="nav-main-link {{ request()->segment(2) == 'contact-titles' ? ' active' : '' }}"
+                                                href="{{ route('contact-titles.index') }}">
+                                                <span class="nav-main-link-name">Contact Titles</span>
+                                            </a>
+                                        </li>
+                                    @endcan
+
+                                    @can('view checkout pages')
+                                        <li class="nav-main-item">
+                                            <a class="nav-main-link {{ request()->segment(2) == 'contact-descriptions' ? ' active' : '' }}"
+                                                href="{{ route('contact-descriptions.index') }}">
+                                                <span class="nav-main-link-name">Contact Description</span>
                                             </a>
                                         </li>
                                     @endcan

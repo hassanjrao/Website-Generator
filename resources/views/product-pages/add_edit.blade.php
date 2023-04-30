@@ -56,7 +56,7 @@
                                         {{ $productPage->file }}
                                     </a>
                                 @endif
-
+                                                                                                                 
                                 <label class="form-label" for="label">File <span class="text-danger">{{ $productPage && $productPage->file ? "" : "*" }}</span></label>
                                 <input  {{ $productPage && $productPage->file ? "" : "required" }} type="file"
                                     class="form-control" id="file" name="file" placeholder="Enter file">

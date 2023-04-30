@@ -230,7 +230,7 @@ class RoleSeeder extends Seeder
         $superAdmin->givePermissionTo("edit checkout pages");
         $superAdmin->givePermissionTo("delete checkout pages");
 
-
+                           
 
 
 
