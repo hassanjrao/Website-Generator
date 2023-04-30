@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AboutSectionController;
 use App\Http\Controllers\AdvertisingCompanyController;
+use App\Http\Controllers\CheckoutPageController;
 use App\Http\Controllers\ContactSectionController;
 use App\Http\Controllers\CtaSectionController;
 use App\Http\Controllers\DashboardController;
@@ -12,6 +13,7 @@ use App\Http\Controllers\HeroSectionController;
 use App\Http\Controllers\PopularProductSectionController;
 use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProductPageController;
 use App\Http\Controllers\ProductSectionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RelatedProductSectionController;
@@ -54,7 +56,6 @@ Route::middleware(["auth"])->group(function () {
 
 
     Route::prefix("templates")->group(function(){
-
         Route::resource("headers",HeaderTemplateController::class);
         Route::resource("footers",FooterTemplateController::class);
         Route::resource("hero-sections",HeroSectionController::class);
@@ -65,12 +66,14 @@ Route::middleware(["auth"])->group(function () {
         Route::resource("cta-sections",CtaSectionController::class);
         Route::resource("contact-sections",ContactSectionController::class);
         Route::resource("feature-sections",FeatureSectionController::class);
-
-
     });
 
 
 
+    Route::prefix("pages")->group(function(){
+        Route::resource("product-pages",ProductPageController::class);
+        Route::resource("checkout-pages",CheckoutPageController::class);
+    });
 
 
 

@@ -155,8 +155,8 @@ class ZippedSiteController extends Controller
                 'features_section' => $siteTemplate->featureSection->file_name,
                 'footer_template' => $siteTemplate->footerTemplate->file_name,
 
-                'product_page' => $siteTemplate->product_page_id,
-                'checkout_page' => $siteTemplate->checkout_page_id,
+                'product_page' => $siteTemplate->productPage->file_name,
+                'checkout_page' => $siteTemplate->checkoutPage->file_name,
 
                 // If you want to hide any section select 0
 
@@ -336,6 +336,15 @@ class ZippedSiteController extends Controller
             // add features section template file
             $featuresSectionFile = [$siteTemplate->featureSection->file];
             $this->addFiles($newProjectDestination . DIRECTORY_SEPARATOR . 'bp_config' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'features_templates', $featuresSectionFile);
+
+            // add product page template file
+            $productPageFile = [$siteTemplate->productPage->file];
+            $this->addFiles($newProjectDestination . DIRECTORY_SEPARATOR . 'bp_config' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'product_page_templates', $productPageFile);
+
+            // add checkout page template file
+            $checkoutPageFile = [$siteTemplate->checkoutPage->file];
+            $this->addFiles($newProjectDestination . DIRECTORY_SEPARATOR . 'bp_config' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'checkout_page_templates', $checkoutPageFile);
+
 
 
             $siteImages = [];

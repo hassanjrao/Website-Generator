@@ -121,6 +121,22 @@ class RoleSeeder extends Seeder
         Permission::firstOrCreate(["name" => "delete feature sections"]);
 
 
+        // product pages manangement permissions
+        Permission::firstOrCreate(["name" => "view product pages"]);
+        Permission::firstOrCreate(["name" => "create product pages"]);
+        Permission::firstOrCreate(["name" => "edit product pages"]);
+        Permission::firstOrCreate(["name" => "delete product pages"]);
+
+        // checkout pages manangement permissions
+        Permission::firstOrCreate(["name" => "view checkout pages"]);
+        Permission::firstOrCreate(["name" => "create checkout pages"]);
+        Permission::firstOrCreate(["name" => "edit checkout pages"]);
+        Permission::firstOrCreate(["name" => "delete checkout pages"]);
+
+
+
+
+
         // assign permissions to roles
 
         // super admin
@@ -204,7 +220,17 @@ class RoleSeeder extends Seeder
         $superAdmin->givePermissionTo("edit feature sections");
         $superAdmin->givePermissionTo("delete feature sections");
 
-        
+        $superAdmin->givePermissionTo("view product pages");
+        $superAdmin->givePermissionTo("create product pages");
+        $superAdmin->givePermissionTo("edit product pages");
+        $superAdmin->givePermissionTo("delete product pages");
+
+        $superAdmin->givePermissionTo("view checkout pages");
+        $superAdmin->givePermissionTo("create checkout pages");
+        $superAdmin->givePermissionTo("edit checkout pages");
+        $superAdmin->givePermissionTo("delete checkout pages");
+
+
 
 
 

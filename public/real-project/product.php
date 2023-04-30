@@ -213,8 +213,8 @@ if (file_exists('bp_config/includes/templates/headers/' . $pageConfig['header_te
 
 
         <?php
-            if (file_exists('bp_config/includes/templates/product_page_templates/product_page' . $pageConfig['product_page'] . '.php')) {
-                require 'bp_config/includes/templates/product_page_templates/product_page' . $pageConfig['product_page'] . '.php';
+            if (file_exists('bp_config/includes/templates/product_page_templates/' . $pageConfig['product_page'])) {
+                require 'bp_config/includes/templates/product_page_templates/' . $pageConfig['product_page'];
             }
         ?>
 

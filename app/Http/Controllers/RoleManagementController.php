@@ -94,6 +94,9 @@ class RoleManagementController extends Controller
         $permissions = $permissions->groupBy(function ($permission) use ($role) {
             $permissionName = explode(" ", $permission->name);
             $permission->hasPermission = $role->hasPermissionTo($permission->name);
+            if(isset($permissionName[2])){
+                return  $permissionName[1]." ".$permissionName[2];
+            }
             return $permissionName[1];
         });
 

@@ -642,13 +642,13 @@ class SiteController extends Controller
 
     public function getCheckoutPages()
     {
-        $checkoutPages = CheckoutPage::all();
+        $checkoutPages = CheckoutPage::whereNotNull("file")->get();
         return $checkoutPages;
     }
 
     public function getProductPages()
     {
-        $productPages = ProductPage::all();
+        $productPages = ProductPage::whereNotNull("file")->get();
         return $productPages;
     }
 

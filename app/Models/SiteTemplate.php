@@ -64,4 +64,12 @@ class SiteTemplate extends Model
     public function featureSection(){
         return $this->belongsTo(FeatureSection::class)->withTrashed();
     }
+
+    public function productPage(){
+        return $this->belongsTo(ProductPage::class)->withTrashed();
+    }
+
+    public function checkoutPage(){
+        return $this->belongsTo(CheckoutPage::class)->withTrashed();
+    }
 }

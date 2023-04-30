@@ -336,6 +336,41 @@
                             </li>
                         @endif
 
+                        @if (auth()->user()->hasRole('super admin') ||
+                                auth()->user()->can('view product pages') ||
+                                auth()->user()->can('view checkout pages')
+                                )
+                            <li class="nav-main-item {{ request()->segment(1) == 'pages' ? ' open' : '' }}">
+                                <a class="nav-main-link {{ request()->segment(1) == 'pages' ? ' active' : '' }} nav-main-link-submenu"
+                                    data-toggle="submenu" aria-haspopup="true" aria-expanded="false" href="#">
+                                    <i class="nav-main-link-icon si si-energy"></i>
+                                    <span class="nav-main-link-name">Pages</span>
+                                </a>
+                                <ul class="nav-main-submenu">
+
+                                    @can('view product pages')
+                                        <li class="nav-main-item">
+                                            <a class="nav-main-link {{ request()->segment(2) == 'product-pages' ? ' active' : '' }}"
+                                                href="{{ route('product-pages.index') }}">
+                                                <span class="nav-main-link-name">Product</span>
+                                            </a>
+                                        </li>
+                                    @endcan
+
+                                    @can('view checkout pages')
+                                        <li class="nav-main-item">
+                                            <a class="nav-main-link {{ request()->segment(2) == 'checkout-pages' ? ' active' : '' }}"
+                                                href="{{ route('checkout-pages.index') }}">
+                                                <span class="nav-main-link-name">Checkout</span>
+                                            </a>
+                                        </li>
+                                    @endcan
+
+
+                                </ul>
+
+                            </li>
+                        @endif
 
 
                     </ul>

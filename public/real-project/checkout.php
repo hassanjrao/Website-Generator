@@ -282,8 +282,8 @@ if (isset($_POST['firstName'])) {
     </script>
 
     <?php
-    if (file_exists('bp_config/includes/templates/checkout_page_templates/checkout_page' . $pageConfig['checkout_page'] . '.php')) {
-        require 'bp_config/includes/templates/checkout_page_templates/checkout_page' . $pageConfig['checkout_page'] . '.php';
+    if (file_exists('bp_config/includes/templates/checkout_page_templates/' . $pageConfig['checkout_page'] )) {
+        require 'bp_config/includes/templates/checkout_page_templates/' . $pageConfig['checkout_page'] ;
     }
     ?>
 
