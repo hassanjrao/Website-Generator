@@ -343,7 +343,8 @@
                             <li class="nav-main-item {{ request()->segment(1) == 'pages' ? ' open' : '' }}">
                                 <a class="nav-main-link {{ request()->segment(1) == 'pages' ? ' active' : '' }} nav-main-link-submenu"
                                     data-toggle="submenu" aria-haspopup="true" aria-expanded="false" href="#">
-                                    <i class="nav-main-link-icon si si-energy"></i>
+                                    
+                                    <i class="nav-main-link-icon fas fa-pager"></i>
                                     <span class="nav-main-link-name">Pages</span>
                                 </a>
                                 <ul class="nav-main-submenu">
