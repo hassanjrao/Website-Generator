@@ -46,6 +46,8 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes(['register' => false]);
 
+Route::get("test-ftp", [ZippedSiteController::class,"uploadToServer"]);
+
 Route::middleware(["auth"])->group(function () {
     Route::get('/', [DashboardController::class,"index"])->name('dashboard.index');
 
@@ -128,6 +130,8 @@ Route::middleware(["auth"])->group(function () {
 
 
         Route::get("download/{site}", [ZippedSiteController::class,"download"])->name("sites.download");
+
+        Route::post("upload-to-server", [ZippedSiteController::class,"uploadToServer"])->name("sites.uploadToServer");
 
 
 
