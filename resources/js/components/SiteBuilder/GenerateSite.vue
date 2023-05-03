@@ -29,7 +29,7 @@
 
                     </v-col>
 
-                    <!-- <v-col cols="12" sm="6" md="6" class="mt-4">
+                    <v-col cols="12" sm="6" md="6" class="mt-4">
 
                         <v-row class="border border-primary px-4">
                             <v-col cols="12" sm="6" md="6">
@@ -60,7 +60,7 @@
 
 
 
-                    </v-col> -->
+                    </v-col>
 
 
                 </v-row>
@@ -180,16 +180,12 @@ export default {
             }).then(response => {
                 this.loading = false;
                 console.log(response);
-                if (response.data.success) {
-                    alert.showSuccess(response.data.message);
-                    this.downloadAble = true;
-                } else {
-                    alert.showError(response.data.message);
-                }
+
+                this.showStatus(response.data.message,"success");
             }).catch(error => {
                 this.loading = false;
                 console.log(error);
-                alert.showError(error.message);
+                this.showStatus(error.response.data.message,"error");
             });
         }
     },

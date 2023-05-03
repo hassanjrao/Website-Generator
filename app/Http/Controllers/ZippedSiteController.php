@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\SiteUploadJob;
 use App\Models\CreditCard;
 use App\Models\Site;
+use App\Notifications\SiteUploadStartedNotification;
+use App\Notifications\SiteUploadStatusNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Response;
@@ -575,40 +578,26 @@ class ZippedSiteController extends Controller
             'host' => 'ftp.yagaskilz.com',
             'username' => 'hsn2@yagaskilz.com',
             'password' => 'BHa9U8gNIA=A',
-            'root' => '/sites'
+            'root' => '/sites',
+            // 'port' => 21,
+            'timout' => 30,
         ];
-
-        $server = Storage::createFtpDriver($serverDetails);
 
 
         $path = $this->download($request->site_id, true);
 
-        // make max execution time unlimited
-        ini_set('max_execution_time', 0);
+        $site=Site::find($request->site_id);
 
 
-        // upload each file and folder to the server
+        auth()->user()->notify(new SiteUploadStatusNotification($site));
 
-        $files = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path));
+        return;
 
-        $folderName = basename($path);
+        SiteUploadJob::dispatch($path,$serverDetails,auth()->user(),$site);
 
-        foreach ($files as $name => $file) {
 
-            // We're skipping all subfolders
-            if (!$file->isDir()) {
-                $filePath     = $file->getRealPath();
-
-                // extracting filename with substr/strlen
-
-                $relativePath =  substr($filePath, strlen($path) + 1);
-
-                $relativePathArr = explode(DIRECTORY_SEPARATOR, $relativePath);
-
-                $relativePath = implode(DIRECTORY_SEPARATOR, array_slice($relativePathArr, 1));
-
-                $server->put($relativePath, $filePath);
-            }
-        }
+        // return response()->json([
+        //     "message" => "Site is being uploaded to the server",
+        // ],200);
     }
 }

@@ -15,6 +15,7 @@ use App\Http\Controllers\FeatureSectionController;
 use App\Http\Controllers\FooterTemplateController;
 use App\Http\Controllers\HeaderTemplateController;
 use App\Http\Controllers\HeroSectionController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PopularProductSectionController;
 use App\Http\Controllers\PopularTitleController;
 use App\Http\Controllers\ProductCategoryController;
@@ -30,6 +31,7 @@ use App\Http\Controllers\SloganController;
 use App\Http\Controllers\TagLineController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ZippedSiteController;
+use App\Notifications\SiteUploadStatusNotification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -46,7 +48,22 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes(['register' => false]);
 
-Route::get("test-ftp", [ZippedSiteController::class,"uploadToServer"]);
+Route::get("test", function(){
+    $site= \App\Models\Site::find(1);
+
+    $user=\App\Models\User::find(1);
+
+    $user->notify(new SiteUploadStatusNotification($site));
+
+    dd("done");
+
+    $advertisingCompanies= \App\Models\AdvertisingCompany::all();
+
+    return view("advertising-companies.index", compact("advertisingCompanies"));
+
+    // dd("done");
+
+});
 
 Route::middleware(["auth"])->group(function () {
     Route::get('/', [DashboardController::class,"index"])->name('dashboard.index');
@@ -101,6 +118,7 @@ Route::middleware(["auth"])->group(function () {
     });
 
 
+    Route::resource("notifications",NotificationController::class);
 
 
 

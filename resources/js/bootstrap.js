@@ -30,3 +30,45 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+import Echo from 'laravel-echo';
+import Pusher from 'pusher-js';
+
+window.Pusher = Pusher;
+
+window.Pusher.log = function(message){
+    window.console.log(message);
+ }
+
+window.Echo = new Echo({
+    broadcaster: "pusher",
+    key: process.env.MIX_PUSHER_APP_KEY,
+    cluster: process.env.MIX_PUSHER_APP_CLUSTER,
+    forceTLS: false,
+    encrypted: true,
+});
+console.log("pusher",'App.Models.User.',process.env.MIX_PUSHER_APP_KEY,process.env.MIX_PUSHER_APP_CLUSTER,process.env.MIX_PUSHER_APP_CLUSTER);
+
+console.log('App.Models.User.' + window.userId)
+
+window.Echo.private('App.Models.User.1')
+    .notification((notification) => {
+        console.log("notification",notification);
+
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
+
+        Toast.fire({
+            icon: notification.data.status,
+            title: notification.data.message,
+        })
+
+    });

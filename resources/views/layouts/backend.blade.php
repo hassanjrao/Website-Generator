@@ -33,7 +33,10 @@
     <!-- Scripts -->
     <script>
         window.Laravel = {!! json_encode(['csrfToken' => csrf_token()]) !!};
+        window.userId = {{  auth()->user()->id  }};
     </script>
+
+
 </head>
 
 <body>
@@ -381,8 +384,7 @@
                                 auth()->user()->can('view button titles') ||
                                 auth()->user()->can('view popular titles') ||
                                 auth()->user()->can('view contact titles') ||
-                                auth()->user()->can('view contact descriptions')
-                                )
+                                auth()->user()->can('view contact descriptions'))
                             <li class="nav-main-item {{ request()->segment(1) == 'content' ? ' open' : '' }}">
                                 <a class="nav-main-link {{ request()->segment(1) == 'content' ? ' active' : '' }} nav-main-link-submenu"
                                     data-toggle="submenu" aria-haspopup="true" aria-expanded="false" href="#">
@@ -576,8 +578,8 @@
                     <!-- END User Dropdown -->
 
                     <!-- Notifications Dropdown -->
-                    {{-- <div class="dropdown d-inline-block ms-2">
-                        <button type="button" class="btn btn-sm btn-alt-secondary"
+                    <div class="dropdown d-inline-block ms-2">
+                        <button type="button" onclick="getNotifications()" class="btn btn-sm btn-alt-secondary"
                             id="page-header-notifications-dropdown" data-bs-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false">
                             <i class="fa fa-fw fa-bell"></i>
@@ -600,17 +602,7 @@
                                         </div>
                                     </a>
                                 </li>
-                                <li>
-                                    <a class="text-dark d-flex py-2" href="javascript:void(0)">
-                                        <div class="flex-shrink-0 me-2 ms-3">
-                                            <i class="fa fa-fw fa-plus-circle text-primary"></i>
-                                        </div>
-                                        <div class="flex-grow-1 pe-2">
-                                            <div class="fw-semibold">1 new sale, keep it up</div>
-                                            <span class="fw-medium text-muted">22 min ago</span>
-                                        </div>
-                                    </a>
-                                </li>
+
                                 <li>
                                     <a class="text-dark d-flex py-2" href="javascript:void(0)">
                                         <div class="flex-shrink-0 me-2 ms-3">
@@ -622,39 +614,7 @@
                                         </div>
                                     </a>
                                 </li>
-                                <li>
-                                    <a class="text-dark d-flex py-2" href="javascript:void(0)">
-                                        <div class="flex-shrink-0 me-2 ms-3">
-                                            <i class="fa fa-fw fa-plus-circle text-primary"></i>
-                                        </div>
-                                        <div class="flex-grow-1 pe-2">
-                                            <div class="fw-semibold">2 new sales, keep it up</div>
-                                            <span class="fw-medium text-muted">33 min ago</span>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="text-dark d-flex py-2" href="javascript:void(0)">
-                                        <div class="flex-shrink-0 me-2 ms-3">
-                                            <i class="fa fa-fw fa-user-plus text-success"></i>
-                                        </div>
-                                        <div class="flex-grow-1 pe-2">
-                                            <div class="fw-semibold">You have a new subscriber</div>
-                                            <span class="fw-medium text-muted">41 min ago</span>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="text-dark d-flex py-2" href="javascript:void(0)">
-                                        <div class="flex-shrink-0 me-2 ms-3">
-                                            <i class="fa fa-fw fa-check-circle text-success"></i>
-                                        </div>
-                                        <div class="flex-grow-1 pe-2">
-                                            <div class="fw-semibold">You have a new follower</div>
-                                            <span class="fw-medium text-muted">42 min ago</span>
-                                        </div>
-                                    </a>
-                                </li>
+
                             </ul>
                             <div class="p-2 border-top text-center">
                                 <a class="d-inline-block fw-medium" href="javascript:void(0)">
@@ -662,7 +622,7 @@
                                 </a>
                             </div>
                         </div>
-                    </div> --}}
+                    </div>
                     <!-- END Notifications Dropdown -->
 
                     <!-- Toggle Side Overlay -->
@@ -860,7 +820,22 @@
                 }
             })
         }
+
+        function getNotifications() {
+
+            $.ajax({
+                url: "{{ route('notifications.index') }}",
+                type: "GET",
+                success: function(data) {
+                    console.log(data);
+                    // $("#notifications").html(data);
+                }
+            });
+
+        }
     </script>
+
+
 </body>
 
 </html>
