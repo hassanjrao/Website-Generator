@@ -134,6 +134,60 @@ class RoleSeeder extends Seeder
         Permission::firstOrCreate(["name" => "delete checkout pages"]);
 
 
+        // slogans manangement permissions
+        Permission::firstOrCreate(["name" => "view slogans"]);
+        Permission::firstOrCreate(["name" => "create slogans"]);
+        Permission::firstOrCreate(["name" => "edit slogans"]);
+        Permission::firstOrCreate(["name" => "delete slogans"]);
+
+        // taglines manangement permissions
+        Permission::firstOrCreate(["name" => "view taglines"]);
+        Permission::firstOrCreate(["name" => "create taglines"]);
+        Permission::firstOrCreate(["name" => "edit taglines"]);
+        Permission::firstOrCreate(["name" => "delete taglines"]);
+
+        // aboutus titles manangement permissions
+        Permission::firstOrCreate(["name" => "view aboutus titles"]);
+        Permission::firstOrCreate(["name" => "create aboutus titles"]);
+        Permission::firstOrCreate(["name" => "edit aboutus titles"]);
+        Permission::firstOrCreate(["name" => "delete aboutus titles"]);
+
+        // aboutus descriptions manangement permissions
+        Permission::firstOrCreate(["name" => "view aboutus descriptions"]);
+        Permission::firstOrCreate(["name" => "create aboutus descriptions"]);
+        Permission::firstOrCreate(["name" => "edit aboutus descriptions"]);
+        Permission::firstOrCreate(["name" => "delete aboutus descriptions"]);
+
+        // shop titles manangement permissions
+        Permission::firstOrCreate(["name" => "view shop titles"]);
+        Permission::firstOrCreate(["name" => "create shop titles"]);
+        Permission::firstOrCreate(["name" => "edit shop titles"]);
+        Permission::firstOrCreate(["name" => "delete shop titles"]);
+
+        // button titles manangement permissions
+        Permission::firstOrCreate(["name" => "view button titles"]);
+        Permission::firstOrCreate(["name" => "create button titles"]);
+        Permission::firstOrCreate(["name" => "edit button titles"]);
+        Permission::firstOrCreate(["name" => "delete button titles"]);
+
+        // popular titles manangement permissions
+        Permission::firstOrCreate(["name" => "view popular titles"]);
+        Permission::firstOrCreate(["name" => "create popular titles"]);
+        Permission::firstOrCreate(["name" => "edit popular titles"]);
+        Permission::firstOrCreate(["name" => "delete popular titles"]);
+
+        // contact titles manangement permissions
+        Permission::firstOrCreate(["name" => "view contact titles"]);
+        Permission::firstOrCreate(["name" => "create contact titles"]);
+        Permission::firstOrCreate(["name" => "edit contact titles"]);
+        Permission::firstOrCreate(["name" => "delete contact titles"]);
+
+        // contact descriptions manangement permissions
+        Permission::firstOrCreate(["name" => "view contact descriptions"]);
+        Permission::firstOrCreate(["name" => "create contact descriptions"]);
+        Permission::firstOrCreate(["name" => "edit contact descriptions"]);
+        Permission::firstOrCreate(["name" => "delete contact descriptions"]);
+
 
 
 
@@ -230,7 +284,56 @@ class RoleSeeder extends Seeder
         $superAdmin->givePermissionTo("edit checkout pages");
         $superAdmin->givePermissionTo("delete checkout pages");
 
-                           
+
+        $superAdmin->givePermissionTo("view slogans");
+        $superAdmin->givePermissionTo("create slogans");
+        $superAdmin->givePermissionTo("edit slogans");
+        $superAdmin->givePermissionTo("delete slogans");
+
+        $superAdmin->givePermissionTo("view taglines");
+        $superAdmin->givePermissionTo("create taglines");
+        $superAdmin->givePermissionTo("edit taglines");
+        $superAdmin->givePermissionTo("delete taglines");
+
+        $superAdmin->givePermissionTo("view aboutus titles");
+        $superAdmin->givePermissionTo("create aboutus titles");
+        $superAdmin->givePermissionTo("edit aboutus titles");
+        $superAdmin->givePermissionTo("delete aboutus titles");
+
+        $superAdmin->givePermissionTo("view aboutus descriptions");
+        $superAdmin->givePermissionTo("create aboutus descriptions");
+        $superAdmin->givePermissionTo("edit aboutus descriptions");
+        $superAdmin->givePermissionTo("delete aboutus descriptions");
+
+        $superAdmin->givePermissionTo("view shop titles");
+        $superAdmin->givePermissionTo("create shop titles");
+        $superAdmin->givePermissionTo("edit shop titles");
+        $superAdmin->givePermissionTo("delete shop titles");
+
+        $superAdmin->givePermissionTo("view button titles");
+        $superAdmin->givePermissionTo("create button titles");
+        $superAdmin->givePermissionTo("edit button titles");
+        $superAdmin->givePermissionTo("delete button titles");
+
+        $superAdmin->givePermissionTo("view popular titles");
+        $superAdmin->givePermissionTo("create popular titles");
+        $superAdmin->givePermissionTo("edit popular titles");
+        $superAdmin->givePermissionTo("delete popular titles");
+
+        $superAdmin->givePermissionTo("view contact titles");
+        $superAdmin->givePermissionTo("create contact titles");
+        $superAdmin->givePermissionTo("edit contact titles");
+        $superAdmin->givePermissionTo("delete contact titles");
+
+
+
+        $superAdmin->givePermissionTo("view contact descriptions");
+        $superAdmin->givePermissionTo("create contact descriptions");
+        $superAdmin->givePermissionTo("edit contact descriptions");
+        $superAdmin->givePermissionTo("delete contact descriptions");
+
+
+
 
 
 

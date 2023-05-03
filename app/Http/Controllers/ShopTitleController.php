@@ -14,6 +14,9 @@ class ShopTitleController extends Controller
      */
     public function index()
     {
+        if (!auth()->user()->can('view shop titles')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $shopTitles=ShopTitle::latest()->get();
 
         return view("shop-titles.index",compact("shopTitles"));
@@ -26,6 +29,9 @@ class ShopTitleController extends Controller
      */
     public function create()
     {
+        if (!auth()->user()->can('create shop titles')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $shopTitle=null;
 
         return view("shop-titles.add_edit",compact("shopTitle"));
@@ -39,6 +45,9 @@ class ShopTitleController extends Controller
      */
     public function store(Request $request)
     {
+        if (!auth()->user()->can('create shop titles')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $request->validate([
             "title"=>"required"
         ]);
@@ -69,6 +78,9 @@ class ShopTitleController extends Controller
      */
     public function edit($id)
     {
+        if (!auth()->user()->can('edit shop titles')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $shopTitle=ShopTitle::findOrFail($id);
 
         return view("shop-titles.add_edit",compact("shopTitle"));
@@ -83,6 +95,9 @@ class ShopTitleController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if (!auth()->user()->can('edit shop titles')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $request->validate([
             "title"=>"required"
         ]);
@@ -104,6 +119,9 @@ class ShopTitleController extends Controller
      */
     public function destroy($id)
     {
+        if (!auth()->user()->can('delete shop titles')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $shopTitle=ShopTitle::findOrFail($id);
 
         $shopTitle->delete();

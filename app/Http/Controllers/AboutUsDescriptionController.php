@@ -14,6 +14,9 @@ class AboutUsDescriptionController extends Controller
      */
     public function index()
     {
+        if (!auth()->user()->can('view aboutus descriptions')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $aboutUsDescriptions=AboutUsDescription::latest()->get();
 
         return view("about-us-descriptions.index",compact("aboutUsDescriptions"));
@@ -26,6 +29,9 @@ class AboutUsDescriptionController extends Controller
      */
     public function create()
     {
+        if (!auth()->user()->can('create aboutus descriptions')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $aboutUsDescription=null;
 
         return view("about-us-descriptions.add_edit",compact("aboutUsDescription"));
@@ -39,6 +45,9 @@ class AboutUsDescriptionController extends Controller
      */
     public function store(Request $request)
     {
+        if (!auth()->user()->can('create aboutus descriptions')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $request->validate([
             "description"=>"required"
         ]);
@@ -69,6 +78,9 @@ class AboutUsDescriptionController extends Controller
      */
     public function edit($id)
     {
+        if (!auth()->user()->can('edit aboutus descriptions')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $aboutUsDescription=AboutUsDescription::findOrFail($id);
 
         return view("about-us-descriptions.add_edit",compact("aboutUsDescription"));
@@ -83,6 +95,9 @@ class AboutUsDescriptionController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if (!auth()->user()->can('edit aboutus descriptions')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $request->validate([
             "description"=>"required"
         ]);
@@ -104,6 +119,9 @@ class AboutUsDescriptionController extends Controller
      */
     public function destroy($id)
     {
+        if (!auth()->user()->can('delete aboutus descriptions')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $aboutUsDescription=AboutUsDescription::findOrFail($id);
 
         $aboutUsDescription->delete();

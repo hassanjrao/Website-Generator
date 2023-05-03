@@ -14,6 +14,9 @@ class ContactTitleController extends Controller
      */
     public function index()
     {
+        if (!auth()->user()->can('view contact titles')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $contactTitles=ContactTitle::latest()->get();
 
         return view("contact-titles.index",compact("contactTitles"));
@@ -26,6 +29,9 @@ class ContactTitleController extends Controller
      */
     public function create()
     {
+        if (!auth()->user()->can('create contact titles')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $contactTitle=null;
 
         return view("contact-titles.add_edit",compact("contactTitle"));
@@ -39,6 +45,9 @@ class ContactTitleController extends Controller
      */
     public function store(Request $request)
     {
+        if (!auth()->user()->can('create contact titles')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $request->validate([
             "title"=>"required"
         ]);
@@ -69,6 +78,9 @@ class ContactTitleController extends Controller
      */
     public function edit($id)
     {
+        if (!auth()->user()->can('edit contact titles')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $contactTitle=ContactTitle::findOrFail($id);
 
         return view("contact-titles.add_edit",compact("contactTitle"));
@@ -83,6 +95,9 @@ class ContactTitleController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if (!auth()->user()->can('edit contact titles')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $request->validate([
             "title"=>"required"
         ]);
@@ -104,6 +119,9 @@ class ContactTitleController extends Controller
      */
     public function destroy($id)
     {
+        if (!auth()->user()->can('delete contact titles')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $contactTitle=ContactTitle::findOrFail($id);
 
         $contactTitle->delete();

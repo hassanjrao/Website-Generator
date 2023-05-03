@@ -14,6 +14,12 @@ class SloganController extends Controller
      */
     public function index()
     {
+
+        if (!auth()->user()->can('view slogans')) {
+            return abort(403, "You don't have permission to access this page");
+        }
+
+
         $slogans=Slogan::latest()->get();
 
         return view("slogans.index",compact("slogans"));
@@ -26,6 +32,9 @@ class SloganController extends Controller
      */
     public function create()
     {
+        if (!auth()->user()->can('create slogans')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $slogan=null;
 
         return view("slogans.add_edit",compact("slogan"));
@@ -39,6 +48,9 @@ class SloganController extends Controller
      */
     public function store(Request $request)
     {
+        if (!auth()->user()->can('create slogans')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $request->validate([
             "title"=>"required"
         ]);
@@ -69,6 +81,9 @@ class SloganController extends Controller
      */
     public function edit($id)
     {
+        if (!auth()->user()->can('edit slogans')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $slogan=Slogan::findOrFail($id);
 
         return view("slogans.add_edit",compact("slogan"));
@@ -83,6 +98,9 @@ class SloganController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if (!auth()->user()->can('edit slogans')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $request->validate([
             "title"=>"required"
         ]);
@@ -104,6 +122,9 @@ class SloganController extends Controller
      */
     public function destroy($id)
     {
+        if (!auth()->user()->can('delete slogans')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $slogan=Slogan::findOrFail($id);
 
         $slogan->delete();

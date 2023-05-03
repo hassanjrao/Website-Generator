@@ -14,6 +14,9 @@ class AboutUsTitleController extends Controller
      */
     public function index()
     {
+        if (!auth()->user()->can('view aboutus titles')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $aboutUsTitles=AboutUsTitle::latest()->get();
 
         return view("about-us-titles.index",compact("aboutUsTitles"));
@@ -26,6 +29,9 @@ class AboutUsTitleController extends Controller
      */
     public function create()
     {
+        if (!auth()->user()->can('create aboutus titles')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $aboutUsTitle=null;
 
         return view("about-us-titles.add_edit",compact("aboutUsTitle"));
@@ -39,6 +45,9 @@ class AboutUsTitleController extends Controller
      */
     public function store(Request $request)
     {
+        if (!auth()->user()->can('create aboutus titles')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $request->validate([
             "title"=>"required"
         ]);
@@ -69,6 +78,9 @@ class AboutUsTitleController extends Controller
      */
     public function edit($id)
     {
+        if (!auth()->user()->can('edit aboutus titles')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $aboutUsTitle=AboutUsTitle::findOrFail($id);
 
         return view("about-us-titles.add_edit",compact("aboutUsTitle"));
@@ -83,6 +95,9 @@ class AboutUsTitleController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if (!auth()->user()->can('edit aboutus titles')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $request->validate([
             "title"=>"required"
         ]);
@@ -104,6 +119,9 @@ class AboutUsTitleController extends Controller
      */
     public function destroy($id)
     {
+        if (!auth()->user()->can('delete aboutus titles')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $aboutUsTitle=AboutUsTitle::findOrFail($id);
 
         $aboutUsTitle->delete();

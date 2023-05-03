@@ -14,6 +14,9 @@ class ButtonTitleController extends Controller
      */
     public function index()
     {
+        if (!auth()->user()->can('view button titles')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $buttonTitles=ButtonName::latest()->get();
 
         return view("button-titles.index",compact("buttonTitles"));
@@ -26,6 +29,10 @@ class ButtonTitleController extends Controller
      */
     public function create()
     {
+
+        if (!auth()->user()->can('create button titles')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $buttonTitle=null;
 
         return view("button-titles.add_edit",compact("buttonTitle"));
@@ -39,6 +46,10 @@ class ButtonTitleController extends Controller
      */
     public function store(Request $request)
     {
+
+        if (!auth()->user()->can('create button titles')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $request->validate([
             "title"=>"required"
         ]);
@@ -69,6 +80,10 @@ class ButtonTitleController extends Controller
      */
     public function edit($id)
     {
+
+        if (!auth()->user()->can('edit button titles')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $buttonTitle=ButtonName::findOrFail($id);
 
         return view("button-titles.add_edit",compact("buttonTitle"));
@@ -83,6 +98,10 @@ class ButtonTitleController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+        if (!auth()->user()->can('edit button titles')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $request->validate([
             "title"=>"required"
         ]);
@@ -104,6 +123,10 @@ class ButtonTitleController extends Controller
      */
     public function destroy($id)
     {
+
+        if (!auth()->user()->can('delete button titles')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $buttonTitle=ButtonName::findOrFail($id);
 
         $buttonTitle->delete();

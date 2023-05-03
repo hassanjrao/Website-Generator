@@ -19,9 +19,9 @@
                 </h3>
 
 
-                {{-- @can('create popularTitle') --}}
+                @can('create popular titles')
                     <a type="button" class="btn btn-primary push" href="{{ route('popular-titles.create') }}">Add</a>
-                {{-- @endcan --}}
+                @endcan
             </div>
 
             <div class="block-content block-content-full">
@@ -55,12 +55,12 @@
                                     <td>
                                         <div class="btn-group" role="group" aria-label="Horizontal Primary">
 
-                                            {{-- @can('edit popularTitle') --}}
+                                            @can('edit popular titles')
                                                 <a href="{{ route('popular-titles.edit', $popularTitle->id) }}"
                                                     class="btn btn-sm btn-alt-primary">Edit</a>
-                                            {{-- @endcan --}}
+                                            @endcan
 
-                                            {{-- @can('delete popularTitle') --}}
+                                            @can('delete popular titles')
                                                 <form id="form-{{ $popularTitle->id }}"
                                                     action="{{ route('popular-titles.destroy', $popularTitle->id) }}"
                                                     method="POST">
@@ -70,7 +70,7 @@
                                                         class="btn btn-sm btn-alt-danger" value="Delete">
 
                                                 </form>
-                                            {{-- @endcan --}}
+                                            @endcan
                                         </div>
                                     </td>
 

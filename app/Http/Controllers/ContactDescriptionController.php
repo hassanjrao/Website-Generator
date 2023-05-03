@@ -14,6 +14,9 @@ class ContactDescriptionController extends Controller
      */
     public function index()
     {
+        if (!auth()->user()->can('view contact descriptions')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $contactDescriptions=ContactContent::latest()->get();
 
         return view("contact-descriptions.index",compact("contactDescriptions"));
@@ -26,6 +29,9 @@ class ContactDescriptionController extends Controller
      */
     public function create()
     {
+        if (!auth()->user()->can('create contact descriptions')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $contactDescription=null;
 
         return view("contact-descriptions.add_edit",compact("contactDescription"));
@@ -39,6 +45,9 @@ class ContactDescriptionController extends Controller
      */
     public function store(Request $request)
     {
+        if (!auth()->user()->can('create contact descriptions')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $request->validate([
             "description"=>"required"
         ]);
@@ -69,6 +78,9 @@ class ContactDescriptionController extends Controller
      */
     public function edit($id)
     {
+        if (!auth()->user()->can('edit contact descriptions')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $contactDescription=ContactContent::findOrFail($id);
 
         return view("contact-descriptions.add_edit",compact("contactDescription"));
@@ -83,6 +95,9 @@ class ContactDescriptionController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if (!auth()->user()->can('edit contact descriptions')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $request->validate([
             "description"=>"required"
         ]);
@@ -104,6 +119,9 @@ class ContactDescriptionController extends Controller
      */
     public function destroy($id)
     {
+        if (!auth()->user()->can('delete contact descriptions')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $contactDescription=ContactContent::findOrFail($id);
 
         $contactDescription->delete();

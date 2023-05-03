@@ -373,18 +373,26 @@
                         @endif
 
                         @if (auth()->user()->hasRole('super admin') ||
-                                auth()->user()->can('view product pages') ||
-                                auth()->user()->can('view checkout pages'))
+                                auth()->user()->can('view slogans') ||
+                                auth()->user()->can('view taglines') ||
+                                auth()->user()->can('view aboutus titles') ||
+                                auth()->user()->can('view aboutus descriptions') ||
+                                auth()->user()->can('view shop titles') ||
+                                auth()->user()->can('view button titles') ||
+                                auth()->user()->can('view popular titles') ||
+                                auth()->user()->can('view contact titles') ||
+                                auth()->user()->can('view contact descriptions')
+                                )
                             <li class="nav-main-item {{ request()->segment(1) == 'content' ? ' open' : '' }}">
                                 <a class="nav-main-link {{ request()->segment(1) == 'content' ? ' active' : '' }} nav-main-link-submenu"
                                     data-toggle="submenu" aria-haspopup="true" aria-expanded="false" href="#">
 
-                                    <i class="nav-main-link-icon fas fa-pager"></i>
+                                    <i class="nav-main-link-icon far fa-file-alt"></i>
                                     <span class="nav-main-link-name">Content</span>
                                 </a>
                                 <ul class="nav-main-submenu">
 
-                                    @can('view product pages')
+                                    @can('view slogans')
                                         <li class="nav-main-item">
                                             <a class="nav-main-link {{ request()->segment(2) == 'slogans' ? ' active' : '' }}"
                                                 href="{{ route('slogans.index') }}">
@@ -393,7 +401,7 @@
                                         </li>
                                     @endcan
 
-                                    @can('view checkout pages')
+                                    @can('view taglines')
                                         <li class="nav-main-item">
                                             <a class="nav-main-link {{ request()->segment(2) == 'tag-lines' ? ' active' : '' }}"
                                                 href="{{ route('tag-lines.index') }}">
@@ -402,7 +410,7 @@
                                         </li>
                                     @endcan
 
-                                    @can('view checkout pages')
+                                    @can('view aboutus titles')
                                         <li class="nav-main-item">
                                             <a class="nav-main-link {{ request()->segment(2) == 'about-us-titles' ? ' active' : '' }}"
                                                 href="{{ route('about-us-titles.index') }}">
@@ -411,7 +419,7 @@
                                         </li>
                                     @endcan
 
-                                    @can('view checkout pages')
+                                    @can('view aboutus descriptions')
                                         <li class="nav-main-item">
                                             <a class="nav-main-link {{ request()->segment(2) == 'about-us-descriptions' ? ' active' : '' }}"
                                                 href="{{ route('about-us-descriptions.index') }}">
@@ -420,7 +428,7 @@
                                         </li>
                                     @endcan
 
-                                    @can('view checkout pages')
+                                    @can('view shop titles')
                                         <li class="nav-main-item">
                                             <a class="nav-main-link {{ request()->segment(2) == 'shop-titles' ? ' active' : '' }}"
                                                 href="{{ route('shop-titles.index') }}">
@@ -429,7 +437,7 @@
                                         </li>
                                     @endcan
 
-                                    @can('view checkout pages')
+                                    @can('view button titles')
                                         <li class="nav-main-item">
                                             <a class="nav-main-link {{ request()->segment(2) == 'button-titles' ? ' active' : '' }}"
                                                 href="{{ route('button-titles.index') }}">
@@ -438,7 +446,7 @@
                                         </li>
                                     @endcan
 
-                                    @can('view checkout pages')
+                                    @can('view popular titles')
                                         <li class="nav-main-item">
                                             <a class="nav-main-link {{ request()->segment(2) == 'popular-titles' ? ' active' : '' }}"
                                                 href="{{ route('popular-titles.index') }}">
@@ -447,7 +455,7 @@
                                         </li>
                                     @endcan
 
-                                    @can('view checkout pages')
+                                    @can('view contact titles')
                                         <li class="nav-main-item">
                                             <a class="nav-main-link {{ request()->segment(2) == 'contact-titles' ? ' active' : '' }}"
                                                 href="{{ route('contact-titles.index') }}">
@@ -456,7 +464,7 @@
                                         </li>
                                     @endcan
 
-                                    @can('view checkout pages')
+                                    @can('view contact descriptions')
                                         <li class="nav-main-item">
                                             <a class="nav-main-link {{ request()->segment(2) == 'contact-descriptions' ? ' active' : '' }}"
                                                 href="{{ route('contact-descriptions.index') }}">

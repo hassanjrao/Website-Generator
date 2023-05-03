@@ -14,6 +14,10 @@ class PopularTitleController extends Controller
      */
     public function index()
     {
+
+        if (!auth()->user()->can('view popular titles')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $popularTitles=PopularTitle::latest()->get();
 
         return view("popular-titles.index",compact("popularTitles"));
@@ -26,6 +30,9 @@ class PopularTitleController extends Controller
      */
     public function create()
     {
+        if (!auth()->user()->can('create popular titles')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $popularTitle=null;
 
         return view("popular-titles.add_edit",compact("popularTitle"));
@@ -39,6 +46,9 @@ class PopularTitleController extends Controller
      */
     public function store(Request $request)
     {
+        if (!auth()->user()->can('create popular titles')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $request->validate([
             "title"=>"required"
         ]);
@@ -69,6 +79,9 @@ class PopularTitleController extends Controller
      */
     public function edit($id)
     {
+        if (!auth()->user()->can('edit popular titles')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $popularTitle=PopularTitle::findOrFail($id);
 
         return view("popular-titles.add_edit",compact("popularTitle"));
@@ -83,6 +96,9 @@ class PopularTitleController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if (!auth()->user()->can('edit popular titles')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $request->validate([
             "title"=>"required"
         ]);
@@ -104,6 +120,9 @@ class PopularTitleController extends Controller
      */
     public function destroy($id)
     {
+        if (!auth()->user()->can('delete popular titles')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $popularTitle=PopularTitle::findOrFail($id);
 
         $popularTitle->delete();

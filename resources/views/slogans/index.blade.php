@@ -19,9 +19,9 @@
                 </h3>
 
 
-                {{-- @can('create slogans') --}}
+                @can('create slogans')
                     <a type="button" class="btn btn-primary push" href="{{ route('slogans.create') }}">Add</a>
-                {{-- @endcan --}}
+                @endcan
             </div>
 
             <div class="block-content block-content-full">
@@ -55,12 +55,12 @@
                                     <td>
                                         <div class="btn-group" role="group" aria-label="Horizontal Primary">
 
-                                            {{-- @can('edit slogans') --}}
+                                            @can('edit slogans')
                                                 <a href="{{ route('slogans.edit', $slogan->id) }}"
                                                     class="btn btn-sm btn-alt-primary">Edit</a>
-                                            {{-- @endcan --}}
+                                            @endcan
 
-                                            {{-- @can('delete slogans') --}}
+                                            @can('delete slogans')
                                                 <form id="form-{{ $slogan->id }}"
                                                     action="{{ route('slogans.destroy', $slogan->id) }}"
                                                     method="POST">
@@ -70,7 +70,7 @@
                                                         class="btn btn-sm btn-alt-danger" value="Delete">
 
                                                 </form>
-                                            {{-- @endcan --}}
+                                            @endcan
                                         </div>
                                     </td>
 

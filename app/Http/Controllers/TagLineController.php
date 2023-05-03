@@ -14,6 +14,9 @@ class TagLineController extends Controller
      */
     public function index()
     {
+        if (!auth()->user()->can('view taglines')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $tagLines=TagLine::latest()->get();
 
         return view("tag-lines.index",compact("tagLines"));
@@ -26,6 +29,9 @@ class TagLineController extends Controller
      */
     public function create()
     {
+        if (!auth()->user()->can('create taglines')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $tagLine=null;
 
         return view("tag-lines.add_edit",compact("tagLine"));
@@ -39,6 +45,9 @@ class TagLineController extends Controller
      */
     public function store(Request $request)
     {
+        if (!auth()->user()->can('create taglines')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $request->validate([
             "title"=>"required"
         ]);
@@ -69,6 +78,9 @@ class TagLineController extends Controller
      */
     public function edit($id)
     {
+        if (!auth()->user()->can('edit taglines')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $tagLine=TagLine::findOrFail($id);
 
         return view("tag-lines.add_edit",compact("tagLine"));
@@ -83,6 +95,9 @@ class TagLineController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if (!auth()->user()->can('edit taglines')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $request->validate([
             "title"=>"required"
         ]);
@@ -104,6 +119,9 @@ class TagLineController extends Controller
      */
     public function destroy($id)
     {
+        if (!auth()->user()->can('delete taglines')) {
+            return abort(403, "You don't have permission to access this page");
+        }
         $tagLine=TagLine::findOrFail($id);
 
         $tagLine->delete();
