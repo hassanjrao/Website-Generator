@@ -589,15 +589,12 @@ class ZippedSiteController extends Controller
         $site=Site::find($request->site_id);
 
 
-        auth()->user()->notify(new SiteUploadStatusNotification($site));
-
-        return;
 
         SiteUploadJob::dispatch($path,$serverDetails,auth()->user(),$site);
 
 
-        // return response()->json([
-        //     "message" => "Site is being uploaded to the server",
-        // ],200);
+        return response()->json([
+            "message" => "Site is being uploaded to the server",
+        ],200);
     }
 }

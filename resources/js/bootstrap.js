@@ -67,8 +67,8 @@ window.Echo.private('App.Models.User.1')
         })
 
         Toast.fire({
-            icon: notification.data.status,
-            title: notification.data.message,
+            icon: notification.status,
+            title: notification.message,
         })
 
     });

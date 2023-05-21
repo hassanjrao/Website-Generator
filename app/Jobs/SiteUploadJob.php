@@ -45,9 +45,6 @@ class SiteUploadJob implements ShouldQueue
         try {
 
 
-            $this->user->notify(new SiteUploadStatusNotification($this->site));
-
-            return;
 
             $server = Storage::createFtpDriver($this->serverDetails);
 
