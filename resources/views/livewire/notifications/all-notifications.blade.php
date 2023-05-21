@@ -43,14 +43,14 @@
 
                 @endphp
 
-                <div class="alert alert-{{ $isRead ? 'success' : 'danger' }}" role="alert">
+                <div class="alert alert-{{ $isRead ? 'success' : 'info' }}" role="alert">
 
                     <a class="alert-link" href="#">
                         <span class="fw-medium text-muted">{{ $notification->created_at->diffForHumans() }}</span>
 
                         <i
                             class="fa fa-fw {{ $isRead ? 'fa-check-circle' : 'fa-info-circle' }}
-                        text-{{ $isRead ? 'success' : 'danger' }}"></i>
+                        text-{{ $isRead ? 'success' : 'info' }}"></i>
                         {{ $notification->data['message'] }}
 
                     </a>!

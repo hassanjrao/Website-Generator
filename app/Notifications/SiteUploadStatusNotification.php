@@ -10,7 +10,7 @@ use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\Log;
 
-class SiteUploadStatusNotification extends Notification 
+class SiteUploadStatusNotification extends Notification
 {
     use Queueable;
 
@@ -20,10 +20,13 @@ class SiteUploadStatusNotification extends Notification
      * @return void
      */
     public $site;
-    public function __construct($site)
+    public $message;
+    public function __construct($site, $message)
     {
         $this->site = $site;
+        $this->message = $message;
     }
+
 
     /**
      * Get the notification's delivery channels.
@@ -59,7 +62,8 @@ class SiteUploadStatusNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            "message" => "Site {$this->site->name} upload complete",
+            "message" => $this->message,
+            "site_id" => $this->site->id,
         ];
     }
 
@@ -68,7 +72,7 @@ class SiteUploadStatusNotification extends Notification
         Log::info("SiteUploadStatusNotification toBroadcast");
         return new BroadcastMessage([
             "status"=>"success",
-            "message" => "Site {$this->site->name} upload complete",
+            "message" => $this->message,
         ]);
     }
 }

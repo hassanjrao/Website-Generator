@@ -573,15 +573,31 @@ class ZippedSiteController extends Controller
             "root_path" => "required",
         ]);
 
+        // if root_path do not contains forward slash, add it
+        if (substr($request->root_path, 0, 1) != '/') {
+            $request->root_path = '/' . $request->root_path;
+        }
+
+
         $serverDetails = [
             'driver' => 'ftp',
-            'host' => 'ftp.yagaskilz.com',
-            'username' => 'hsn2@yagaskilz.com',
-            'password' => 'BHa9U8gNIA=A',
-            'root' => '/sites',
+            'host' => $request->host_name,
+            'username' => $request->username,
+            'password' => $request->password,
+            'root' => $request->root_path,
             // 'port' => 21,
             'timout' => 30,
         ];
+
+        // $serverDetails = [
+        //     'driver' => 'ftp',
+        //     'host' => 'ftp.yagaskilz.com',
+        //     'username' => 'hsn2@yagaskilz.com',
+        //     'password' => 'BHa9U8gNIA=A',
+        //     'root' => '/sites',
+        //     // 'port' => 21,
+        //     'timout' => 30,
+        // ];
 
 
         $path = $this->download($request->site_id, true);

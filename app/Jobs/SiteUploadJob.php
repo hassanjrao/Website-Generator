@@ -80,7 +80,7 @@ class SiteUploadJob implements ShouldQueue
             ]);
 
 
-            $this->user->notify(new SiteUploadStatusNotification($this->site));
+            $this->user->notify(new SiteUploadStatusNotification($this->site,"{$this->site->name} Site  uploaded successfully"));
 
         } catch (\League\Flysystem\FTP\FtpConnectionException | \ErrorException $e) {
 
@@ -90,6 +90,9 @@ class SiteUploadJob implements ShouldQueue
                 "trace" => $e->getTraceAsString(),
             ]);
 
+            $this->user->notify(new SiteUploadStatusNotification($this->site,"{$this->site->name} Site  upload failed, please check your ftp details and try again"));
+
+
 
         } catch (\Exception $e) {
 
@@ -98,6 +101,9 @@ class SiteUploadJob implements ShouldQueue
                 "line" => $e->getLine(),
                 "trace" => $e->getTraceAsString(),
             ]);
+
+            $this->user->notify(new SiteUploadStatusNotification($this->site,"{$this->site->name} Site upload failed, please check your ftp details and try again"));
+
 
         }
     }
