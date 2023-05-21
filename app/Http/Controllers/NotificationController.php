@@ -13,7 +13,31 @@ class NotificationController extends Controller
      */
     public function index()
     {
-        $notifications=auth()->user()->notifications;
+
+
+        return view("notifications.index");
+    }
+
+    public function markAllAsRead(){
+        auth()->user()->unreadNotifications->markAsRead();
+
+        return response()->json([
+            "message"=>"All notifications marked as read"
+        ]);
+
+    }
+
+    public function markAsRead(Request $request){
+
+        $request->validate([
+            "id"=>"required|exists:notifications,id"
+        ]);
+
+        auth()->user()->notifications()->where("id", $request->id)->first()->markAsRead();
+
+        return response()->json([
+            "message"=>"Notification marked as read"
+        ]);
     }
 
     /**

@@ -50,7 +50,7 @@ console.log("pusher",'App.Models.User.',process.env.MIX_PUSHER_APP_KEY,process.e
 
 console.log('App.Models.User.' + window.userId)
 
-window.Echo.private('App.Models.User.1')
+window.Echo.private('App.Models.User.'+window.userId)
     .notification((notification) => {
         console.log("notification",notification);
 

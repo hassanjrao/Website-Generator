@@ -33,8 +33,10 @@
     <!-- Scripts -->
     <script>
         window.Laravel = {!! json_encode(['csrfToken' => csrf_token()]) !!};
-        window.userId = {{  auth()->user()->id  }};
+        window.userId = {{ auth()->user()->id }};
     </script>
+
+    @livewireStyles
 
 
 </head>
@@ -583,42 +585,72 @@
                             id="page-header-notifications-dropdown" data-bs-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false">
                             <i class="fa fa-fw fa-bell"></i>
-                            <span class="text-primary">•</span>
+
+                            @php
+                                $notifications = auth()->user()->unreadNotifications;
+
+                                $totalNotifications = $notifications->count();
+
+                            @endphp
+
+                            @if ($totalNotifications > 0)
+                                <span id="notificationCountBadge"
+                                    class="badge bg-danger rounded-pill">{{ $totalNotifications }}</span>
+                            @endif
+
                         </button>
                         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end p-0 border-0 fs-sm"
                             aria-labelledby="page-header-notifications-dropdown">
                             <div class="p-2 bg-body-light border-bottom text-center rounded-top">
                                 <h5 class="dropdown-header text-uppercase">Notifications</h5>
                             </div>
-                            <ul class="nav-items mb-0">
-                                <li>
-                                    <a class="text-dark d-flex py-2" href="javascript:void(0)">
-                                        <div class="flex-shrink-0 me-2 ms-3">
-                                            <i class="fa fa-fw fa-check-circle text-success"></i>
-                                        </div>
-                                        <div class="flex-grow-1 pe-2">
-                                            <div class="fw-semibold">You have a new follower</div>
-                                            <span class="fw-medium text-muted">15 min ago</span>
-                                        </div>
-                                    </a>
-                                </li>
+                            <ul class="nav-items mb-0" id="notificationsContainer">
 
-                                <li>
-                                    <a class="text-dark d-flex py-2" href="javascript:void(0)">
-                                        <div class="flex-shrink-0 me-2 ms-3">
-                                            <i class="fa fa-fw fa-times-circle text-danger"></i>
-                                        </div>
-                                        <div class="flex-grow-1 pe-2">
-                                            <div class="fw-semibold">Update failed, restart server</div>
-                                            <span class="fw-medium text-muted">26 min ago</span>
-                                        </div>
-                                    </a>
-                                </li>
+                                {{-- first 5 notifications --}}
+
+                                @forelse ($notifications->take(5) as $notification)
+                                    <li>
+                                        <a class="text-dark d-flex py-2" href="javascript:void(0)">
+                                            <div class="flex-shrink-0 me-2 ms-3">
+                                                <i class="fa fa-fw fa-info text-info"></i>
+                                            </div>
+                                            <div class="flex-grow-1 pe-2">
+                                                <div class="fw-semibold">{{ $notification->data['message'] }}</div>
+                                                <span class="fw-medium text-muted">
+                                                    {{ $notification->created_at->diffForHumans() }}
+                                                </span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                @empty
+                                    <li>
+                                        <a class="text-dark d-flex py-2" href="javascript:void(0)">
+                                            <div class="flex-shrink-0 me-2 ms-3">
+                                                <i class="fa fa-fw fa-info text-info"></i>
+                                            </div>
+                                            <div class="flex-grow-1 pe-2">
+                                                <div class="fw-semibold">No New Notifications</div>
+                                                <span class="fw-medium text-muted">
+                                                    No New Notifications
+                                                </span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                @endforelse
+
 
                             </ul>
-                            <div class="p-2 border-top text-center">
-                                <a class="d-inline-block fw-medium" href="javascript:void(0)">
-                                    <i class="fa fa-fw fa-arrow-down me-1 opacity-50"></i> Load More..
+                            <div class="p-2 border-top text-center d-flex justify-content-around">
+
+                                @if ($totalNotifications > 0)
+                                    <a class="d-inline-block fw-medium" style="cursor: pointer"
+                                        onclick="markReadAllNotifications(this)">
+                                        <i class="fa fa-fw fa-check me-1 opacity-50"></i> Mark All As Read
+                                    </a>
+                                @endif
+                                <a class="d-inline-block fw-medium" style="cursor: pointer"
+                                    href="{{ route('notifications.index') }}">
+                                    <i class="fa fa-fw fa-eye me-1 opacity-50"></i> View All
                                 </a>
                             </div>
                         </div>
@@ -751,6 +783,7 @@
     @include('sweetalert::alert')
 
 
+    @livewireScripts
 
 
     @yield('js_after')
@@ -829,6 +862,20 @@
                 success: function(data) {
                     console.log(data);
                     // $("#notifications").html(data);
+                }
+            });
+
+        }
+
+        function markReadAllNotifications(element) {
+
+            $.ajax({
+                url: "{{ route('notifications.mark-all-as-read') }}",
+                type: "GET",
+                success: function(data) {
+                    console.log(data);
+                    $("#notificationCountBadge").remove();
+                    $("#notificationsContainer").html('');
                 }
             });
 
