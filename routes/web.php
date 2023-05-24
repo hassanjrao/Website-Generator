@@ -130,6 +130,7 @@ Route::middleware(["auth"])->group(function () {
 
         Route::get("/", [SiteController::class,"index"])->name("sites.index");
         Route::get("create", [SiteController::class,"create"])->name("sites.create");
+        Route::get("edit/{site}", [SiteController::class,"edit"])->name("sites.edit");
         Route::post("create-site", [SiteController::class,"createSite"])->name("sites.createSite");
 
         Route::post("site-downloadable", [SiteController::class,"siteDownloadAble"])->name("sites.siteDownloadAble");

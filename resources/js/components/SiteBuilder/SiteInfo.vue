@@ -144,6 +144,10 @@ export default {
         site_info: {
             type: Array,
             required: true
+        },
+        site_id: {
+            type: Number,
+            required: false
         }
     },
 
@@ -358,7 +362,8 @@ export default {
     },
 
     mounted() {
-        console.log('Site info.')
+        console.log('Site info.',this.site_info);
+        this.siteId = this.site_id
     },
 
 

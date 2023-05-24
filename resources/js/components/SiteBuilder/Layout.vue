@@ -177,7 +177,12 @@ export default {
     mounted() {
         console.log('Template.vue mounted');
         this.layoutItems = this.layouts;
-        this.layoutItemsIncluded = this.layouts;
+        this.layoutItemsIncluded = this.layouts.filter(item => item.selected == true)
+
+                                                                                        
+        this.$emit('includedLayoutItems', this.layoutItemsIncluded)
+
+        console.log(this.layoutItems,this.layoutItemsIncluded)
 
         this.siteId = this.site_id;
     },

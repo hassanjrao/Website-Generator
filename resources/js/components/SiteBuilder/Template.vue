@@ -1024,6 +1024,64 @@ export default {
         this.showStatus = alert.showStatus;
         this.siteId = this.site_id;
 
+        let selectedHeaderTemplate=this.headertemplates.find((item) => item.selected==true);
+        if(selectedHeaderTemplate){
+            this.selectedHeaderTemplate=selectedHeaderTemplate.value;
+        }
+
+
+        let selectedHeroSection=this.herosections.find((item) => item.selected==true);
+        if(selectedHeroSection){
+            this.selectedHeroSection=selectedHeroSection.value;
+        }
+
+
+        let selectedProductSection=this.productsections.find((item) => item.selected==true);
+        if(this.selectedProductSection){
+            this.selectedProductSection=this.selectedProductSection.value;
+        }
+
+        let selectedAboutSection=this.aboutsections.find((item) => item.selected==true);
+        if(selectedAboutSection){
+            this.selectedAboutSection=selectedAboutSection.value;
+        }
+
+        let selectedContactSection=this.contactsections.find((item) => item.selected==true);
+        if(selectedContactSection){
+            this.selectedContactSection=selectedContactSection.value;
+        }
+
+        let selectedPopularProductSection=this.popularproductsections.find((item) => item.selected==true);
+        if(selectedPopularProductSection){
+            this.selectedPopularProductSection=selectedPopularProductSection.value;
+        }
+
+        let selectedCtaSection=this.ctasections.find((item) => item.selected==true);
+        if(selectedCtaSection){
+            this.selectedCtaSection=selectedCtaSection.value;
+        }
+        let selectedFeatureSection=this.featuresections.find((item) => item.selected==true);
+        if(selectedFeatureSection){
+            this.selectedFeatureSection=selectedFeatureSection.value;
+        }
+        let selectedFooterTemplate=this.footertemplates.find((item) => item.selected==true);
+        if(selectedFooterTemplate){
+            this.selectedFooterTemplate=selectedFooterTemplate.value;
+        }
+        let selectedProductPages=this.productpages.find((item) => item.selected==true);
+        if(selectedProductPages){
+            this.selectedProductPages=selectedProductPages.value;
+        }
+        let selectedCheckoutPages=this.checkoutpages.find((item) => item.selected==true);
+        if(selectedCheckoutPages){
+            this.selectedCheckoutPages=selectedCheckoutPages.value;
+        }
+        let selectedRelatedProductSection=this.relatedproductsections.find((item) => item.selected==true);
+        if(selectedRelatedProductSection){
+            this.selectedRelatedProductSection=selectedRelatedProductSection.value;
+        }
+
+
         console.log(this.siteId);
     },
     components: {

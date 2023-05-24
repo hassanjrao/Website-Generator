@@ -48,7 +48,7 @@ class SiteController extends Controller
     public function index()
     {
 
-        if(auth()->user()->can('view sites') == false){
+        if (auth()->user()->can('view sites') == false) {
             return redirect()->back()->withToastError("You don't have permission to access this page");
         }
 
@@ -63,7 +63,7 @@ class SiteController extends Controller
     public function create()
     {
 
-        if(auth()->user()->can('create sites') == false){
+        if (auth()->user()->can('create sites') == false) {
             return redirect()->back()->withToastError("You don't have permission to access this page");
         }
 
@@ -291,6 +291,290 @@ class SiteController extends Controller
 
         // $totalProducts = Prod;
 
+        $site = 0;
+
+
+        return view(
+            'sites.add_edit',
+            compact(
+                'site',
+                'slogans',
+                'tagLines',
+                'aboutUsTitles',
+                'aboutUsContent',
+                'shopTitles',
+                'buttonNames',
+                'popularTitles',
+                'contactTitles',
+                'contactContent',
+                'headerTemplates',
+                'heroSections',
+                'productSections',
+                'aboutSections',
+                'contactSections',
+                'popularProductSections',
+                'ctaSections',
+                'featureSections',
+                'footerTemplates',
+                'productPages',
+                'checkoutPages',
+                'relatedProductSections',
+                'layouts',
+                'loadingGifs',
+                'colors',
+                'fontFamilies',
+                'creditCards',
+                'sortProductsBy',
+                'advertisingCompanies',
+                'totalProducts'
+            )
+        );
+    }
+
+    public function edit($id)
+    {
+
+        $site = Site::findOrFail($id);
+
+        $slogans = $this->getSlogans();
+        $slogans = $slogans->map(function ($slogan) {
+
+            return [
+                "text" => $slogan->title,
+                "value" => $slogan->id
+            ];
+        });
+
+        $tagLines = $this->getTagLines();
+        $tagLines = $tagLines->map(function ($tagLine) {
+
+            return [
+                "text" => $tagLine->title,
+                "value" => $tagLine->id
+            ];
+        });
+
+        $aboutUsTitles = $this->getAboutUsTitles();
+        $aboutUsTitles = $aboutUsTitles->map(function ($aboutUsTitle) {
+
+            return [
+                "text" => $aboutUsTitle->title,
+                "value" => $aboutUsTitle->id
+            ];
+        });
+
+        $aboutUsContent = $this->getAboutUsContent();
+        $aboutUsContent = $aboutUsContent->map(function ($aboutUsContent) {
+
+            return [
+                "text" => $aboutUsContent->description,
+                "value" => $aboutUsContent->id
+            ];
+        });
+
+        $shopTitles = $this->getShopTitles();
+        $shopTitles = $shopTitles->map(function ($shopTitle) {
+
+            return [
+                "text" => $shopTitle->title,
+                "value" => $shopTitle->id
+            ];
+        });
+
+        $buttonNames = $this->getButtonNames();
+        $buttonNames = $buttonNames->map(function ($buttonName) {
+            return [
+                "text" => $buttonName->title,
+                "value" => $buttonName->id
+            ];
+        });
+
+        $popularTitles = $this->getPopularTitles();
+        $popularTitles = $popularTitles->map(function ($popularTitle) {
+            return [
+                "text" => $popularTitle->title,
+                "value" => $popularTitle->id
+            ];
+        });
+
+        $contactTitles = $this->getContactTitles();
+        $contactTitles = $contactTitles->map(function ($contactTitle) {
+            return [
+                "text" => $contactTitle->title,
+                "value" => $contactTitle->id
+            ];
+        });
+
+        $contactContent = $this->getContactContent();
+        $contactContent = $contactContent->map(function ($contactContent) {
+            return [
+                "text" => $contactContent->description,
+                "value" => $contactContent->id
+            ];
+        });
+
+        $siteTemplate=$site->siteTemplate;
+
+        $headerTemplates = $this->headerTemplates();
+        $headerTemplates = $headerTemplates->map(function ($headerTemplate) use ($siteTemplate) {
+            return [
+                "text" => $headerTemplate->name,
+                "value" => $headerTemplate->id,
+                "selected" => $headerTemplate->id == $siteTemplate->header_template_id ? true : false
+            ];
+        });
+
+        $heroSections = $this->getHeroSections();
+        $heroSections = $heroSections->map(function ($heroSection) use ($siteTemplate) {
+            return [
+                "text" => $heroSection->name,
+                "value" => $heroSection->id,
+                'selected' => $heroSection->id == $siteTemplate->hero_section_id ? true : false
+            ];
+        });
+
+
+        $productSections = $this->getProductSections();
+        $productSections = $productSections->map(function ($productSection) use ($siteTemplate) {
+            return [
+                "text" => $productSection->name,
+                "value" => $productSection->id,
+                'selected' => $productSection->id == $siteTemplate->product_section_id ? true : false
+            ];
+        });
+
+
+        $aboutSections = $this->getAboutSections();
+        $aboutSections = $aboutSections->map(function ($aboutSection) use ($siteTemplate) {
+            return [
+                "text" => $aboutSection->name,
+                "value" => $aboutSection->id,
+                'selected' => $aboutSection->id == $siteTemplate->about_section_id ? true : false
+            ];
+        });
+
+        $contactSections = $this->getContactSections();
+        $contactSections = $contactSections->map(function ($contactSection) use ($siteTemplate) {
+            return [
+                "text" => $contactSection->name,
+                "value" => $contactSection->id,
+                'selected' => $contactSection->id == $siteTemplate->contact_section_id ? true : false
+            ];
+        });
+
+        $popularProductSections = $this->getPopularProductSections();
+        $popularProductSections = $popularProductSections->map(function ($popularProductSection) use ($siteTemplate) {
+            return [
+                "text" => $popularProductSection->name,
+                "value" => $popularProductSection->id,
+                'selected' => $popularProductSection->id == $siteTemplate->popular_product_section_id ? true : false
+            ];
+        });
+
+        $ctaSections = $this->getCtaSections();
+        $ctaSections = $ctaSections->map(function ($ctaSection) use ($siteTemplate) {
+            return [
+                "text" => $ctaSection->name,
+                "value" => $ctaSection->id,
+                'selected' => $ctaSection->id == $siteTemplate->cta_section_id ? true : false
+            ];
+        });
+
+        $featureSections = $this->getFeatureSections();
+        $featureSections = $featureSections->map(function ($featureSection) use ($siteTemplate) {
+            return [
+                "text" => $featureSection->name,
+                "value" => $featureSection->id,
+                'selected' => $featureSection->id == $siteTemplate->feature_section_id ? true : false
+            ];
+        });
+
+        $footerTemplates = $this->getFooterTemplates();
+        $footerTemplates = $footerTemplates->map(function ($footerTemplate) use ($siteTemplate) {
+            return [
+                "text" => $footerTemplate->name,
+                "value" => $footerTemplate->id,
+                'selected' => $footerTemplate->id == $siteTemplate->footer_template_id ? true : false
+            ];
+        });
+
+        $productPages = $this->getProductPages();
+        $productPages = $productPages->map(function ($productPage) use ($siteTemplate) {
+            return [
+                "text" => $productPage->name,
+                "value" => $productPage->id,
+                'selected' => $productPage->id == $siteTemplate->product_page_id ? true : false
+            ];
+        });
+
+        $checkoutPages = $this->getCheckoutPages();
+        $checkoutPages = $checkoutPages->map(function ($checkoutPage) use ($siteTemplate) {
+            return [
+                "text" => $checkoutPage->name,
+                "value" => $checkoutPage->id,
+                'selected' => $checkoutPage->id == $siteTemplate->checkout_page_id ? true : false
+            ];
+        });
+
+        $relatedProductSections = $this->getRelatedProductSections();
+        $relatedProductSections = $relatedProductSections->map(function ($relatedProductSection) use ($siteTemplate) {
+            return [
+                "text" => $relatedProductSection->name,
+                "value" => $relatedProductSection->id,
+                'selected' => $relatedProductSection->id == $siteTemplate->related_product_section_id ? true : false
+            ];
+        });
+
+        $sortProductsBy = $this->getSortProductsBy();
+        $sortProductsBy = $sortProductsBy->map(function ($sortProductBy)  {
+            return [
+                "text" => $sortProductBy->name,
+                "value" => $sortProductBy->id
+            ];
+        });
+
+        $siteProductCategory = $site->siteProductCategory;
+
+        $advertisingCompanies = $this->getAdvertisingCompanies();
+        $advertisingCompanies = $advertisingCompanies->map(function ($advertisingCompany) use ($siteProductCategory) {
+            return [
+                "text" => $advertisingCompany->name,
+                "value" => $advertisingCompany->id,
+                'url' => $advertisingCompany->url,
+                'username' => $advertisingCompany->username,
+                'password' => $advertisingCompany->password,
+                'shipping_id' => $advertisingCompany->shipping_id,
+                'compaign_id' => $advertisingCompany->compaign_id,
+                'tran_type' => $advertisingCompany->tran_type,
+                'offer_id' => $advertisingCompany->offer_id,
+                'billing_model_id' => $advertisingCompany->billing_model_id,
+                'gateway_id' => $advertisingCompany->gateway_id,
+                "selected" => $advertisingCompany->id == $siteProductCategory->productCategory->advertisingCompany->id ? true : false
+            ];
+        });
+
+        $layouts = $this->getLayouts($site);
+        $layouts = json_encode($layouts);
+
+
+        $loadingGifs = $this->getLoadingGifs();
+        $loadingGifs = json_encode($loadingGifs);
+
+        $colors = $this->getSiteColors();
+        $colors = json_encode($colors);
+
+        $fontFamilies = $this->getSiteFonts();
+        $fontFamilies = json_encode($fontFamilies);
+
+        $creditCards = $this->getCreditCards();
+        $creditCards = json_encode($creditCards);
+
+
+        $totalProducts = Product::all()->count();
+
+
+        // $totalProducts = Prod;
+
 
         return view(
             'sites.add_edit',
@@ -334,14 +618,22 @@ class SiteController extends Controller
 
         $request->validate([
             'advertising_company_id' => 'required',
+            'site_id' => 'nullable|exists:sites,id'
         ]);
 
         $categories = ProductCategory::where('advertising_company_id', $request->advertising_company_id)->get();
 
-        $categories = $categories->map(function ($product) {
+        $siteProductCategory = null;
+        if ($request->site_id) {
+            $site = Site::findOrFail($request->site_id);
+
+            $siteProductCategory = $site->siteProductCategory;
+        }
+        $categories = $categories->map(function ($product) use ($siteProductCategory) {
             return [
                 "text" => $product->name,
                 "value" => $product->id,
+                'selected' => $siteProductCategory && $siteProductCategory->product_category_id == $product->id ? true : false
             ];
         });
 
@@ -559,62 +851,38 @@ class SiteController extends Controller
         return $fontFamilies;
     }
 
-    public function getLayouts()
+    public function getLayouts($site = null)
     {
-        $layouts = [
-            [
-                "id" => 1,
-                "name" => "Header",
-                "label" => "header",
-                "fixed" => true,
-            ],
-            [
-                "id" => 2,
-                "name" => "Hero Section",
-                "label" => "hero"
-            ],
-            [
-                "id" => 3,
-                "name" => "About Section",
-                "label" => "about_section",
-            ],
-            [
-                "id" => 4,
-                "name" => "Product Section",
-                "label" => "product_section",
-            ],
-
-            [
-                "id" => 5,
-                "name" => "Featured Products",
-                "label" => "featured_products",
-            ],
-
-            [
-                "id" => 6,
-                "name" => "Contact",
-                "label" => "contact",
-            ],
-
-            [
-                "id" => 7,
-                "name" => "Footer",
-                "fixed" => true,
-            ],
-
-        ];
 
         $layouts = PageLayout::all();
 
 
-        $layouts = $layouts->map(function ($layouts) {
-            return [
-                "id" => $layouts->id,
-                "name" => $layouts->name,
-                "label" => $layouts->code,
-                "fixed" => $layouts->code == 'header' || $layouts->code == 'footer' ? true : false,
-            ];
-        });
+        $sitePageLayouts = [];
+        if ($site) {
+            $sitePageLayouts = $site->sitePageLayouts()->pluck('page_layout_id')->toArray();
+
+            $layouts = $layouts->map(function ($layout) use ($sitePageLayouts) {
+
+                return [
+                    "id" => $layout->id,
+                    "name" => $layout->name,
+                    "label" => $layout->code,
+                    "fixed" => $layout->code == 'header' || $layout->code == 'footer' ? true : false,
+                    "selected" => in_array($layout->id, $sitePageLayouts) ? true : false
+                ];
+            });
+        } else {
+
+            $layouts = $layouts->map(function ($layout) use ($sitePageLayouts) {
+                return [
+                    "id" => $layout->id,
+                    "name" => $layout->name,
+                    "label" => $layout->code,
+                    "fixed" => $layout->code == 'header' || $layout->code == 'footer' ? true : false,
+                    "selected" => true,
+                ];
+            });
+        }
 
 
         return $layouts;
@@ -990,8 +1258,8 @@ class SiteController extends Controller
 
         if ($request->hasFile('hero_section_bg_image')) {
 
-            if($siteTemplate->hero_section_bg_image){
-                Storage::delete('site-sections/hero/'.$siteTemplate->hero_section_bg_image);
+            if ($siteTemplate->hero_section_bg_image) {
+                Storage::delete('site-sections/hero/' . $siteTemplate->hero_section_bg_image);
             }
 
 
@@ -1000,20 +1268,18 @@ class SiteController extends Controller
             $siteTemplate->update([
                 "hero_section_bg_image" => basename($heroImage)
             ]);
-        }
-        else{
-            if($siteTemplate->hero_section_bg_image){
-                Storage::delete('site-sections/hero/'.$siteTemplate->hero_section_bg_image);
+        } else {
+            if ($siteTemplate->hero_section_bg_image) {
+                Storage::delete('site-sections/hero/' . $siteTemplate->hero_section_bg_image);
             }
             $siteTemplate->update([
                 "hero_section_bg_image" => null
             ]);
-
         }
 
-        if($request->hasFile('hero_section_product_image')){
-            if($siteTemplate->hero_section_product_image){
-                Storage::delete('site-sections/hero/'.$siteTemplate->hero_section_product_image);
+        if ($request->hasFile('hero_section_product_image')) {
+            if ($siteTemplate->hero_section_product_image) {
+                Storage::delete('site-sections/hero/' . $siteTemplate->hero_section_product_image);
             }
 
             $heroProductImage = $request->file('hero_section_product_image')->store('site-sections/hero');
@@ -1021,22 +1287,20 @@ class SiteController extends Controller
             $siteTemplate->update([
                 "hero_section_product_image" => basename($heroProductImage)
             ]);
-        }
-        else{
-            if($siteTemplate->hero_section_product_image){
-                Storage::delete('site-sections/hero/'.$siteTemplate->hero_section_product_image);
+        } else {
+            if ($siteTemplate->hero_section_product_image) {
+                Storage::delete('site-sections/hero/' . $siteTemplate->hero_section_product_image);
             }
             $siteTemplate->update([
                 "hero_section_product_image" => null
             ]);
-
         }
 
 
         if ($request->hasFile('about_section_bg_image')) {
 
-            if($siteTemplate->about_section_bg_image){
-                Storage::delete('site-sections/about/'.$siteTemplate->about_section_bg_image);
+            if ($siteTemplate->about_section_bg_image) {
+                Storage::delete('site-sections/about/' . $siteTemplate->about_section_bg_image);
             }
 
             $aboutImage = $request->file('about_section_bg_image')->store('site-sections/about');
@@ -1044,21 +1308,19 @@ class SiteController extends Controller
             $siteTemplate->update([
                 "about_section_bg_image" => basename($aboutImage)
             ]);
-        }
-        else{
-            if($siteTemplate->about_section_bg_image){
-                Storage::delete('site-sections/about/'.$siteTemplate->about_section_bg_image);
+        } else {
+            if ($siteTemplate->about_section_bg_image) {
+                Storage::delete('site-sections/about/' . $siteTemplate->about_section_bg_image);
             }
             $siteTemplate->update([
                 "about_section_bg_image" => null
             ]);
-
         }
 
         if ($request->hasFile('contact_section_bg_image')) {
 
-            if($siteTemplate->contact_section_bg_image){
-                Storage::delete('site-sections/contact/'.$siteTemplate->contact_section_bg_image);
+            if ($siteTemplate->contact_section_bg_image) {
+                Storage::delete('site-sections/contact/' . $siteTemplate->contact_section_bg_image);
             }
 
             $contactImage = $request->file('contact_section_bg_image')->store('site-sections/contact');
@@ -1066,10 +1328,9 @@ class SiteController extends Controller
             $siteTemplate->update([
                 "contact_section_bg_image" => basename($contactImage)
             ]);
-        }
-        else{
-            if($siteTemplate->contact_section_bg_image){
-                Storage::delete('site-sections/contact/'.$siteTemplate->contact_section_bg_image);
+        } else {
+            if ($siteTemplate->contact_section_bg_image) {
+                Storage::delete('site-sections/contact/' . $siteTemplate->contact_section_bg_image);
             }
             $siteTemplate->update([
                 "contact_section_bg_image" => null
@@ -1078,8 +1339,8 @@ class SiteController extends Controller
 
         if ($request->hasFile('cta_section_bg_image')) {
 
-            if($siteTemplate->cta_section_bg_image){
-                Storage::delete('site-sections/cta/'.$siteTemplate->cta_section_bg_image);
+            if ($siteTemplate->cta_section_bg_image) {
+                Storage::delete('site-sections/cta/' . $siteTemplate->cta_section_bg_image);
             }
 
             $popularProductImage = $request->file('cta_section_bg_image')->store('site-sections/cta');
@@ -1087,20 +1348,19 @@ class SiteController extends Controller
             $siteTemplate->update([
                 "cta_section_bg_image" => basename($popularProductImage)
             ]);
-        }
-        else{
-            if($siteTemplate->cta_section_bg_image){
-                Storage::delete('site-sections/cta/'.$siteTemplate->cta_section_bg_image);
+        } else {
+            if ($siteTemplate->cta_section_bg_image) {
+                Storage::delete('site-sections/cta/' . $siteTemplate->cta_section_bg_image);
             }
             $siteTemplate->update([
                 "cta_section_bg_image" => null
             ]);
         }
 
-        if($request->hasFile('product_section_bg_image')){
+        if ($request->hasFile('product_section_bg_image')) {
 
-            if($siteTemplate->product_section_bg_image){
-                Storage::delete('site-sections/product/'.$siteTemplate->product_section_bg_image);
+            if ($siteTemplate->product_section_bg_image) {
+                Storage::delete('site-sections/product/' . $siteTemplate->product_section_bg_image);
             }
 
             $productImage = $request->file('product_section_bg_image')->store('site-sections/product');
@@ -1108,10 +1368,9 @@ class SiteController extends Controller
             $siteTemplate->update([
                 "product_section_bg_image" => basename($productImage)
             ]);
-        }
-        else{
-            if($siteTemplate->product_section_bg_image){
-                Storage::delete('site-sections/product/'.$siteTemplate->product_section_bg_image);
+        } else {
+            if ($siteTemplate->product_section_bg_image) {
+                Storage::delete('site-sections/product/' . $siteTemplate->product_section_bg_image);
             }
             $siteTemplate->update([
                 "product_section_bg_image" => null
@@ -1321,7 +1580,8 @@ class SiteController extends Controller
         ], 200);
     }
 
-    public function siteDownloadAble(Request $request){
+    public function siteDownloadAble(Request $request)
+    {
 
         $request->validate([
             'site_id' => 'required|exists:sites,id',
@@ -1337,6 +1597,5 @@ class SiteController extends Controller
             "message" => "Site download able added successfully",
 
         ], 200);
-
     }
 }

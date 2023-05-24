@@ -7,8 +7,9 @@
 @section('page-title', $addEdit . ' site')
 @section('content')
 
+
     <div class="content mb-4">
-        <site-builder-form :slogans="{{ $slogans }}" :taglines="{{ $tagLines }}"
+        <site-builder-form :site="{{ $site }}" :slogans="{{ $slogans }}" :taglines="{{ $tagLines }}"
             :aboutustitles="{{ $aboutUsTitles }}" :aboutuscontent="{{ $aboutUsContent }}" :shoptitles="{{ $shopTitles }}"
             :buttonNames="{{ $buttonNames }}" :populartitles="{{ $popularTitles }}" :contactTitles="{{ $contactTitles }}"
             :contactContent="{{ $contactContent }}" :headertemplates="{{ $headerTemplates }}"

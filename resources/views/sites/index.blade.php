@@ -76,8 +76,8 @@
                                                 <a href="#" class="btn btn-sm btn-alt-warning">In complete</a>
                                             @endif
 
-                                            {{-- <a href="{{ route('sites.edit', $site->id) }}"
-                                                class="btn btn-sm btn-alt-primary">Edit</a> --}}
+                                            <a href="{{ route('sites.edit', $site->id) }}"
+                                                class="btn btn-sm btn-alt-primary">View</a>
                                             {{-- <form id="form-{{ $site->id }}"
                                                 action="{{ route('sites.destroy', $site->id) }}" method="POST">
                                                 @method('DELETE')

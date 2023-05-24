@@ -74,6 +74,8 @@ export default {
             required: true
         },
 
+
+
     },
 
     validations: {
@@ -144,6 +146,13 @@ export default {
 
                     this.categories = response.data.data.categories;
 
+                    let selectedCategory=this.categories.find(category=>category.selected==true)
+
+                    if(selectedCategory)
+                    {
+                        this.selectedCategory= selectedCategory.value
+                    }
+
                     console.log(this.categories);
 
                 })
@@ -167,6 +176,17 @@ export default {
     created() {
         this.showStatus = alert.showStatus;
         this.siteId = this.site_id;
+
+
+        let selectedAdvertisingCompany= this.advertisingcompanies.find(advertisingcompany => advertisingcompany.selected==true)
+
+        console.log("selectedAdvertisingCompany",selectedAdvertisingCompany,this.advertisingcompanies);
+
+        if(selectedAdvertisingCompany)
+        {
+            this.selectedAdvertisingCompany= selectedAdvertisingCompany.value
+        }
+
     },
 
     computed: {
