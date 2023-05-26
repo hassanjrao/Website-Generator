@@ -71,6 +71,7 @@
                                                 </form>
                                             @endcan
                                         </div>
+
                                     </td>
 
                                 </tr>

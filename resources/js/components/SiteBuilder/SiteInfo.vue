@@ -52,10 +52,16 @@
                             @blur="$v.site_info.corp_name.$touch()"></v-text-field>
                     </v-col>
 
-                    <v-col cols="12" sm="6" md="6">
+                    <!-- <v-col cols="12" sm="6" md="6">
                         <v-textarea v-model="site_info.description" label="Description" required rows="1" auto-grow
                             @input="$v.site_info.description.$touch()" :error-messages="descriptionErrors"
                             @blur="$v.site_info.description.$touch()"></v-textarea>
+                    </v-col> -->
+
+                    <v-col cols="12" sm="6" md="4">
+                        <v-text-field v-model="site_info.fulfillment" label="Fulfillment" required
+                            @input="$v.site_info.fulfillment.$touch()" :error-messages="fulfillmentErrors"
+                            @blur="$v.site_info.fulfillment.$touch()"></v-text-field>
                     </v-col>
 
                     <v-col cols="12" sm="6" md="6">
@@ -65,11 +71,7 @@
                     </v-col>
 
 
-                    <v-col cols="12" sm="6" md="4">
-                        <v-text-field v-model="site_info.fulfillment" label="Fulfillment" required
-                            @input="$v.site_info.fulfillment.$touch()" :error-messages="fulfillmentErrors"
-                            @blur="$v.site_info.fulfillment.$touch()"></v-text-field>
-                    </v-col>
+
 
                     <v-col cols="12" sm="6" md="4">
                         <v-text-field v-model="site_info.trial_period" label="Trial Period" required
@@ -98,12 +100,7 @@
 
                     </v-col>
 
-                    <v-col cols="12" sm="6" md="4">
-                        <v-text-field v-model="site_info.style_sheet" label="Style Sheet" required
-                            @input="$v.site_info.style_sheet.$touch()" :error-messages="styleSheetErrors"
-                            @blur="$v.site_info.style_sheet.$touch()"></v-text-field>
 
-                    </v-col>
 
                     <v-col cols="12" sm="6" md="4">
                         <v-text-field v-model="site_info.customer_service_hours" label="Customer Service Hours" required
@@ -172,9 +169,6 @@ export default {
             corp_name: {
                 required
             },
-            description: {
-                required
-            },
             return_address: {
                 required
             },
@@ -193,9 +187,7 @@ export default {
             shipping_carrier: {
                 required
             },
-            style_sheet: {
-                required
-            },
+
             customer_service_hours: {
                 required
             },
@@ -209,7 +201,7 @@ export default {
     data() {
         return {
             loading: false,
-            siteId: null,
+            siteId: 1,
         }
     },
 

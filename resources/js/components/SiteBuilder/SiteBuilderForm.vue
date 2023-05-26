@@ -33,7 +33,9 @@
                                     :populartitles="populartitles" :contacttitles="contacttitles"
                                     :contactcontent="contactcontent" :loadinggifs="loadinggifs" :colorsfonts="colorsfonts"
                                     :creditcards="creditcards" :fontfamilies="fontfamilies"
-                                    @templateSubmitted="getTemplateSubmitted" @layoutSubmitted="getLayoutSubmitted"
+                                    @templateContentSubmitted="getTemplateContentSubmitted"
+                                    @templateImagesSubmitted="getTemplateImagesSubmitted"
+                                    @layoutSubmitted="getLayoutSubmitted"
                                     @contentSubmitted="getContentSubmitted" @loadingGifsSubmitted="getLoadingGifsSubmitted"
                                     @colorFontSubmitted="getColorFontSubmitted"
                                     @creditCardSubmitted="getCreditCardSubmitted" />
@@ -267,9 +269,10 @@ export default {
                 },
             ],
             siteInfo: [],
-            siteId: null,
+            siteId: 1,
             productsSubmitted: false,
-            templateSubmitted: false,
+            templateContentSubmitted: false,
+            templateImagesSubmitted: false,
             layoutSubmitted: false,
             contentSubmitted: false,
             loadingGifsSubmitted: false,
@@ -290,9 +293,14 @@ export default {
                     message: 'Please complete the products step'
                 },
                 {
-                    label: 'templates',
+                    label: 'template_content',
                     submitted: false,
-                    message: 'Please complete the template step'
+                    message: 'Please complete the template content step'
+                },
+                {
+                    label: 'template_images',
+                    submitted: false,
+                    message: 'Please complete the template images step'
                 },
                 {
                     label: 'layout',
@@ -360,16 +368,32 @@ export default {
 
         }
         ,
-        getTemplateSubmitted(templateSubmitted) {
-            this.templateSubmitted = templateSubmitted;
-            console.log("templateSubmitted " + this.templateSubmitted);
+        getTemplateContentSubmitted(templateContentSubmitted) {
+            this.templateContentSubmitted = templateContentSubmitted;
+            console.log("templateContentSubmitted " + this.templateContentSubmitted);
 
 
 
             this.stepsRequired.forEach((step) => {
-                if (step.label === 'templates') {
+                if (step.label === 'template_content') {
                     step.submitted = true;
-                    step.message = 'Template step completed';
+                    step.message = 'Template Content step completed';
+                }
+            })
+
+
+        },
+        getTemplateImagesSubmitted(templateImagesSubmitted) {
+            this.templateImagesSubmitted = templateImagesSubmitted;
+            console.log("templateImagesSubmitted " + this.templateImagesSubmitted);
+
+            this.tab=3
+
+
+            this.stepsRequired.forEach((step) => {
+                if (step.label === 'template_images') {
+                    step.submitted = true;
+                    step.message = 'Template Images step completed';
                 }
             })
 
@@ -451,7 +475,6 @@ export default {
             this.creditCardSubmitted = creditCardSubmitted;
             console.log("creditCardSubmitted " + this.creditCardSubmitted);
 
-            this.tab = 3
 
             this.stepsRequired.forEach((step) => {
                 if (step.label === 'credit_card') {
@@ -531,7 +554,7 @@ export default {
         stepsRequired: {
             handler: function (val) {
                 // if template, layout, content, loading gifs, color and fonts, credit card, are all submitted, then change the template tab to green
-                if (this.templateSubmitted && this.layoutSubmitted && this.contentSubmitted && this.loadingGifsSubmitted && this.colorFontsSubmitted && this.creditCardSubmitted) {
+                if (this.templateContentSubmitted && this.templateImagesSubmitted && this.layoutSubmitted && this.contentSubmitted && this.loadingGifsSubmitted && this.colorFontsSubmitted && this.creditCardSubmitted) {
                     this.tabs.forEach((tab) => {
                         if (tab.label === 'templates') {
                             tab.icon.icon = 'mdi-check-circle-outline';
@@ -540,7 +563,7 @@ export default {
                     })
                 }
 
-                if (this.productsSubmitted && this.templateSubmitted && this.layoutSubmitted && this.contentSubmitted && this.loadingGifsSubmitted && this.colorFontsSubmitted && this.creditCardSubmitted && this.termsOthersSubmitted && this.crmSubmitted) {
+                if (this.productsSubmitted && this.templateContentSubmitted && this.templateImagesSubmitted && this.layoutSubmitted && this.contentSubmitted && this.loadingGifsSubmitted && this.colorFontsSubmitted && this.creditCardSubmitted && this.termsOthersSubmitted && this.crmSubmitted) {
 
                     console.log("all steps completed");
                     this.siteDownloadAble();

@@ -856,29 +856,31 @@ class SiteController extends Controller
 
         $layouts = PageLayout::all();
 
+        $fixedLayouts=["header","footer","heroSection"];
+
 
         $sitePageLayouts = [];
         if ($site) {
             $sitePageLayouts = $site->sitePageLayouts()->pluck('page_layout_id')->toArray();
 
-            $layouts = $layouts->map(function ($layout) use ($sitePageLayouts) {
+            $layouts = $layouts->map(function ($layout) use ($sitePageLayouts,$fixedLayouts) {
 
                 return [
                     "id" => $layout->id,
                     "name" => $layout->name,
                     "label" => $layout->code,
-                    "fixed" => $layout->code == 'header' || $layout->code == 'footer' ? true : false,
+                    "fixed" => in_array($layout->code,$fixedLayouts) ? true : false,
                     "selected" => in_array($layout->id, $sitePageLayouts) ? true : false
                 ];
             });
         } else {
 
-            $layouts = $layouts->map(function ($layout) use ($sitePageLayouts) {
+            $layouts = $layouts->map(function ($layout) use ($sitePageLayouts,$fixedLayouts) {
                 return [
                     "id" => $layout->id,
                     "name" => $layout->name,
                     "label" => $layout->code,
-                    "fixed" => $layout->code == 'header' || $layout->code == 'footer' ? true : false,
+                    "fixed" =>  in_array($layout->code,$fixedLayouts) ? true : false,
                     "selected" => true,
                 ];
             });
@@ -1036,19 +1038,19 @@ class SiteController extends Controller
 
         $request->validate([
             "site_name" => "required",
-            "url" => "required|url",
+            "url" => "required",
             "email" => "required|email",
             "phone" => "required",
             "address" => "required",
             "corp_name" => "required",
-            "description" => "required",
+            "description" => "nullable",
             "return_address" => "required",
             "fulfillment" => "required",
             "trial_period_breakdown" => "required",
             "trial_period" => "required",
             "shipping_period" => "required",
             "shipping_carrier" => "required",
-            "style_sheet" => "required",
+            "style_sheet" => "nullable",
             "customer_service_hours" => "required",
             "maximum_ticket_value" => "required",
             "site_id" => "nullable|exists:sites,id"
@@ -1211,18 +1213,12 @@ class SiteController extends Controller
             "site_id" => "required|exists:sites,id",
             "header_template_id" => "required|exists:header_templates,id",
             "hero_section_id" => "nullable|exists:hero_sections,id",
-            "hero_section_bg_image" => "nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048",
-            "hero_section_product_image" => "nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048",
             "product_section_id" => "nullable|exists:product_sections,id",
-            "product_section_bg_image" => "nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048",
             "related_product_section_id" => "nullable|exists:related_product_sections,id",
             "about_section_id" => "nullable|exists:about_sections,id",
-            "about_section_bg_image" => "nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048",
             "contact_section_id" => "nullable|exists:contact_sections,id",
-            "contact_section_bg_image" => "nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048",
             "popular_product_section_id" => "nullable|exists:popular_product_sections,id",
             "cta_section_id" => "nullable|exists:cta_sections,id",
-            "cta_section_bg_image" => "nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048",
             "feature_section_id" => "nullable|exists:feature_sections,id",
             "footer_template_id" => "required|exists:footer_templates,id",
             "product_page_id" => "required|exists:product_pages,id",
@@ -1255,6 +1251,37 @@ class SiteController extends Controller
         } else {
             $siteTemplate = SiteTemplate::create($siteTemplateData);
         }
+
+
+
+        return response()->json([
+            "message" => "Site Template Added Successfully",
+            "data" => [
+                "site_template_id" => $siteTemplate->id,
+            ]
+        ], 200);
+    }
+
+    public function submitSiteTemplateImages(Request $request)
+    {
+
+
+        $request->validate([
+            "site_id" => "required|exists:sites,id",
+            "hero_section_bg_image" => "nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048",
+            "hero_section_product_image" => "nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048",
+            "product_section_bg_image" => "nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048",
+            "about_section_bg_image" => "nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048",
+            "contact_section_bg_image" => "nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048",
+            "cta_section_bg_image" => "nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048",
+
+        ]);
+
+
+
+        $siteTemplate = SiteTemplate::where('site_id', $request->site_id)->first();
+
+
 
         if ($request->hasFile('hero_section_bg_image')) {
 

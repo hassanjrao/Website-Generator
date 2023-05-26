@@ -18,6 +18,7 @@ class RoleSeeder extends Seeder
     {
         $superAdmin = Role::firstOrCreate(["name" => "super admin"]);
         $admin = Role::firstOrCreate(["name" => "admin"]);
+        $owner=Role::firstOrCreate(["name"=>"owner"]);
 
 
         // users management permissions
@@ -335,6 +336,146 @@ class RoleSeeder extends Seeder
 
 
 
+        // assign permissions to owner
+
+        // super admin
+        $owner->givePermissionTo("view users");
+        $owner->givePermissionTo("create users");
+        $owner->givePermissionTo("edit users");
+        $owner->givePermissionTo("delete users");
+
+        $owner->givePermissionTo("view roles");
+        $owner->givePermissionTo("create roles");
+        $owner->givePermissionTo("edit roles");
+        $owner->givePermissionTo("delete roles");
+
+        $owner->givePermissionTo("view sites");
+        $owner->givePermissionTo("create sites");
+        $owner->givePermissionTo("edit sites");
+        $owner->givePermissionTo("delete sites");
+
+        $owner->givePermissionTo("view products");
+        $owner->givePermissionTo("create products");
+        $owner->givePermissionTo("edit products");
+        $owner->givePermissionTo("delete products");
+
+        $owner->givePermissionTo("view categories");
+        $owner->givePermissionTo("create categories");
+        $owner->givePermissionTo("edit categories");
+        $owner->givePermissionTo("delete categories");
+
+        $owner->givePermissionTo("view advertising companies");
+        $owner->givePermissionTo("create advertising companies");
+        $owner->givePermissionTo("edit advertising companies");
+        $owner->givePermissionTo("delete advertising companies");
+
+        $owner->givePermissionTo("view headers");
+        $owner->givePermissionTo("create headers");
+        $owner->givePermissionTo("edit headers");
+        $owner->givePermissionTo("delete headers");
+
+        $owner->givePermissionTo("view footers");
+        $owner->givePermissionTo("create footers");
+        $owner->givePermissionTo("edit footers");
+        $owner->givePermissionTo("delete footers");
+
+        $owner->givePermissionTo("view hero sections");
+        $owner->givePermissionTo("create hero sections");
+        $owner->givePermissionTo("edit hero sections");
+        $owner->givePermissionTo("delete hero sections");
+
+        $owner->givePermissionTo("view about sections");
+        $owner->givePermissionTo("create about sections");
+        $owner->givePermissionTo("edit about sections");
+        $owner->givePermissionTo("delete about sections");
+
+        $owner->givePermissionTo("view product sections");
+        $owner->givePermissionTo("create product sections");
+        $owner->givePermissionTo("edit product sections");
+        $owner->givePermissionTo("delete product sections");
+
+        $owner->givePermissionTo("view related product sections");
+        $owner->givePermissionTo("create related product sections");
+        $owner->givePermissionTo("edit related product sections");
+        $owner->givePermissionTo("delete related product sections");
+
+        $owner->givePermissionTo("view popular product sections");
+        $owner->givePermissionTo("create popular product sections");
+        $owner->givePermissionTo("edit popular product sections");
+        $owner->givePermissionTo("delete popular product sections");
+
+        $owner->givePermissionTo("view cta sections");
+        $owner->givePermissionTo("create cta sections");
+        $owner->givePermissionTo("edit cta sections");
+        $owner->givePermissionTo("delete cta sections");
+
+        $owner->givePermissionTo("view contact sections");
+        $owner->givePermissionTo("create contact sections");
+        $owner->givePermissionTo("edit contact sections");
+        $owner->givePermissionTo("delete contact sections");
+
+        $owner->givePermissionTo("view feature sections");
+        $owner->givePermissionTo("create feature sections");
+        $owner->givePermissionTo("edit feature sections");
+        $owner->givePermissionTo("delete feature sections");
+
+        $owner->givePermissionTo("view product pages");
+        $owner->givePermissionTo("create product pages");
+        $owner->givePermissionTo("edit product pages");
+        $owner->givePermissionTo("delete product pages");
+
+        $owner->givePermissionTo("view checkout pages");
+        $owner->givePermissionTo("create checkout pages");
+        $owner->givePermissionTo("edit checkout pages");
+        $owner->givePermissionTo("delete checkout pages");
+
+
+        $owner->givePermissionTo("view slogans");
+        $owner->givePermissionTo("create slogans");
+        $owner->givePermissionTo("edit slogans");
+        $owner->givePermissionTo("delete slogans");
+
+        $owner->givePermissionTo("view taglines");
+        $owner->givePermissionTo("create taglines");
+        $owner->givePermissionTo("edit taglines");
+        $owner->givePermissionTo("delete taglines");
+
+        $owner->givePermissionTo("view aboutus titles");
+        $owner->givePermissionTo("create aboutus titles");
+        $owner->givePermissionTo("edit aboutus titles");
+        $owner->givePermissionTo("delete aboutus titles");
+
+        $owner->givePermissionTo("view aboutus descriptions");
+        $owner->givePermissionTo("create aboutus descriptions");
+        $owner->givePermissionTo("edit aboutus descriptions");
+        $owner->givePermissionTo("delete aboutus descriptions");
+
+        $owner->givePermissionTo("view shop titles");
+        $owner->givePermissionTo("create shop titles");
+        $owner->givePermissionTo("edit shop titles");
+        $owner->givePermissionTo("delete shop titles");
+
+        $owner->givePermissionTo("view button titles");
+        $owner->givePermissionTo("create button titles");
+        $owner->givePermissionTo("edit button titles");
+        $owner->givePermissionTo("delete button titles");
+
+        $owner->givePermissionTo("view popular titles");
+        $owner->givePermissionTo("create popular titles");
+        $owner->givePermissionTo("edit popular titles");
+        $owner->givePermissionTo("delete popular titles");
+
+        $owner->givePermissionTo("view contact titles");
+        $owner->givePermissionTo("create contact titles");
+        $owner->givePermissionTo("edit contact titles");
+        $owner->givePermissionTo("delete contact titles");
+
+
+
+        $owner->givePermissionTo("view contact descriptions");
+        $owner->givePermissionTo("create contact descriptions");
+        $owner->givePermissionTo("edit contact descriptions");
+        $owner->givePermissionTo("delete contact descriptions");
 
 
 

@@ -15,7 +15,7 @@
             </div>
 
         </v-card-title>
-
+                                                           
         <!-- divider -->
         <v-divider></v-divider>
 
@@ -40,7 +40,7 @@
 
                                         <v-list-item-content :key="item.name" class="d-flex" style="padding:0px !important">
                                             <v-switch :label="item.name" :value="item" v-model="layoutItemsIncluded"
-                                                :disabled="item.name == 'Header' || item.name == 'Footer'">
+                                                :disabled="item.fixed" :color="item.fixed ? 'grey' : 'primary'">
                                             </v-switch>
                                         </v-list-item-content>
 
@@ -82,6 +82,11 @@ export default {
             type: Number,
             required: true
         },
+        randomizeAll: {
+            type: Number,
+            required: false,
+            default: 0
+        }
 
     },
 
@@ -91,6 +96,7 @@ export default {
             layoutItemsIncluded: [],
             loading: false,
             siteId: null,
+            disabledLayouts:[],
         }
     },
     computed: {
@@ -98,24 +104,68 @@ export default {
 
     },
 
+    watch: {
+
+        randomizeAll: function (val) {
+
+            console.log('randomizeAll layout', val);
+            this.randomize();
+        }
+
+    },
+
     methods: {
         randomize() {
 
-            // change the layoutItems array to a random order except the first and last item
+            // change the layoutItems array to a random order except the fixed items
 
             let layoutItems = this.layoutItems;
 
-            let firstItem = layoutItems[0];
-            let lastItem = layoutItems[layoutItems.length - 1];
+            let fixedItems = this.disabledLayouts;
 
-            layoutItems = layoutItems.slice(1, layoutItems.length - 1);
+            let notFixedItems = layoutItems.filter(item => !fixedItems.includes(item));
 
-            layoutItems.sort(() => Math.random() - 0.5);
+            let randomItems = notFixedItems.sort(() => Math.random() - 0.5);
 
-            layoutItems.unshift(firstItem);
-            layoutItems.push(lastItem);
 
-            this.layoutItems = layoutItems;
+            // add the fixed items to the randomItems array, the position of the fixed item should be according to the id of the fixed item
+
+            fixedItems.forEach(item => {
+                randomItems.splice(item.id - 1, 0, item);
+            });
+
+            this.layoutItems = randomItems;
+
+
+
+            // add random number of items to the layoutItemsIncluded array except the fixed items
+
+            let layoutItemsIncluded = this.layoutItems;
+
+            let notFixedItemsIncluded = layoutItemsIncluded.filter(item => !fixedItems.includes(item));
+
+            let randomItemsIncluded = notFixedItemsIncluded.sort(() => Math.random() - 0.5);
+
+            let randomNumber= Math.floor(Math.random() * randomItemsIncluded.length);
+
+            let randomItemsIncludedSliced = randomItemsIncluded.slice(0, randomNumber);
+
+            // add the fixed items to the randomItemsIncluded array, the position of the fixed item should be according to the id of the fixed item
+
+            fixedItems.forEach(item => {
+                randomItemsIncludedSliced.splice(item.id - 1, 0, item);
+            });
+
+            // add item with code productSection to the randomItemsIncluded array if it is not already included
+
+            let productSection = this.layoutItems.find(item => item.label == 'productSection');
+
+
+            if (!randomItemsIncludedSliced.includes(productSection)) {
+                randomItemsIncludedSliced.push(productSection);
+            }
+
+            this.layoutItemsIncluded = randomItemsIncludedSliced;
 
 
         },
@@ -179,12 +229,16 @@ export default {
         this.layoutItems = this.layouts;
         this.layoutItemsIncluded = this.layouts.filter(item => item.selected == true)
 
-                                                                                        
+        this.disabledLayouts = this.layoutItems.filter(item => item.fixed == true)
+
+
         this.$emit('includedLayoutItems', this.layoutItemsIncluded)
 
         console.log(this.layoutItems,this.layoutItemsIncluded)
 
         this.siteId = this.site_id;
+
+        console.log("randomizeAll", this.randomizeAll);
     },
     created() {
         this.showStatus = alert.showStatus;

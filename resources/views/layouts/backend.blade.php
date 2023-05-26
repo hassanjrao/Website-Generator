@@ -238,145 +238,142 @@
                         @endif
 
 
-                        @if (auth()->user()->hasRole('super admin') ||
-                                auth()->user()->can('view headers') ||
-                                auth()->user()->can('view footers') ||
-                                auth()->user()->can('view hero sections') ||
-                                auth()->user()->can('view about sections') ||
-                                auth()->user()->can('view contact sections') ||
-                                auth()->user()->can('view product sections') ||
-                                auth()->user()->can('view related product sections') ||
-                                auth()->user()->can('view popular product sections') ||
-                                auth()->user()->can('view cta sections') ||
-                                auth()->user()->can('view feature sections'))
-                            <li class="nav-main-item {{ request()->segment(1) == 'templates' ? ' open' : '' }}">
-                                <a class="nav-main-link {{ request()->segment(1) == 'templates' ? ' active' : '' }} nav-main-link-submenu"
-                                    data-toggle="submenu" aria-haspopup="true" aria-expanded="false" href="#">
-                                    <i class="nav-main-link-icon si si-energy"></i>
-                                    <span class="nav-main-link-name">Templates</span>
-                                </a>
-                                <ul class="nav-main-submenu">
 
-                                    @can('view headers')
-                                        <li class="nav-main-item">
-                                            <a class="nav-main-link {{ request()->segment(2) == 'headers' ? ' active' : '' }}"
-                                                href="{{ route('headers.index') }}">
-                                                <span class="nav-main-link-name">Headers</span>
-                                            </a>
-                                        </li>
-                                    @endcan
-                                    @can('view footers')
-                                        <li class="nav-main-item">
-                                            <a class="nav-main-link {{ request()->segment(2) == 'footers' ? ' active' : '' }}"
-                                                href="{{ route('footers.index') }}">
-                                                <span class="nav-main-link-name">Footers</span>
-                                            </a>
-                                        </li>
-                                    @endcan
-                                    @can('view hero sections')
-                                        <li class="nav-main-item">
-                                            <a class="nav-main-link {{ request()->segment(2) == 'hero-sections' ? ' active' : '' }}"
-                                                href="{{ route('hero-sections.index') }}">
-                                                <span class="nav-main-link-name">Hero Section</span>
-                                            </a>
-                                        </li>
-                                    @endcan
-                                    @can('view about sections')
-                                        <li class="nav-main-item">
-                                            <a class="nav-main-link {{ request()->segment(2) == 'about-sections' ? ' active' : '' }}"
-                                                href="{{ route('about-sections.index') }}">
-                                                <span class="nav-main-link-name">About Section</span>
-                                            </a>
-                                        </li>
-                                    @endcan
-                                    @can('view product sections')
-                                        <li class="nav-main-item">
-                                            <a class="nav-main-link {{ request()->segment(2) == 'product-sections' ? ' active' : '' }}"
-                                                href="{{ route('product-sections.index') }}">
-                                                <span class="nav-main-link-name">Product Section</span>
-                                            </a>
-                                        </li>
-                                    @endcan
-                                    @can('view related product sections')
-                                        <li class="nav-main-item">
-                                            <a class="nav-main-link {{ request()->segment(2) == 'related-product-sections' ? ' active' : '' }}"
-                                                href="{{ route('related-product-sections.index') }}">
-                                                <span class="nav-main-link-name">Related Product Section</span>
-                                            </a>
-                                        </li>
-                                    @endcan
-                                    @can('view popular product sections')
-                                        <li class="nav-main-item">
-                                            <a class="nav-main-link {{ request()->segment(2) == 'popular-product-sections' ? ' active' : '' }}"
-                                                href="{{ route('popular-product-sections.index') }}">
-                                                <span class="nav-main-link-name">Popular Product Section</span>
-                                            </a>
-                                        </li>
-                                    @endcan
-                                    @can('view cta sections')
-                                        <li class="nav-main-item">
-                                            <a class="nav-main-link {{ request()->segment(2) == 'cta-sections' ? ' active' : '' }}"
-                                                href="{{ route('cta-sections.index') }}">
-                                                <span class="nav-main-link-name">CTA Section</span>
-                                            </a>
-                                        </li>
-                                    @endcan
-                                    @can('view contact sections')
-                                        <li class="nav-main-item">
-                                            <a class="nav-main-link {{ request()->segment(2) == 'contact-sections' ? ' active' : '' }}"
-                                                href="{{ route('contact-sections.index') }}">
-                                                <span class="nav-main-link-name">Contact Section</span>
-                                            </a>
-                                        </li>
-                                    @endcan
-                                    @can('view feature sections')
-                                        <li class="nav-main-item">
-                                            <a class="nav-main-link {{ request()->segment(2) == 'feature-sections' ? ' active' : '' }}"
-                                                href="{{ route('feature-sections.index') }}">
-                                                <span class="nav-main-link-name">Feature Section</span>
-                                            </a>
-                                        </li>
-                                    @endcan
-                                </ul>
-                            </li>
-                        @endif
+                        <li class="nav-main-item {{ request()->segment(1) == 'templates' ||  request()->segment(1) == 'pages' ? ' open' : '' }}">
+                            <a class="nav-main-link {{ request()->segment(1) == 'templates' ||  request()->segment(1) == 'pages' ? ' active' : '' }} nav-main-link-submenu"
+                                data-toggle="submenu" aria-haspopup="true" aria-expanded="false" href="#">
+                                <i class="nav-main-link-icon si si-energy"></i>
+                                <span class="nav-main-link-name">Templates</span>
+                            </a>
+                            <ul class="nav-main-submenu">
 
-                        @if (auth()->user()->hasRole('super admin') ||
-                                auth()->user()->can('view product pages') ||
-                                auth()->user()->can('view checkout pages'))
-                            <li class="nav-main-item {{ request()->segment(1) == 'pages' ? ' open' : '' }}">
-                                <a class="nav-main-link {{ request()->segment(1) == 'pages' ? ' active' : '' }} nav-main-link-submenu"
-                                    data-toggle="submenu" aria-haspopup="true" aria-expanded="false" href="#">
+                                @if (auth()->user()->hasRole('super admin') ||
+                                        auth()->user()->can('view headers') ||
+                                        auth()->user()->can('view footers') ||
+                                        auth()->user()->can('view hero sections') ||
+                                        auth()->user()->can('view about sections') ||
+                                        auth()->user()->can('view contact sections') ||
+                                        auth()->user()->can('view product sections') ||
+                                        auth()->user()->can('view related product sections') ||
+                                        auth()->user()->can('view popular product sections') ||
+                                        auth()->user()->can('view cta sections') ||
+                                        auth()->user()->can('view feature sections'))
+                                    <li
+                                        class="nav-main-item {{ request()->segment(1) == 'templates' ? ' open' : '' }}">
+                                        <a class="nav-main-link {{ request()->segment(1) == 'templates' ? ' active' : '' }} nav-main-link-submenu"
+                                            data-toggle="submenu" aria-haspopup="true" aria-expanded="false"
+                                            href="#">
+                                            <i class="nav-main-link-icon si si-energy"></i>
+                                            <span class="nav-main-link-name">Landing Pages</span>
+                                        </a>
+                                        <ul class="nav-main-submenu">
+                                            @can('view headers')
+                                                <li class="nav-main-item">
+                                                    <a class="nav-main-link {{ request()->segment(2) == 'headers' ? ' active' : '' }}"
+                                                        href="{{ route('headers.index') }}">
+                                                        <span class="nav-main-link-name">Headers</span>
+                                                    </a>
+                                                </li>
+                                            @endcan
+                                            @can('view footers')
+                                                <li class="nav-main-item">
+                                                    <a class="nav-main-link {{ request()->segment(2) == 'footers' ? ' active' : '' }}"
+                                                        href="{{ route('footers.index') }}">
+                                                        <span class="nav-main-link-name">Footers</span>
+                                                    </a>
+                                                </li>
+                                            @endcan
+                                            @can('view hero sections')
+                                                <li class="nav-main-item">
+                                                    <a class="nav-main-link {{ request()->segment(2) == 'hero-sections' ? ' active' : '' }}"
+                                                        href="{{ route('hero-sections.index') }}">
+                                                        <span class="nav-main-link-name">Hero Section</span>
+                                                    </a>
+                                                </li>
+                                            @endcan
+                                            @can('view about sections')
+                                                <li class="nav-main-item">
+                                                    <a class="nav-main-link {{ request()->segment(2) == 'about-sections' ? ' active' : '' }}"
+                                                        href="{{ route('about-sections.index') }}">
+                                                        <span class="nav-main-link-name">About Section</span>
+                                                    </a>
+                                                </li>
+                                            @endcan
+                                            @can('view product sections')
+                                                <li class="nav-main-item">
+                                                    <a class="nav-main-link {{ request()->segment(2) == 'product-sections' ? ' active' : '' }}"
+                                                        href="{{ route('product-sections.index') }}">
+                                                        <span class="nav-main-link-name">Product Section</span>
+                                                    </a>
+                                                </li>
+                                            @endcan
+                                            @can('view related product sections')
+                                                <li class="nav-main-item">
+                                                    <a class="nav-main-link {{ request()->segment(2) == 'related-product-sections' ? ' active' : '' }}"
+                                                        href="{{ route('related-product-sections.index') }}">
+                                                        <span class="nav-main-link-name">Related Product Section</span>
+                                                    </a>
+                                                </li>
+                                            @endcan
+                                            @can('view popular product sections')
+                                                <li class="nav-main-item">
+                                                    <a class="nav-main-link {{ request()->segment(2) == 'popular-product-sections' ? ' active' : '' }}"
+                                                        href="{{ route('popular-product-sections.index') }}">
+                                                        <span class="nav-main-link-name">Popular Product Section</span>
+                                                    </a>
+                                                </li>
+                                            @endcan
+                                            @can('view cta sections')
+                                                <li class="nav-main-item">
+                                                    <a class="nav-main-link {{ request()->segment(2) == 'cta-sections' ? ' active' : '' }}"
+                                                        href="{{ route('cta-sections.index') }}">
+                                                        <span class="nav-main-link-name">CTA Section</span>
+                                                    </a>
+                                                </li>
+                                            @endcan
+                                            @can('view contact sections')
+                                                <li class="nav-main-item">
+                                                    <a class="nav-main-link {{ request()->segment(2) == 'contact-sections' ? ' active' : '' }}"
+                                                        href="{{ route('contact-sections.index') }}">
+                                                        <span class="nav-main-link-name">Contact Section</span>
+                                                    </a>
+                                                </li>
+                                            @endcan
+                                            @can('view feature sections')
+                                                <li class="nav-main-item">
+                                                    <a class="nav-main-link {{ request()->segment(2) == 'feature-sections' ? ' active' : '' }}"
+                                                        href="{{ route('feature-sections.index') }}">
+                                                        <span class="nav-main-link-name">Feature Section</span>
+                                                    </a>
+                                                </li>
+                                            @endcan
+                                        </ul>
 
-                                    <i class="nav-main-link-icon fas fa-pager"></i>
-                                    <span class="nav-main-link-name">Pages</span>
-                                </a>
-                                <ul class="nav-main-submenu">
+                                    </li>
+                                @endif
 
-                                    @can('view product pages')
-                                        <li class="nav-main-item">
-                                            <a class="nav-main-link {{ request()->segment(2) == 'product-pages' ? ' active' : '' }}"
-                                                href="{{ route('product-pages.index') }}">
-                                                <span class="nav-main-link-name">Product</span>
-                                            </a>
-                                        </li>
-                                    @endcan
+                                @can('view product pages')
+                                    <li class="nav-main-item">
+                                        <a class="nav-main-link {{ request()->segment(2) == 'product-pages' ? ' active' : '' }}"
+                                            href="{{ route('product-pages.index') }}">
+                                            <span class="nav-main-link-name">Product</span>
+                                        </a>
+                                    </li>
+                                @endcan
 
-                                    @can('view checkout pages')
-                                        <li class="nav-main-item">
-                                            <a class="nav-main-link {{ request()->segment(2) == 'checkout-pages' ? ' active' : '' }}"
-                                                href="{{ route('checkout-pages.index') }}">
-                                                <span class="nav-main-link-name">Checkout</span>
-                                            </a>
-                                        </li>
-                                    @endcan
+                                @can('view checkout pages')
+                                    <li class="nav-main-item">
+                                        <a class="nav-main-link {{ request()->segment(2) == 'checkout-pages' ? ' active' : '' }}"
+                                            href="{{ route('checkout-pages.index') }}">
+                                            <span class="nav-main-link-name">Checkout</span>
+                                        </a>
+                                    </li>
+                                @endcan
+                            </ul>
+                        </li>
 
 
-                                </ul>
-
-                            </li>
-                        @endif
-
+                       
                         @if (auth()->user()->hasRole('super admin') ||
                                 auth()->user()->can('view slogans') ||
                                 auth()->user()->can('view taglines') ||
@@ -776,7 +773,6 @@
         //     dropdownParent: $(".modal")
         // });
     </script>
-
 
 
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>

@@ -5,15 +5,29 @@
         <!-- header -->
         <v-card-title>
 
-            <v-tabs center-active v-model="tab">
-
-                <v-tab v-for="(tab, ind) in tabs" :key="ind">
-                    {{ tab.text }}
-                </v-tab>
-
-            </v-tabs>
+            <v-row class="justify-content-around align-items-center">
 
 
+
+                <v-col cols="12" sm="12" md="12">
+                    <v-tabs center-active v-model="tab">
+
+                        <v-tab v-for="(tab, ind) in tabs" :key="ind">
+                            {{ tab.text }}
+                        </v-tab>
+
+
+                    </v-tabs>
+                </v-col>
+
+
+                <v-col cols="12" sm="12" md="12" class="text-right">
+
+                <v-btn color="secondary" :loading="loading" class="mr-2" @click="randomizeAllMethod">RandomizeAll</v-btn>
+                </v-col>
+
+
+            </v-row>
 
         </v-card-title>
 
@@ -26,357 +40,61 @@
                 <v-tab-item v-for="(tab, i) in tabs" :key="i">
                     <v-card flat v-if="tab.label == 'template'">
 
-
-                        <v-card-title class="d-flex justify-content-between">
-                            <h6 class="headline mb-0">Template</h6>
-
-                            <div class="d-flex justify-content-center">
-                                <v-btn color="secondary" class="mr-2" @click="randomize">Randomize</v-btn>
-
-                                <v-btn color="primary" :loading="loading" @click="submitSiteTemplate">Submit</v-btn>
-                            </div>
-
-                        </v-card-title>
-
-                        <v-card-text>
-
-                            <v-row>
-                                <v-col cols="12" sm="12" md="12">
-
-                                    <v-card>
-
-                                        <v-card-title>
-                                            <h3 class="headline mb-0">Landing Page</h3>
-                                        </v-card-title>
-
-                                        <v-card-text>
-
-                                            <v-row>
-
-                                                <v-col cols="12" sm="6" md="4">
-
-
-                                                    <v-autocomplete label="Header Template" clearable
-                                                        :items="headertemplates" v-model="selectedHeaderTemplate" required
-                                                        @input="$v.selectedHeaderTemplate.$touch()"
-                                                        :error-messages="selectedHeaderTemplateErrors"
-                                                        @blur="$v.selectedHeaderTemplate.$touch()"></v-autocomplete>
-
-                                                </v-col>
-
-                                                <v-col cols="12" sm="6" md="4"
-                                                    v-if="includedLayoutItems.includes('heroSection')">
-
-                                                    <v-autocomplete label="Hero Section" clearable :items="herosections"
-                                                        v-model="selectedHeroSection" required
-                                                        @input="$v.selectedHeroSection.$touch()"
-                                                        :error-messages="selectedHeroSectionErrors"
-                                                        @blur="$v.selectedHeroSection.$touch()"></v-autocomplete>
-                                                </v-col>
-
-
-
-                                                <v-col cols="12" sm="6" md="4"
-                                                    v-if="includedLayoutItems.includes('productSection')">
-
-                                                    <v-autocomplete label="Product Section" clearable
-                                                        :items="productsections" v-model="selectedProductSection" required
-                                                        @input="$v.selectedProductSection.$touch()"
-                                                        :error-messages="selectedProductSectionErrors"
-                                                        @blur="$v.selectedProductSection.$touch()"></v-autocomplete>
-                                                </v-col>
-
-
-
-                                                <v-col cols="12" sm="6" md="4">
-
-                                                    <v-autocomplete label="Related Product Section" clearable
-                                                        :items="relatedproductsections"
-                                                        v-model="selectedRelatedProductSection" required
-                                                        @input="$v.selectedRelatedProductSection.$touch()"
-                                                        :error-messages="selectedRelatedProductSectionErrors"
-                                                        @blur="$v.selectedRelatedProductSection.$touch()"></v-autocomplete>
-                                                </v-col>
-
-                                                <v-col cols="12" sm="6" md="4"
-                                                    v-if="includedLayoutItems.includes('aboutSection')">
-
-                                                    <v-autocomplete label="About Section" clearable :items="aboutsections"
-                                                        v-model="selectedAboutSection" required
-                                                        @input="$v.selectedAboutSection.$touch()"
-                                                        :error-messages="selectedAboutSectionErrors"
-                                                        @blur="$v.selectedAboutSection.$touch()"></v-autocomplete>
-
-
-                                                </v-col>
-
-
-
-                                                <v-col cols="12" sm="6" md="4"
-                                                    v-if="includedLayoutItems.includes('contactSection')">
-
-                                                    <v-autocomplete label="Contact Section" clearable
-                                                        :items="contactsections" v-model="selectedContactSection" required
-                                                        @input="$v.selectedContactSection.$touch()"
-                                                        :error-messages="selectedContactSectionErrors"
-                                                        @blur="$v.selectedContactSection.$touch()"></v-autocomplete>
-                                                </v-col>
-
-
-
-
-
-
-                                                <v-col cols="12" sm="6" md="4"
-                                                    v-if="includedLayoutItems.includes('popularProductsection')">
-
-                                                    <v-autocomplete label="Popular Product Section" clearable
-                                                        :items="popularproductsections"
-                                                        v-model="selectedPopularProductSection" required
-                                                        @input="$v.selectedPopularProductSection.$touch()"
-                                                        :error-messages="selectedPopularProductSectionErrors"
-                                                        @blur="$v.selectedPopularProductSection.$touch()"></v-autocomplete>
-                                                </v-col>
-
-
-                                                <v-col cols="12" sm="6" md="4"
-                                                    v-if="includedLayoutItems.includes('ctaSection')">
-
-                                                    <v-autocomplete label="CTA Section" clearable :items="ctasections"
-                                                        v-model="selectedCtaSection" required
-                                                        @input="$v.selectedCtaSection.$touch()"
-                                                        :error-messages="selectedCtaSectionErrors"
-                                                        @blur="$v.selectedCtaSection.$touch()"></v-autocomplete>
-                                                </v-col>
-
-
-
-                                                <v-col cols="12" sm="6" md="4"
-                                                    v-if="includedLayoutItems.includes('featuresSection')">
-
-                                                    <v-autocomplete label="Feature Section" clearable
-                                                        :items="featuresections" v-model="selectedFeatureSection" required
-                                                        @input="$v.selectedFeatureSection.$touch()"
-                                                        :error-messages="selectedFeatureSectionErrors"
-                                                        @blur="$v.selectedFeatureSection.$touch()"></v-autocomplete>
-                                                </v-col>
-
-
-
-                                                <v-col cols="12" sm="6" md="4">
-
-                                                    <v-autocomplete label="Footer Template" clearable
-                                                        :items="footertemplates" v-model="selectedFooterTemplate" required
-                                                        @input="$v.selectedFooterTemplate.$touch()"
-                                                        :error-messages="selectedFooterTemplateErrors"
-                                                        @blur="$v.selectedFooterTemplate.$touch()"></v-autocomplete>
-                                                </v-col>
-
-
-
-
-                                            </v-row>
-
-
-                                        </v-card-text>
-
-                                    </v-card>
-                                </v-col>
-
-
-                                <v-col cols="12" sm="12" md="12">
-
-                                    <v-card>
-
-                                        <v-card-title>
-                                            <h3 class="headline mb-0">Section Images</h3>
-                                        </v-card-title>
-
-                                        <v-card-text>
-
-                                            <v-row>
-
-                                                <v-col cols="12" sm="6" md="4"
-                                                    v-if="includedLayoutItems.includes('productSection')">
-
-                                                    <v-file-input label="Product Section BG Image" show-size
-                                                        truncate-length="15" required v-model="productSectionBgImage"
-                                                        @input="$v.productSectionBgImage.$touch()"
-                                                        :error-messages="productSectionBgImageErrors"
-                                                        @blur="$v.productSectionBgImage.$touch()">
-                                                    </v-file-input>
-                                                </v-col>
-
-                                                <v-col cols="12" sm="6" md="4"
-                                                    v-if="includedLayoutItems.includes('ctaSection')">
-                                                    <v-file-input label="CTA Section BG Image" show-size
-                                                        truncate-length="15" required v-model="ctaSectionBgImage"
-                                                        @input="$v.ctaSectionBgImage.$touch()"
-                                                        :error-messages="ctaSectionBgImageErrors"
-                                                        @blur="$v.ctaSectionBgImage.$touch()">
-                                                    </v-file-input>
-
-                                                </v-col>
-
-
-                                                <v-col cols="12" sm="6" md="4"
-                                                    v-if="includedLayoutItems.includes('contactSection')">
-                                                    <v-file-input label="Contact Section BG Image" show-size
-                                                        truncate-length="15" required v-model="contactSectionBgImage"
-                                                        @input="$v.contactSectionBgImage.$touch()"
-                                                        :error-messages="contactSectionBgImageErrors"
-                                                        @blur="$v.contactSectionBgImage.$touch()">
-                                                    </v-file-input>
-
-                                                </v-col>
-
-                                                <v-col cols="12" sm="6" md="4"
-                                                    v-if="includedLayoutItems.includes('aboutSection')">
-                                                    <v-file-input label="About Section BG Image" show-size
-                                                        truncate-length="15" required v-model="aboutSectionBgImage"
-                                                        @input="$v.aboutSectionBgImage.$touch()"
-                                                        :error-messages="aboutSectionBgImageErrors"
-                                                        @blur="$v.aboutSectionBgImage.$touch()">
-                                                    </v-file-input>
-
-                                                </v-col>
-
-                                                <v-col cols="12" sm="6" md="4"
-                                                    v-if="includedLayoutItems.includes('heroSection')">
-
-                                                    <v-file-input label="Hero Section BG Image" show-size
-                                                        truncate-length="15" required v-model="heroSectionBgImage"
-                                                        @input="$v.heroSectionBgImage.$touch()"
-                                                        :error-messages="heroSectionBgImageErrors"
-                                                        @blur="$v.heroSectionBgImage.$touch()"></v-file-input>
-                                                </v-col>
-
-                                                <v-col cols="12" sm="6" md="4"
-                                                    v-if="includedLayoutItems.includes('heroSection')">
-
-                                                    <v-file-input label="Hero Section Product Image" show-size
-                                                        truncate-length="15" required v-model="heroSectionProductImage"
-                                                        @input="$v.heroSectionProductImage.$touch()"
-                                                        :error-messages="heroSectionProductImageErrors"
-                                                        @blur="$v.heroSectionProductImage.$touch()"></v-file-input>
-                                                </v-col>
-
-
-
-
-
-
-                                            </v-row>
-
-
-                                        </v-card-text>
-
-                                    </v-card>
-                                </v-col>
-
-
-                                <v-col cols="12" sm="12" md="6">
-
-                                    <v-card>
-
-                                        <v-card-title>
-                                            <h3 class="headline mb-0">Product Page</h3>
-                                        </v-card-title>
-
-                                        <v-card-text>
-
-                                            <v-row>
-
-
-                                                <v-col cols="12" sm="12" md="12">
-
-                                                    <v-autocomplete label="Product Pages" clearable :items="productpages"
-                                                        v-model="selectedProductPages" required
-                                                        @input="$v.selectedProductPages.$touch()"
-                                                        :error-messages="selectedProductPagesErrors"
-                                                        @blur="$v.selectedProductPages.$touch()"></v-autocomplete>
-                                                </v-col>
-
-                                            </v-row>
-
-
-                                        </v-card-text>
-
-                                    </v-card>
-                                </v-col>
-
-                                <v-col cols="12" sm="12" md="6">
-
-                                    <v-card>
-
-                                        <v-card-title>
-                                            <h3 class="headline mb-0">Checkout Page</h3>
-                                        </v-card-title>
-
-                                        <v-card-text>
-
-                                            <v-row>
-
-
-
-                                                <v-col cols="12" sm="12" md="12">
-
-                                                    <v-autocomplete label="Checkout Pages" clearable :items="checkoutpages"
-                                                        v-model="selectedCheckoutPages" required
-                                                        @input="$v.selectedCheckoutPages.$touch()"
-                                                        :error-messages="selectedCheckoutPagesErrors"
-                                                        @blur="$v.selectedCheckoutPages.$touch()"></v-autocomplete>
-                                                </v-col>
-
-
-                                            </v-row>
-
-
-                                        </v-card-text>
-
-                                    </v-card>
-                                </v-col>
-
-                            </v-row>
-
-
-                        </v-card-text>
+                        <TemplateContent ref="templateContent" :key="templateContentKey" :headertemplates="headertemplates"
+                            :herosections="herosections" :productsections="productsections"
+                            :relatedproductsections="relatedproductsections" :aboutsections="aboutsections"
+                            :contactsections="contactsections" :popularproductsections="popularproductsections"
+                            :ctasections="ctasections" :featuresections="featuresections" :footertemplates="footertemplates"
+                            :site_id="siteId" :productpages="productpages" :checkoutpages="checkoutpages"
+                            :includedlayoutitems="includedLayoutItems"
+                            @templateContentSubmitted="getTemplateContentSubmitted">
+                        </TemplateContent>
+                    </v-card>
+
+                    <v-card tile v-if="tab.label == 'template_images'">
+
+                        <TemplateImages :key="templateImagesKey" :site_id="siteId"
+                            :includedlayoutitems="includedLayoutItems"
+                            @templateImagesSubmitted="getTemplateImagesSubmitted">
+
+                        </TemplateImages>
 
                     </v-card>
 
                     <v-card tile v-if="tab.label == 'layout'">
 
-                        <Layout :layouts="layouts" :site_id="siteId" @layoutSubmitted="getLayoutSubmitted"
-                            @includedLayoutItems="getIncludedLayoutItems" />
+                        <Layout ref="layout" :layouts="layouts" :site_id="siteId" @layoutSubmitted="getLayoutSubmitted"
+                            @includedLayoutItems="getIncludedLayoutItems" :randomize-all="randomizeAll" />
 
                     </v-card>
 
 
                     <v-card tile v-if="tab.label == 'content'">
 
-                        <SiteContent :site_content="siteContent" :slogans="slogans" :taglines="taglines"
+                        <SiteContent ref="siteContent" :site_content="siteContent" :slogans="slogans" :taglines="taglines"
                             :aboutustitles="aboutustitles" :aboutuscontent="aboutuscontent" :shoptitles="shoptitles"
                             :buttonnames="buttonnames" :populartitles="populartitles" :contacttitles="contacttitles"
-                            :contactcontent="contactcontent" :site_id="siteId" @contentSubmitted="getContentSubmitted" />
+                            :contactcontent="contactcontent" :site_id="siteId" @contentSubmitted="getContentSubmitted"
+                            :randomize-all="randomizeAll" />
                         />
 
                     </v-card>
 
 
                     <v-card tile v-if="tab.label == 'loading_gifs'">
-                        <LoadingGifs :site_id="siteId" :loadinggifs="loadinggifs"
+                        <LoadingGifs ref="loadingGifs" :site_id="siteId" :loadinggifs="loadinggifs"
                             @loadingGifsSubmitted="getLoadingGifsSubmitted" />
                     </v-card>
 
 
                     <v-card tile v-if="tab.label == 'colors_fonts'">
-                        <ColorsFonts :site_id="siteId" :colorsfonts="colorsfonts" :fontfamilies="fontfamilies"
-                            @colorFontSubmitted="getColorFontSubmitted" />
+                        <ColorsFonts ref="colorsFonts" :site_id="siteId" :colorsfonts="colorsfonts"
+                            :fontfamilies="fontfamilies" @colorFontSubmitted="getColorFontSubmitted" />
                     </v-card>
 
 
                     <v-card tile v-if="tab.label == 'credit_cards'">
-                        <CreditCards :site_id="siteId" :creditcards="creditcards"
+                        <CreditCards ref="creditCards" :site_id="siteId" :creditcards="creditcards"
                             @creditCardSubmitted="getCreditCardSubmitted" />
                     </v-card>
 
@@ -403,6 +121,9 @@ import SiteContent from './SiteContent.vue'
 import LoadingGifs from './LoadingGifs.vue'
 import ColorsFonts from './ColorsFonts.vue'
 import CreditCards from './CreditCards.vue'
+import TemplateContent from './TemplateContent.vue'
+import TemplateImages from './TemplateImages.vue'
+
 
 
 export default {
@@ -521,101 +242,17 @@ export default {
             required: true
         },
     },
-    validations: {
-        selectedHeaderTemplate: {
-            requiredIf: requiredIf(function () {
-                return this.includedLayoutItems.includes('header')
-            })
-        },
-        selectedHeroSection: {
-            requiredIf: requiredIf(function () {
-                return this.includedLayoutItems.includes('heroSection')
-            })
-        },
-        selectedProductSection: {
-            requiredIf: requiredIf(function () {
-                return this.includedLayoutItems.includes('productSection')
-            })
-        },
-        selectedAboutSection: {
-            requiredIf: requiredIf(function () {
-                return this.includedLayoutItems.includes('aboutSection')
-            })
-        },
-        selectedContactSection: {
-            requiredIf: requiredIf(function () {
-                return this.includedLayoutItems.includes('contactSection')
-            })
-        },
-        selectedPopularProductSection: {
-            requiredif: requiredIf(function () {
-                return this.includedLayoutItems.includes('popularProductsection')
-            })
-        },
-        selectedCtaSection: {
-            requiredIf: requiredIf(function () {
-                return this.includedLayoutItems.includes('ctaSection')
-            })
-        },
-        selectedFeatureSection: {
-            requiredIf: requiredIf(function () {
-                return this.includedLayoutItems.includes('featuresSection')
-            })
-        },
-        selectedFooterTemplate: {
-            requiredIf: requiredIf(function () {
-                return this.includedLayoutItems.includes('footer')
-            })
-        },
-        selectedProductPages: {
-            required
-        },
-        selectedCheckoutPages: {
-            required
-        },
-        selectedRelatedProductSection: {
-            required
-        },
-        heroSectionBgImage: {
-            requiredIf: requiredIf(function () {
-                return this.includedLayoutItems.includes('heroSection')
-            })
-        },
-        heroSectionProductImage: {
-            requiredIf: requiredIf(function () {
-                return this.includedLayoutItems.includes('heroSection')
-            })
-        },
-        productSectionBgImage: {
-            requiredIf: requiredIf(function () {
-                return this.includedLayoutItems.includes('productSection')
-            })
-        },
-        aboutSectionBgImage: {
-            requiredIf: requiredIf(function () {
-                return this.includedLayoutItems.includes('aboutSection')
-            })
-        },
-        contactSectionBgImage: {
-            requiredIf: requiredIf(function () {
-                return this.includedLayoutItems.includes('contactSection')
-            })
-        },
-        ctaSectionBgImage: {
-            requiredIf: requiredIf(function () {
-                return this.includedLayoutItems.includes('ctaSection')
-            })
-        },
-
-
-    },
 
     data() {
         return {
+            randomizeAll: 0,
+            siteContentKey: 'siteContentKey',
+            templateImagesKey: 'templateImagesKey',
+            templateContentKey: 'templateContentKey',
             selectedHeaderTemplate: null,
             selectedHeroSection: null,
             heroSectionBgImage: null,
-            heroSectionProductImage:null,
+            heroSectionProductImage: null,
             heroSectionBgImage: null,
             selectedProductSection: null,
             productSectionBgImage: null,
@@ -659,9 +296,13 @@ export default {
                 {
                     label: 'credit_cards',
                     text: 'Credit Cards'
+                },
+                {
+                    label: 'template_images',
+                    text: 'Template Images'
                 }
             ],
-            tab: 'template',
+            tab: 0,
             loading: false,
             siteTemplateId: null,
             includedLayoutItems: [],
@@ -783,160 +424,101 @@ export default {
 
     methods: {
 
-        randomize() {
+        visitAllTabs(time) {
+            return new Promise(resolve => setTimeout(() => {
 
-            // Header Template
-            let headerTemplate = this.headertemplates[Math.floor(Math.random() * this.headertemplates.length)];
-
-            this.selectedHeaderTemplate = headerTemplate.value;
-
-            // Hero Section
-
-            if (this.includedLayoutItems.includes('heroSection')) {
-                let heroSection = this.herosections[Math.floor(Math.random() * this.herosections.length)];
-                this.selectedHeroSection = heroSection.value;
-            }
-
-            // Product Section
-            if (this.includedLayoutItems.includes('productSection')) {
-                let productSection = this.productsections[Math.floor(Math.random() * this.productsections.length)];
-                this.selectedProductSection = productSection.value;
-            }
-            // related product section
-
-            let relatedProductSection = this.relatedproductsections[Math.floor(Math.random() * this.relatedproductsections.length)];
-            this.selectedRelatedProductSection = relatedProductSection.value;
-
-            // About Section
-            if (this.includedLayoutItems.includes('aboutSection')) {
-                let aboutSection = this.aboutsections[Math.floor(Math.random() * this.aboutsections.length)];
-                this.selectedAboutSection = aboutSection.value;
-            }
-
-            // Contact Section
-            if (this.includedLayoutItems.includes('contactSection')) {
-                let contactSection = this.contactsections[Math.floor(Math.random() * this.contactsections.length)];
-                this.selectedContactSection = contactSection.value;
-            }
-            // Popular Product Section
-            if (this.includedLayoutItems.includes('popularProductsection')) {
-                let popularProductSection = this.popularproductsections[Math.floor(Math.random() * this.popularproductsections.length)];
-                this.selectedPopularProductSection = popularProductSection.value;
-            }
-
-            // CTA Section
-            if (this.includedLayoutItems.includes('ctaSection')) {
-                let ctaSection = this.ctasections[Math.floor(Math.random() * this.ctasections.length)];
-                this.selectedCtaSection = ctaSection.value;
-            }
-
-            // Feature Section
-            if (this.includedLayoutItems.includes('featuresSection')) {
-                let featureSection = this.featuresections[Math.floor(Math.random() * this.featuresections.length)];
-                this.selectedFeatureSection = featureSection.value;
-            }
-            // Footer Template
-            let footerTemplate = this.footertemplates[Math.floor(Math.random() * this.footertemplates.length)];
-            this.selectedFooterTemplate = footerTemplate.value;
-
-            // Product Pages
-            let productPages = this.productpages[Math.floor(Math.random() * this.productpages.length)];
-            this.selectedProductPages = productPages.value;
-
-            // Checkout Pages
-            let checkoutPages = this.checkoutpages[Math.floor(Math.random() * this.checkoutpages.length)];
-            this.selectedCheckoutPages = checkoutPages.value;
-
+            }, 4000))
         },
 
-        submitSiteTemplate() {
+         randomizeAllMethod() {
 
-            this.$v.$touch();
+            // loop wac
 
 
-            if (this.$v.$error) {
-                return;
-            }
+
+            let refs = [
+                {
+                    'name': 'layout',
+                    'submit': 'submitPageLayout'
+                },
+                {
+                    'name': 'templateContent',
+                    'submit': 'submitSiteTemplate'
+                }
+                ,
+                {
+                    'name': 'siteContent',
+                    'submit': 'submitSiteContent'
+
+                },
+                {
+                    'name': 'loadingGifs',
+                    'submit': 'submitSiteLoadingGif'
+
+                }
+                ,
+                {
+                    'name': 'colorsFonts',
+                    'submit': 'submitSiteColorFont'
+                }
+                ,
+                {
+                    'name': 'creditCards',
+                    'submit': 'submitCreditCards'
+                }
+            ];
 
             this.loading = true;
 
-            let formData = new FormData();
+            this.tabs.forEach((tab, index) => {
 
-            formData.append('site_id', this.siteId);
-            formData.append('header_template_id', this.selectedHeaderTemplate);
-            if (this.selectedHeroSection) {
-                formData.append('hero_section_id', this.selectedHeroSection);
-                formData.append('hero_section_bg_image', this.heroSectionBgImage);
-                formData.append('hero_section_product_image', this.heroSectionProductImage);
-            }
-            if (this.selectedProductSection) {
-                formData.append('product_section_id', this.selectedProductSection);
-                formData.append('product_section_bg_image', this.productSectionBgImage);
+                setTimeout(() => {
+                    this.tab = index;
 
-            }
-            if (this.selectedAboutSection) {
-                formData.append('about_section_id', this.selectedAboutSection);
-                formData.append('about_section_bg_image', this.aboutSectionBgImage);
+                    setTimeout(() => {
+                        let ref = refs[index];
+                        let methodName = ref['submit'];
+                        let component = this.$refs[ref['name']][0];
 
-            }
+                        console.log("component", component)
+                        component.randomize();
 
-            if (this.selectedContactSection) {
-                formData.append('contact_section_id', this.selectedContactSection);
-                formData.append('contact_section_bg_image', this.contactSectionBgImage);
-            }
-            if (this.selectedPopularProductSection) {
-                formData.append('popular_product_section_id', this.selectedPopularProductSection);
-            }
-            if (this.selectedCtaSection) {
-                formData.append('cta_section_id', this.selectedCtaSection);
-                formData.append('cta_section_bg_image', this.ctaSectionBgImage);
-            }
-            if (this.selectedFeatureSection) {
-                formData.append('feature_section_id', this.selectedFeatureSection);
-            }
-            if (this.selectedFooterTemplate) {
-                formData.append('footer_template_id', this.selectedFooterTemplate);
-            }
-            if (this.selectedProductPages) {
-                formData.append('product_page_id', this.selectedProductPages);
-            }
-            if (this.selectedCheckoutPages) {
-                formData.append('checkout_page_id', this.selectedCheckoutPages);
-            }
-            if (this.selectedRelatedProductSection) {
-                formData.append('related_product_section_id', this.selectedRelatedProductSection);
-            }
+                        component[methodName]();
 
-            // add images
+                        // this.$refs[refs[index]['name']][0].randomize()
+                        // this.$refs[refs[index]['name']][0].refs[index]['submit']()
+                    }, 2000)
+                    //
 
 
+                }, 1500 * index)
 
-            axios.post('/sites/submit-site-template', formData, { headers: { 'Content-type': 'multipart/form-data' } })
-                .then(response => {
-                    console.log(response);
-                    this.loading = false;
-                    this.siteTemplateId = response.data.data.site_template_id;
+            });
 
-                    this.showStatus(response.data.message, 'success');
+            setTimeout(() => {
+                console.log('hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh');
+                this.loading = false;
+            }, 1500 * this.tabs.length)
 
+        }
 
-                    this.$emit('templateSubmitted', true)
-
-                    this.tab = 2
-                })
-                .catch(error => {
-                    console.log(error);
-                    this.loading = false;
-                    this.showStatus(error.response.data.message, 'error');
-                });
+        ,
 
 
-        },
 
         getLayoutSubmitted(layoutSubmitted) {
             this.$emit('layoutSubmitted', layoutSubmitted)
             this.tab = 1
         },
+
+        getTemplateContentSubmitted(templateContentSubmitted) {
+            this.$emit('templateContentSubmitted', templateContentSubmitted)
+            this.tab = 2
+        },
+        getTemplateImagesSubmitted(templateImagesSubmitted) {
+            this.$emit('templateImagesSubmitted', templateImagesSubmitted)
+        },
+
 
         getContentSubmitted(contentSubmitted) {
             this.$emit('contentSubmitted', contentSubmitted)
@@ -955,61 +537,19 @@ export default {
 
         getCreditCardSubmitted(creditCardSubmitted) {
             this.$emit('creditCardSubmitted', creditCardSubmitted)
+            this.tab = 6
 
         },
 
         getIncludedLayoutItems(includedLayoutItems) {
-            console.log("getIncludedLayoutItems evetn", includedLayoutItems);
+            this.includedLayoutItems = includedLayoutItems
 
-            // pluck only the label and value from the includedLayoutItems array
+            this.templateContentKey = 'templateContentKey' + Math.random();
+            this.templateImagesKey = 'templateImagesKey' + Math.random();
 
-            let includedLayoutItemsArray = includedLayoutItems.map((item) => item.label);
+            console.log('getIncludedLayoutItems    event+', includedLayoutItems);
 
-            console.log("includedLayoutItemsArray", includedLayoutItemsArray);
-
-            this.includedLayoutItems = includedLayoutItemsArray
-
-            // reset all fields
-
-            if (!this.includedLayoutItems.includes('heroSection')) {
-                this.selectedHeroSection = null;
-                this.heroSectionBgImage = null;
-            }
-            if (!this.includedLayoutItems.includes('productSection')) {
-                this.selectedProductSection = null;
-                this.productSectionBgImage = null;
-            }
-            if (!this.includedLayoutItems.includes('relatedProductsection')) {
-                this.selectedAboutSection = null;
-            }
-            if (!this.includedLayoutItems.includes('aboutSection')) {
-                this.selectedAboutSection = null;
-                this.aboutSectionBgImage = null;
-            }
-            if (!this.includedLayoutItems.includes('contactSection')) {
-                this.selectedContactSection = null;
-                this.contactSectionBgImage = null;
-            }
-            if (!this.includedLayoutItems.includes('popularProductsection')) {
-                this.selectedPopularProductSection = null;
-            }
-            if (!this.includedLayoutItems.includes('ctaSection')) {
-                this.selectedCtaSection = null;
-                this.ctaSectionBgImage = null;
-            }
-            if (!this.includedLayoutItems.includes('featuresSection')) {
-                this.selectedFeatureSection = null;
-            }
-
-
-
-
-
-
-
-
-
-
+            //    this.$refs.templateContent.includedLayoutItems = includedLayoutItems;
         },
 
 
@@ -1024,61 +564,61 @@ export default {
         this.showStatus = alert.showStatus;
         this.siteId = this.site_id;
 
-        let selectedHeaderTemplate=this.headertemplates.find((item) => item.selected==true);
-        if(selectedHeaderTemplate){
-            this.selectedHeaderTemplate=selectedHeaderTemplate.value;
+        let selectedHeaderTemplate = this.headertemplates.find((item) => item.selected == true);
+        if (selectedHeaderTemplate) {
+            this.selectedHeaderTemplate = selectedHeaderTemplate.value;
         }
 
 
-        let selectedHeroSection=this.herosections.find((item) => item.selected==true);
-        if(selectedHeroSection){
-            this.selectedHeroSection=selectedHeroSection.value;
+        let selectedHeroSection = this.herosections.find((item) => item.selected == true);
+        if (selectedHeroSection) {
+            this.selectedHeroSection = selectedHeroSection.value;
         }
 
 
-        let selectedProductSection=this.productsections.find((item) => item.selected==true);
-        if(this.selectedProductSection){
-            this.selectedProductSection=this.selectedProductSection.value;
+        let selectedProductSection = this.productsections.find((item) => item.selected == true);
+        if (this.selectedProductSection) {
+            this.selectedProductSection = this.selectedProductSection.value;
         }
 
-        let selectedAboutSection=this.aboutsections.find((item) => item.selected==true);
-        if(selectedAboutSection){
-            this.selectedAboutSection=selectedAboutSection.value;
+        let selectedAboutSection = this.aboutsections.find((item) => item.selected == true);
+        if (selectedAboutSection) {
+            this.selectedAboutSection = selectedAboutSection.value;
         }
 
-        let selectedContactSection=this.contactsections.find((item) => item.selected==true);
-        if(selectedContactSection){
-            this.selectedContactSection=selectedContactSection.value;
+        let selectedContactSection = this.contactsections.find((item) => item.selected == true);
+        if (selectedContactSection) {
+            this.selectedContactSection = selectedContactSection.value;
         }
 
-        let selectedPopularProductSection=this.popularproductsections.find((item) => item.selected==true);
-        if(selectedPopularProductSection){
-            this.selectedPopularProductSection=selectedPopularProductSection.value;
+        let selectedPopularProductSection = this.popularproductsections.find((item) => item.selected == true);
+        if (selectedPopularProductSection) {
+            this.selectedPopularProductSection = selectedPopularProductSection.value;
         }
 
-        let selectedCtaSection=this.ctasections.find((item) => item.selected==true);
-        if(selectedCtaSection){
-            this.selectedCtaSection=selectedCtaSection.value;
+        let selectedCtaSection = this.ctasections.find((item) => item.selected == true);
+        if (selectedCtaSection) {
+            this.selectedCtaSection = selectedCtaSection.value;
         }
-        let selectedFeatureSection=this.featuresections.find((item) => item.selected==true);
-        if(selectedFeatureSection){
-            this.selectedFeatureSection=selectedFeatureSection.value;
+        let selectedFeatureSection = this.featuresections.find((item) => item.selected == true);
+        if (selectedFeatureSection) {
+            this.selectedFeatureSection = selectedFeatureSection.value;
         }
-        let selectedFooterTemplate=this.footertemplates.find((item) => item.selected==true);
-        if(selectedFooterTemplate){
-            this.selectedFooterTemplate=selectedFooterTemplate.value;
+        let selectedFooterTemplate = this.footertemplates.find((item) => item.selected == true);
+        if (selectedFooterTemplate) {
+            this.selectedFooterTemplate = selectedFooterTemplate.value;
         }
-        let selectedProductPages=this.productpages.find((item) => item.selected==true);
-        if(selectedProductPages){
-            this.selectedProductPages=selectedProductPages.value;
+        let selectedProductPages = this.productpages.find((item) => item.selected == true);
+        if (selectedProductPages) {
+            this.selectedProductPages = selectedProductPages.value;
         }
-        let selectedCheckoutPages=this.checkoutpages.find((item) => item.selected==true);
-        if(selectedCheckoutPages){
-            this.selectedCheckoutPages=selectedCheckoutPages.value;
+        let selectedCheckoutPages = this.checkoutpages.find((item) => item.selected == true);
+        if (selectedCheckoutPages) {
+            this.selectedCheckoutPages = selectedCheckoutPages.value;
         }
-        let selectedRelatedProductSection=this.relatedproductsections.find((item) => item.selected==true);
-        if(selectedRelatedProductSection){
-            this.selectedRelatedProductSection=selectedRelatedProductSection.value;
+        let selectedRelatedProductSection = this.relatedproductsections.find((item) => item.selected == true);
+        if (selectedRelatedProductSection) {
+            this.selectedRelatedProductSection = selectedRelatedProductSection.value;
         }
 
 
@@ -1086,10 +626,12 @@ export default {
     },
     components: {
         Layout,
+        TemplateContent,
         SiteContent,
         LoadingGifs,
         ColorsFonts,
-        CreditCards
+        CreditCards,
+        TemplateImages
     },
 }
 

@@ -7,7 +7,7 @@
             <h6 class="headline mb-0">Site Content</h6>
 
             <div class="d-flex justify-content-center">
-                <v-btn color="secondary" class="mr-2"  @click="randomize">Randomize</v-btn>
+                <v-btn color="secondary" class="mr-2" @click="randomize">Randomize</v-btn>
 
                 <v-btn color="primary" :loading="loading" @click="submitSiteContent">Submit</v-btn>
             </div>
@@ -150,6 +150,11 @@ export default {
             type: Array,
             required: true
         },
+        randomizeAll: {
+            type: Number,
+            required: false,
+            default: 0
+        }
     },
 
     validations: {
@@ -258,11 +263,24 @@ export default {
 
     },
 
+    watch: {
+        randomizeAll: function (val) {
+
+            console.log("randomizeAll sitecont: " + val)
+
+            this.randomize();
+        }
+    },
+
 
 
     methods: {
 
-        randomize(){
+        randomizeAllMethod(){
+            console.log("randomizeAll sitecont: ")
+        },
+
+        randomize() {
 
             this.selectedSlogan = this.slogans[Math.floor(Math.random() * this.slogans.length)].value
             this.selectedTagline = this.taglines[Math.floor(Math.random() * this.taglines.length)].value
@@ -276,7 +294,7 @@ export default {
 
         },
 
-        
+
 
 
         submitSiteContent() {
