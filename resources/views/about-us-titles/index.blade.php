@@ -17,7 +17,7 @@
                 <h3 class="block-title">
                     About Us Titles
                 </h3>
-
+{{--  --}}
 
                 @can('create aboutus titles')
                     <a type="button" class="btn btn-primary push" href="{{ route('about-us-titles.create') }}">Add</a>
