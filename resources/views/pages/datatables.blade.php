@@ -72,10 +72,10 @@
                 <h3 class="block-title">
                     Dynamic Table <small>Full</small>
                 </h3>
-            </div>                                                            
+            </div>
             <div class="block-content block-content-full">
-                <!-- DataTables init on table by adding .js-dataTable-full class, functionality is initialized in js/pages/tables_datatables.js -->
-                <table class="table table-bordered table-striped table-vcenter js-dataTable-full fs-sm">
+                <!-- DataTables init on table by adding .  class, functionality is initialized in js/pages/tables_datatables.js -->
+                <table class=" table table-bordered table-striped table-vcenter js-dataTable-full table-vcenter   fs-sm">
                     <thead>
                         <tr>
                             <th class="text-center" style="width: 80px;">#</th>
@@ -114,7 +114,7 @@
             </div>
             <div class="block-content block-content-full">
                 <!-- DataTables init on table by adding .js-dataTable-buttons class, functionality is initialized in js/pages/tables_datatables.js -->
-                <table class="table table-bordered table-striped table-vcenter js-dataTable-buttons fs-sm">
+                <table class=" table table-bordered table-striped table-vcenter js-dataTable-full table-vcenter js-dataTable-buttons fs-sm">
                     <thead>
                         <tr>
                             <th class="text-center" style="width: 80px;">#</th>

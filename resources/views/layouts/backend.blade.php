@@ -373,7 +373,7 @@
                         </li>
 
 
-                       
+
                         @if (auth()->user()->hasRole('super admin') ||
                                 auth()->user()->can('view slogans') ||
                                 auth()->user()->can('view taglines') ||
@@ -772,6 +772,8 @@
         // $(".drp0select2").select2({
         //     dropdownParent: $(".modal")
         // });
+
+       
     </script>
 
 

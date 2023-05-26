@@ -37,7 +37,7 @@ class pageTablesDatatables {
         // Init full DataTable
         jQuery('.js-dataTable-full').dataTable({
             pageLength: 5,
-            lengthMenu: [[5, 10, 15, 20], [5, 10, 15, 20]],
+            lengthMenu: [[5, 10, 15, 20,50,100,"all"], [5, 10, 15, 20,50,100,"All"]],
             autoWidth: false
         });
 

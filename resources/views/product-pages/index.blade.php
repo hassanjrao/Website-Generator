@@ -28,7 +28,7 @@
                 <!-- DataTables init on table by adding .js-dataTable-buttons class, functionality is initialized in js/pages/tables_datatables.js -->
                 <div class="table-responsive">
 
-                    <table class="table table-bordered table-striped table-vcenter js-dataTable-full">
+                    <table class=" table table-bordered table-striped table-vcenter js-dataTable-full table-vcenter  ">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -49,7 +49,7 @@
                                     <td>{{ $ind + 1 }}</td>
                                     <td>{{ $productPage->name }}</td>
                                     <td>
-                                                    
+
                                         <a href="{{ asset('storage/' . $productPage->file) }}" download>
                                             <i class="fa fa-download" aria-hidden="true"></i>
                                             {{ $productPage->file }}

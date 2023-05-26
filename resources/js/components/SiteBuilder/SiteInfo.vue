@@ -201,7 +201,7 @@ export default {
     data() {
         return {
             loading: false,
-            siteId: 1,
+            siteId: null,
         }
     },
 
