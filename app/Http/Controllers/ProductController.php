@@ -57,7 +57,8 @@ class ProductController extends Controller
             return redirect()->back()->withToastError("You don't have permission to access this page");
         }
 
-        $request->validate([
+
+        $request->validate([                     
             "product_category"=>"required|exists:product_categories,id",
             "name"=>"required|string",
             "sticky_id"=>"required|string",

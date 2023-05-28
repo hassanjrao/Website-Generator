@@ -154,8 +154,10 @@ Route::middleware(["auth"])->group(function () {
         Route::post("submit-site-page-layout", [SiteController::class,"submitSitePageLayout"])->name("sites.submit-site-page-layout");
 
 
-
+                     
         Route::get("download/{site}", [ZippedSiteController::class,"download"])->name("sites.download");
+
+        Route::get("preview/{site}", [ZippedSiteController::class,"previewSite"])->name("sites.preview");
 
         Route::post("upload-to-server", [ZippedSiteController::class,"uploadToServer"])->name("sites.uploadToServer");
 

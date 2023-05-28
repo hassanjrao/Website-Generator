@@ -6,8 +6,13 @@
         <v-card-title class="d-flex justify-content-between">
             <h6 class="headline mb-0">Generate Site</h6>
 
-            <v-btn color="primary" :loading="loading" @click="generateSite"
-                :disabled="!requiredSteps.every(step => step.submitted)">Generate</v-btn>
+            <div>
+                <v-btn color="primary" :loading="loading" @click="generateSite"
+                    :disabled="!requiredSteps.every(step => step.submitted)">Generate</v-btn>
+
+                <v-btn color="primary" :loading="loading" @click="previewSite"
+                    :disabled="!requiredSteps.every(step => step.submitted)">Preview</v-btn>
+            </div>
 
         </v-card-title>
 
@@ -54,7 +59,8 @@
                             </v-col>
 
                             <v-col cols="12" sm="12" md="12" class="text-right">
-                                <v-btn color="primary" :disabled="!requiredSteps.every(step => step.submitted)" :loading="loading" @click="uploadSite">Upload</v-btn>
+                                <v-btn color="primary" :disabled="!requiredSteps.every(step => step.submitted)"
+                                    :loading="loading" @click="uploadSite">Upload</v-btn>
                             </v-col>
                         </v-row>
 
@@ -162,13 +168,16 @@ export default {
         generateSite() {
             window.open('/sites/download/' + this.siteId, '_blank');
         },
+        previewSite() {
+            window.open('/sites/preview/' + this.siteId, '_blank');
+        },
 
         uploadSite() {
 
             this.$v.$touch()
             if (this.$v.$invalid) {
                 return
-            }
+            }                  
 
             this.loading = true;
             axios.post('/sites/upload-to-server', {
@@ -181,11 +190,11 @@ export default {
                 this.loading = false;
                 console.log(response);
 
-                this.showStatus(response.data.message,"success");
+                this.showStatus(response.data.message, "success");
             }).catch(error => {
                 this.loading = false;
                 console.log(error);
-                this.showStatus(error.response.data.message,"error");
+                this.showStatus(error.response.data.message, "error");
             });
         }
     },

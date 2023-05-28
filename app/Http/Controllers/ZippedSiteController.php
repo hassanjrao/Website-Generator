@@ -17,7 +17,7 @@ class ZippedSiteController extends Controller
 
 
 
-    public function download($site, $uploadToServer = false)
+    public function download($site, $generateZip = true)
     {
 
         try {
@@ -286,7 +286,7 @@ class ZippedSiteController extends Controller
             // make new project
             $siteName = str_replace(' ', '_', $site->name);
             $randNum = rand(1000, 9999);
-            $projectName = $siteName . '_' . $randNum . '_' . time();
+            $projectName = $siteName;
 
             $newProjectDestination = $this->copyProject($projectName);
 
@@ -435,7 +435,7 @@ class ZippedSiteController extends Controller
             ]);
 
 
-            if ($uploadToServer) {
+            if (!$generateZip) {
                 return $newProjectDestination;
             }
 
@@ -600,7 +600,7 @@ class ZippedSiteController extends Controller
         // ];
 
 
-        $path = $this->download($request->site_id, true);
+        $path = $this->download($request->site_id, false);
 
         $site=Site::find($request->site_id);
 
@@ -613,5 +613,22 @@ class ZippedSiteController extends Controller
         return response()->json([
             "message" => "Site is being uploaded to the server",
         ],200);
+    }
+
+
+    public function previewSite($site_id){
+
+
+        $path = $this->download($site_id, false);
+
+        $pathArr=explode(DIRECTORY_SEPARATOR,$path);
+
+        $projectName=end($pathArr);
+
+        $redirectUrl=config("app.url")."/storage/projects/{$projectName}/index.php";
+
+
+        return redirect()->to($redirectUrl);
+
     }
 }
