@@ -1271,6 +1271,7 @@ class SiteController extends Controller
             "hero_section_bg_image" => "nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048",
             "hero_section_product_image" => "nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048",
             "product_section_bg_image" => "nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048",
+            "popular_product_section_bg_image" => "nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048",
             "about_section_bg_image" => "nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048",
             "contact_section_bg_image" => "nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048",
             "cta_section_bg_image" => "nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048",
@@ -1401,6 +1402,46 @@ class SiteController extends Controller
             }
             $siteTemplate->update([
                 "product_section_bg_image" => null
+            ]);
+        }
+
+        if ($request->hasFile('popular_product_section_image')) {
+
+            if ($siteTemplate->popular_product_section_image) {
+                Storage::delete('site-sections/popular-product/' . $siteTemplate->popular_product_section_image);
+            }
+
+            $productImage = $request->file('popular_product_section_image')->store('site-sections/product');
+
+            $siteTemplate->update([
+                "popular_product_section_image" => basename($productImage)
+            ]);
+        } else {
+            if ($siteTemplate->popular_product_section_image) {
+                Storage::delete('site-sections/popular-product/' . $siteTemplate->popular_product_section_image);
+            }
+            $siteTemplate->update([
+                "popular_product_section_image" => null
+            ]);
+        }
+
+        if ($request->hasFile('related_product_section_image')) {
+
+            if ($siteTemplate->related_product_section_image) {
+                Storage::delete('site-sections/related-product/' . $siteTemplate->related_product_section_image);
+            }
+
+            $productImage = $request->file('related_product_section_image')->store('site-sections/product');
+
+            $siteTemplate->update([
+                "related_product_section_image" => basename($productImage)
+            ]);
+        } else {
+            if ($siteTemplate->related_product_section_image) {
+                Storage::delete('site-sections/related-product/' . $siteTemplate->related_product_section_image);
+            }
+            $siteTemplate->update([
+                "related_product_section_image" => null
             ]);
         }
 

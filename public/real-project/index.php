@@ -53,7 +53,7 @@
             ?>
       </div>
       <?php
-      if (file_exists('bp_config/includes/templates/headers/' . $pageConfig['header_template'])) {
+      if (isset($pageConfig['header_template']) && $pageConfig['header_template']!='' && file_exists('bp_config/includes/templates/headers/' . $pageConfig['header_template'])) {
           require 'bp_config/includes/templates/headers/' . $pageConfig['header_template'];
       }
       ?>
@@ -181,43 +181,43 @@
       <?php $products = Helper::sortProducts($products, $pageConfig['sortProducts']); ?>
 
       <?php
-      if (file_exists('bp_config/includes/templates/hero_section_templates/' . $pageConfig['hero_section'] )) {
+      if (isset($pageConfig['hero_section']) && $pageConfig['hero_section']!='' && file_exists('bp_config/includes/templates/hero_section_templates/' . $pageConfig['hero_section'] )) {
           require 'bp_config/includes/templates/hero_section_templates/' . $pageConfig['hero_section'] ;
       }
       ?>
 
       <?php
-      if (file_exists('bp_config/includes/templates/about_templates/' . $pageConfig['about_section'] )) {
+      if (isset($pageConfig['about_section']) && $pageConfig['about_section']!='' && file_exists('bp_config/includes/templates/about_templates/' . $pageConfig['about_section'] )) {
           require 'bp_config/includes/templates/about_templates/' . $pageConfig['about_section'] ;
       }
       ?>
 
       <?php
-      if (file_exists('bp_config/includes/templates/product_section_templates/' . $pageConfig['product_section'])) {
+      if (isset($pageConfig['product_section']) && $pageConfig['product_section']!='' && file_exists('bp_config/includes/templates/product_section_templates/' . $pageConfig['product_section'])) {
           require 'bp_config/includes/templates/product_section_templates/' . $pageConfig['product_section'];
       }
       ?>
 
       <?php
-      if (file_exists('bp_config/includes/templates/contact_templates/' . $pageConfig['contact_section'])) {
+      if (isset($pageConfig['contact_section']) && $pageConfig['contact_section']!='' && file_exists('bp_config/includes/templates/contact_templates/' . $pageConfig['contact_section'])) {
           require 'bp_config/includes/templates/contact_templates/' . $pageConfig['contact_section'];
       }
       ?>
 
       <?php
-      if (file_exists('bp_config/includes/templates/cta_templates/'.  $pageConfig['cta_section'])) {
+      if (isset($pageConfig['cta_section']) && $pageConfig['cta_section']!='' && file_exists('bp_config/includes/templates/cta_templates/'.  $pageConfig['cta_section'])) {
           require 'bp_config/includes/templates/cta_templates/'.  $pageConfig['cta_section'];
       }
       ?>
 
       <?php
-      if (file_exists('bp_config/includes/templates/features_templates/' . $pageConfig['features_section'])) {
+      if (isset($pageConfig['features_section']) && $pageConfig['features_section']!='' && file_exists('bp_config/includes/templates/features_templates/' . $pageConfig['features_section'])) {
           require 'bp_config/includes/templates/features_templates/' . $pageConfig['features_section'];
       }
       ?>
 
       <?php
-      if (file_exists('bp_config/includes/templates/popular_section_templates/' . $pageConfig['popularProducts_section'] )) {
+      if (isset($pageConfig['popularProducts_section']) && $pageConfig['popularProducts_section']!='' && file_exists('bp_config/includes/templates/popular_section_templates/' . $pageConfig['popularProducts_section'] )) {
           require 'bp_config/includes/templates/popular_section_templates/' . $pageConfig['popularProducts_section'] ;
       }
       ?>
@@ -234,7 +234,7 @@
     <!-- TO make the sections arranage feature work -->
 
       <?php
-      if (file_exists('bp_config/includes/templates/footers/' . $pageConfig['footer_template'] )) {
+      if (isset($pageConfig['footer_template']) && $pageConfig['footer_template']!='' && file_exists('bp_config/includes/templates/footers/' . $pageConfig['footer_template'] )) {
           require 'bp_config/includes/templates/footers/' . $pageConfig['footer_template'] ;
       }
       ?>

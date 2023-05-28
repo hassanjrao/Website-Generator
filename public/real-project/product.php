@@ -213,13 +213,13 @@ if (file_exists('bp_config/includes/templates/headers/' . $pageConfig['header_te
 
 
         <?php
-            if (file_exists('bp_config/includes/templates/product_page_templates/' . $pageConfig['product_page'])) {
+            if (isset($pageConfig['product_page']) && $pageConfig['product_page']!='' && file_exists('bp_config/includes/templates/product_page_templates/' . $pageConfig['product_page'])) {
                 require 'bp_config/includes/templates/product_page_templates/' . $pageConfig['product_page'];
             }
         ?>
 
         <?php
-            if (file_exists('bp_config/includes/templates/related_products_templates/' . $pageConfig['relatedProducts_section'] )) {
+            if (isset($pageConfig['relatedProducts_section']) && $pageConfig['relatedProducts_section']!='' && file_exists('bp_config/includes/templates/related_products_templates/' . $pageConfig['relatedProducts_section'] )) {
                 require 'bp_config/includes/templates/related_products_templates/' . $pageConfig['relatedProducts_section'] ;
             }
         ?>

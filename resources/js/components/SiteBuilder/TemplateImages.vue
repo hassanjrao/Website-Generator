@@ -42,6 +42,26 @@
                                     </v-file-input>
                                 </v-col>
 
+                                <v-col cols="12" sm="6" md="4" v-if="includedLayoutItems.includes('popularProductsection')">
+
+                                    <v-file-input label="Popular Product Section Image" show-size truncate-length="15"
+                                        required v-model="popularProductsectionImage"
+                                        @input="$v.popularProductsectionImage.$touch()"
+                                        :error-messages="popularProductsectionImageErrors"
+                                        @blur="$v.popularProductsectionImage.$touch()">
+                                    </v-file-input>
+                                </v-col>
+
+                                <v-col cols="12" sm="6" md="4" v-if="includedLayoutItems.includes('relatedProductsection')">
+
+                                    <v-file-input label="Related Product Section Image" show-size truncate-length="15"
+                                        required v-model="relatedProductsectionImage"
+                                        @input="$v.relatedProductsectionImage.$touch()"
+                                        :error-messages="relatedProductsectionImageErrors"
+                                        @blur="$v.relatedProductsectionImage.$touch()">
+                                    </v-file-input>
+                                </v-col>
+
                                 <v-col cols="12" sm="6" md="4" v-if="includedLayoutItems.includes('ctaSection')">
                                     <v-file-input label="CTA Section BG Image" show-size truncate-length="15" required
                                         v-model="ctaSectionBgImage" @input="$v.ctaSectionBgImage.$touch()"
@@ -141,6 +161,16 @@ export default {
                 return this.includedLayoutItems.includes('productSection')
             })
         },
+        popularProductsectionImage: {
+            requiredIf: requiredIf(function () {
+                return this.includedLayoutItems.includes('popularProductsection')
+            })
+        },
+        relatedProductsectionImage: {
+            requiredIf: requiredIf(function () {
+                return this.includedLayoutItems.includes('relatedProductsection')
+            })
+        },
         aboutSectionBgImage: {
             requiredIf: requiredIf(function () {
                 return this.includedLayoutItems.includes('aboutSection')
@@ -166,6 +196,8 @@ export default {
             heroSectionProductImage: null,
             heroSectionBgImage: null,
             productSectionBgImage: null,
+            popularProductsectionImage: null,
+            relatedProductsectionImage: null,
             aboutSectionBgImage: null,
             contactSectionBgImage: null,
             ctaSectionBgImage: null,
@@ -195,6 +227,18 @@ export default {
             const errors = []
             if (!this.$v.productSectionBgImage.$dirty) return errors
             !this.$v.productSectionBgImage.requiredIf && errors.push('Product Section Background Image is required.')
+            return errors
+        },
+        popularProductsectionImageErrors() {
+            const errors = []
+            if (!this.$v.popularProductsectionImage.$dirty) return errors
+            !this.$v.popularProductsectionImage.requiredIf && errors.push('Popular Product Section Image is required.')
+            return errors
+        },
+        relatedProductsectionImageErrors() {
+            const errors = []
+            if (!this.$v.relatedProductsectionImage.$dirty) return errors
+            !this.$v.relatedProductsectionImage.requiredIf && errors.push('Related Product Section Image is required.')
             return errors
         },
         aboutSectionBgImageErrors() {
@@ -249,6 +293,12 @@ export default {
             if (this.productSectionBgImage) {
                 formData.append('product_section_bg_image', this.productSectionBgImage);
             }
+            if (this.popularProductsectionImage) {
+                formData.append('popular_product_section_bg_image', this.popularProductsectionImage);
+            }
+            if (this.relatedProductsectionImage) {
+                formData.append('related_product_section_bg_image', this.relatedProductsectionImage);
+            }
             if (this.aboutSectionBgImage) {
                 formData.append('about_section_bg_image', this.aboutSectionBgImage);
             }
@@ -289,6 +339,11 @@ export default {
 
             this.includedLayoutItems = includedLayoutItemsArray
 
+            // this.includedLayoutItems.push('relatedProductsection');
+            this.includedLayoutItems.pop('popularProductsection');
+            this.includedLayoutItems.pop('relatedProductsection');
+
+
             // reset all fields
 
             if (!this.includedLayoutItems.includes('heroSection')) {
@@ -298,9 +353,6 @@ export default {
             if (!this.includedLayoutItems.includes('productSection')) {
                 this.selectedProductSection = null;
                 this.productSectionBgImage = null;
-            }
-            if (!this.includedLayoutItems.includes('relatedProductsection')) {
-                this.selectedAboutSection = null;
             }
             if (!this.includedLayoutItems.includes('aboutSection')) {
                 this.selectedAboutSection = null;
@@ -312,6 +364,9 @@ export default {
             }
             if (!this.includedLayoutItems.includes('popularProductsection')) {
                 this.selectedPopularProductSection = null;
+            }
+            if (!this.includedLayoutItems.includes('relatedProductsection')) {
+                this.selectedRelatedProductSection = null;
             }
             if (!this.includedLayoutItems.includes('ctaSection')) {
                 this.selectedCtaSection = null;

@@ -622,9 +622,6 @@ export default {
             if (!this.includedLayoutItems.includes('productSection')) {
                 this.selectedProductSection = null;
             }
-            if (!this.includedLayoutItems.includes('relatedProductsection')) {
-                this.selectedAboutSection = null;
-            }
             if (!this.includedLayoutItems.includes('aboutSection')) {
                 this.selectedAboutSection = null;
 
