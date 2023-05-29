@@ -263,7 +263,7 @@
                                         <a class="nav-main-link {{ request()->segment(1) == 'templates' ? ' active' : '' }} nav-main-link-submenu"
                                             data-toggle="submenu" aria-haspopup="true" aria-expanded="false"
                                             href="#">
-                                            <i class="nav-main-link-icon si si-energy"></i>
+
                                             <span class="nav-main-link-name">Landing Pages</span>
                                         </a>
                                         <ul class="nav-main-submenu">
@@ -356,7 +356,7 @@
                                     <li class="nav-main-item">
                                         <a class="nav-main-link {{ request()->segment(2) == 'product-pages' ? ' active' : '' }}"
                                             href="{{ route('product-pages.index') }}">
-                                            <span class="nav-main-link-name">Product</span>
+                                            <span class="nav-main-link-name">Product Page</span>
                                         </a>
                                     </li>
                                 @endcan
@@ -365,7 +365,7 @@
                                     <li class="nav-main-item">
                                         <a class="nav-main-link {{ request()->segment(2) == 'checkout-pages' ? ' active' : '' }}"
                                             href="{{ route('checkout-pages.index') }}">
-                                            <span class="nav-main-link-name">Checkout</span>
+                                            <span class="nav-main-link-name">Checkout Page</span>
                                         </a>
                                     </li>
                                 @endcan
@@ -758,6 +758,8 @@
     <script src="{{ asset('js/plugins/dropzone/min/dropzone.min.js') }}"></script>
 
 
+    <script src="{{ asset('js/plugins/datatables/edit.js') }}"></script>
+
     <script src="{{ mix('js/app.js') }}"></script>
 
 
@@ -773,7 +775,7 @@
         //     dropdownParent: $(".modal")
         // });
 
-       
+
     </script>
 
 

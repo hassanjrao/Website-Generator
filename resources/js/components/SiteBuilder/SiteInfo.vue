@@ -19,7 +19,7 @@
                 <v-row>
 
                     <v-col cols="12" sm="6" md="4">
-                        <v-text-field v-model="site_info.name" label="Site Name" required
+                        <v-text-field v-model="site_info.name" label="DBA" required
                             @input="$v.site_info.name.$touch()" :error-messages="siteNameErrors"
                             @blur="$v.site_info.name.$touch()"></v-text-field>
                     </v-col>
@@ -209,7 +209,7 @@ export default {
         siteNameErrors() {
             const errors = []
             if (!this.$v.site_info.name.$dirty) return errors
-            !this.$v.site_info.name.required && errors.push('Site name is required.')
+            !this.$v.site_info.name.required && errors.push('DBA is required.')
             return errors
         },
         urlErrors() {

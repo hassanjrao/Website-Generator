@@ -28,7 +28,7 @@
                 <!-- DataTables init on table by adding .js-dataTable-buttons class, functionality is initialized in js/pages/tables_datatables.js -->
                 <div class="table-responsive">
 
-                    <table class=" table table-bordered table-striped table-vcenter js-dataTable-full table-vcenter  ">
+                    <table class=" table table-bordered table-striped table-vcenter " id="dtable">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -62,8 +62,7 @@
 
                                             @can('delete taglines')
                                                 <form id="form-{{ $tagLine->id }}"
-                                                    action="{{ route('tag-lines.destroy', $tagLine->id) }}"
-                                                    method="POST">
+                                                    action="{{ route('tag-lines.destroy', $tagLine->id) }}" method="POST">
                                                     @method('DELETE')
                                                     @csrf
                                                     <input type="button" onclick="confirmDelete({{ $tagLine->id }})"
@@ -99,5 +98,41 @@
 
 @section('js_after')
 
+
+    <script>
+        var table = $('#dtable').DataTable();
+
+        function myCallbackFunction(updatedCell, updatedRow, oldValue) {
+            console.log("The new value for the cell is: " + updatedCell.data());
+            console.log("The values for each cell in that row are: " + updatedRow.data());
+
+            var id = updatedRow.data()[0];
+            var title = updatedRow.data()[1];
+
+
+            console.log(id, title);
+
+            $.ajax({
+                // add put update route with id
+                url: "/content/tag-lines/" + id,
+                type: 'POST',
+                data: {
+                    id: id,
+                    title: title,
+                    _token: '{{ csrf_token() }}',
+                    _method: 'PUT'
+                },
+                success: function(response) {
+                    console.log(response);
+                }
+            });
+
+        }
+
+        table.MakeCellsEditable({
+            "onUpdate": myCallbackFunction,
+            "inputCss": 'form-control ',
+        });
+    </script>
 
 @endsection

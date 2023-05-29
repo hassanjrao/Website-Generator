@@ -35,8 +35,8 @@
                                     :creditcards="creditcards" :fontfamilies="fontfamilies"
                                     @templateContentSubmitted="getTemplateContentSubmitted"
                                     @templateImagesSubmitted="getTemplateImagesSubmitted"
-                                    @layoutSubmitted="getLayoutSubmitted"
-                                    @contentSubmitted="getContentSubmitted" @loadingGifsSubmitted="getLoadingGifsSubmitted"
+                                    @layoutSubmitted="getLayoutSubmitted" @contentSubmitted="getContentSubmitted"
+                                    @loadingGifsSubmitted="getLoadingGifsSubmitted"
                                     @colorFontSubmitted="getColorFontSubmitted"
                                     @creditCardSubmitted="getCreditCardSubmitted" />
                             </v-card-text>
@@ -387,7 +387,7 @@ export default {
             this.templateImagesSubmitted = templateImagesSubmitted;
             console.log("templateImagesSubmitted " + this.templateImagesSubmitted);
 
-            this.tab=3
+            this.tab = 3
 
 
             this.stepsRequired.forEach((step) => {
@@ -531,11 +531,11 @@ export default {
             })
                 .then(response => {
 
-                    console.log("site downloadbled",response);
+                    console.log("site downloadbled", response);
 
                 })
                 .catch(error => {
-                    console.log("site downloadbled error",error.response);
+                    console.log("site downloadbled error", error.response);
                 });
         }
     },
@@ -580,29 +580,36 @@ export default {
 
     mounted() {
 
-        if(this.site && this.site!=0){
+        if (this.site && this.site != 0) {
             this.siteId = this.site.id;
 
-            console.log("siteeeeeeeeeee",this.site);
+            console.log("siteeeeeeeeeee", this.site);
 
-            this.siteInfo.name=this.site.name;
-            this.siteInfo.url=this.site.url;
-            this.siteInfo.email=this.site.email;
-            this.siteInfo.phone=this.site.phone_number;
-            this.siteInfo.address=this.site.address;
-            this.siteInfo.corp_name=this.site.corp_name;
-            this.siteInfo.description=this.site.description;
-            this.siteInfo.return_address=this.site.return_address;
-            this.siteInfo.fulfillment=this.site.fulfillment;
-            this.siteInfo.trial_period=this.site.trial_period;
-            this.siteInfo.trial_period_breakdown=this.site.trial_period_breakdown;
-            this.siteInfo.shipping_period=this.site.shipping_period;
-            this.siteInfo.shipping_carrier=this.site.shipping_carrier;
-            this.siteInfo.style_sheet=this.site.style_sheet;
-            this.siteInfo.customer_service_hours=this.site.customer_service_hours;
-            this.siteInfo.maximum_ticket_value=this.site.maximum_ticket_value;
+            this.siteInfo.name = this.site.name;
+            this.siteInfo.url = this.site.url;
+            this.siteInfo.email = this.site.email;
+            this.siteInfo.phone = this.site.phone_number;
+            this.siteInfo.address = this.site.address;
+            this.siteInfo.corp_name = this.site.corp_name;
+            this.siteInfo.description = this.site.description;
+            this.siteInfo.return_address = this.site.return_address;
+            this.siteInfo.fulfillment = this.site.fulfillment;
+            this.siteInfo.trial_period = this.site.trial_period ? this.site.trial_period : 14;
+            this.siteInfo.trial_period_breakdown = this.site.trial_period_breakdown ? this.site.trial_period_breakdown : 10 + 4;
+            this.siteInfo.shipping_period = this.site.shipping_period ? this.site.shipping_period : 3 - 5;
+            this.siteInfo.shipping_carrier = this.site.shipping_carrier ? this.site.shipping_carrier : 'USPS';
+            this.siteInfo.style_sheet = this.site.style_sheet;
+            this.siteInfo.customer_service_hours = this.site.customer_service_hours ? this.site.customer_service_hours : '5:00 am - 5:00 pm PST Monday through Sunday';
+            this.siteInfo.maximum_ticket_value = this.site.maximum_ticket_value ? this.site.maximum_ticket_value : 500;
 
         }
+
+        this.siteInfo.trial_period = 14;
+        this.siteInfo.trial_period_breakdown = '10+4';
+        this.siteInfo.shipping_period = '3-5';
+        this.siteInfo.shipping_carrier = 'USPS';
+        this.siteInfo.customer_service_hours = '5:00 am - 5:00 pm PST Monday through Sunday';
+        this.siteInfo.maximum_ticket_value = 500;
 
     }
 }

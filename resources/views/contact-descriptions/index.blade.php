@@ -28,7 +28,7 @@
                 <!-- DataTables init on table by adding .js-dataTable-buttons class, functionality is initialized in js/pages/tables_datatables.js -->
                 <div class="table-responsive">
 
-                    <table class=" table table-bordered table-striped table-vcenter js-dataTable-full table-vcenter  ">
+                    <table class=" table table-bordered table-striped table-vcenter" id="dtable">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -99,5 +99,40 @@
 
 @section('js_after')
 
+    <script>
+        var table = $('#dtable').DataTable();
+
+        function myCallbackFunction(updatedCell, updatedRow, oldValue) {
+            console.log("The new value for the cell is: " + updatedCell.data());
+            console.log("The values for each cell in that row are: " + updatedRow.data());
+
+            var id = updatedRow.data()[0];
+            var description = updatedRow.data()[1];
+
+
+            console.log(id, description);
+
+            $.ajax({
+                // add put update route with id
+                url: "/content/contact-descriptions/" + id,
+                type: 'POST',
+                data: {
+                    id: id,
+                    description: description,
+                    _token: '{{ csrf_token() }}',
+                    _method: 'PUT'
+                },
+                success: function(response) {
+                    console.log(response);
+                }
+            });
+
+        }
+
+        table.MakeCellsEditable({
+            "onUpdate": myCallbackFunction,
+            "inputCss": 'form-control ',
+        });
+    </script>
 
 @endsection

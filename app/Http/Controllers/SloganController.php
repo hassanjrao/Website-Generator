@@ -132,4 +132,23 @@ class SloganController extends Controller
         return redirect()->route("slogans.index")->withToastSuccess("Slogan deleted successfully");
 
     }
+
+    public function updateTitle(Request $request){
+
+        $request->validate([
+            "id"=>"required|exists:slogans,id",
+            "title"=>"required"
+        ]);
+
+        $slogan=Slogan::findOrFail($request->id);
+
+        $slogan->update([
+            "title"=>$request->title,
+        ]);
+
+        return response()->json([
+            "message"=>"Slogan updated successfully"
+        ]);
+
+    }
 }
