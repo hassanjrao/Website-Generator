@@ -98,7 +98,6 @@ class ButtonTitleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        dd($request->all());
 
         if (!auth()->user()->can('edit button titles')) {
             return abort(403, "You don't have permission to access this page");

@@ -122,7 +122,7 @@
                     _method: 'PUT'
                 },
                 success: function(response) {
-                    console.log(response);
+                    // console.log(response);
                 }
             });
 
