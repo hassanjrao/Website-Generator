@@ -286,7 +286,7 @@ class ZippedSiteController extends Controller
             // make new project
             $siteName = str_replace(' ', '_', $site->name);
             $randNum = rand(1000, 9999);
-            $projectName = $siteName;
+            $projectName = $siteName.$site->id;
 
             $newProjectDestination = $this->copyProject($projectName);
 
