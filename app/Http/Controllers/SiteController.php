@@ -253,19 +253,21 @@ class SiteController extends Controller
         });
 
         $advertisingCompanies = $this->getAdvertisingCompanies();
+
         $advertisingCompanies = $advertisingCompanies->map(function ($advertisingCompany) {
             return [
                 "text" => $advertisingCompany->name,
                 "value" => $advertisingCompany->id,
-                'url' => $advertisingCompany->crm->url,
-                'username' => $advertisingCompany->crm->username,
-                'password' => $advertisingCompany->crm->password,
-                'shipping_id' => $advertisingCompany->crm->shipping_id,
-                'compaign_id' => $advertisingCompany->crm->compaign_id,
-                'tran_type' => $advertisingCompany->crm->tran_type,
-                'offer_id' => $advertisingCompany->crm->offer_id,
-                'billing_model_id' => $advertisingCompany->crm->billing_model_id,
-                'gateway_id' => $advertisingCompany->crm->gateway_id,
+                "crm_id"=> $advertisingCompany->crm ? $advertisingCompany->crm->id : null,
+                'url' => $advertisingCompany->crm ? $advertisingCompany->crm->url : null,
+                'username' => $advertisingCompany->crm ? $advertisingCompany->crm->username : null,
+                'password' => $advertisingCompany->crm ? $advertisingCompany->crm->password : null,
+                'shipping_id' => $advertisingCompany->crm ? $advertisingCompany->crm->shipping_id : null,
+                'compaign_id' => $advertisingCompany->crm ? $advertisingCompany->crm->compaign_id : null,
+                'tran_type' => $advertisingCompany->crm ? $advertisingCompany->crm->tran_type : null,
+                'offer_id' => $advertisingCompany->crm ? $advertisingCompany->crm->offer_id : null,
+                'billing_model_id' => $advertisingCompany->crm ? $advertisingCompany->crm->billing_model_id : null,
+                'gateway_id' => $advertisingCompany->crm ? $advertisingCompany->crm->gateway_id : null,
             ];
         });
 
@@ -1625,12 +1627,14 @@ class SiteController extends Controller
 
         $request->validate([
             'site_id' => 'required|exists:sites,id',
-            'advertising_company_id' => "required|exists:advertising_companies,id"
+            'advertising_company_id' => "required|exists:advertising_companies,id",
+            'crm_id' => 'required|exists:crms,id',
         ]);
 
         $crmData = [
             'site_id' => $request->site_id,
-            'advertising_company_id' => $request->advertising_company_id
+            'advertising_company_id' => $request->advertising_company_id,
+            'crm_id' => $request->crm_id,
         ];
 
 

@@ -28,7 +28,7 @@
                             v-model="selectedAdvertisingCompany" required @input="$v.selectedAdvertisingCompany.$touch()"
                             :error-messages="selectedAdvertisingCompanyErrors"
                             @blur="$v.selectedAdvertisingCompany.$touch()"></v-autocomplete>
-                            
+
                     </v-col>
 
                     <v-col cols="12" sm="8" md="8" v-if="selectedAdvertisingCompany">
@@ -87,6 +87,7 @@ export default {
             siteId: null,
             selectedAdvertisingCompany: null,
             url: null,
+            crmId:null,
             crmSettings: [
                 {
                     label: 'URL',
@@ -142,6 +143,7 @@ export default {
                 axios.post('/sites/submit-site-crm-settings', {
                     site_id: this.siteId,
                     advertising_company_id: this.selectedAdvertisingCompany,
+                    crm_id: this.crmId,
                 })
                     .then(response => {
                         this.loading = false;
@@ -176,6 +178,7 @@ export default {
             this.crmSettings[7]['model'] = advertisingCompany.billing_model_id
             this.crmSettings[8]['model'] = advertisingCompany.gateway_id
 
+            this.crmId = advertisingCompany.crm_id;
         }
     }
     ,

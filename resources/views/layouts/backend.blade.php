@@ -206,7 +206,7 @@
                                 <a class="nav-main-link{{ request()->segment(1) == 'crms' ? ' active' : '' }}"
                                     href="{{ route('crms.index') }}">
 
-                                    <i class="fas fa-building nav-main-link-icon"></i>
+                                    <i class="fas fa-tasks nav-main-link-icon"></i>
                                     <span class="nav-main-link-name">CRMs</span>
                                 </a>
                             </li>

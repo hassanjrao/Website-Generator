@@ -152,6 +152,10 @@ class CrmController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $crm=Crm::findOrFail($id);
+
+        $crm->delete();
+
+        return redirect()->route("crms.index")->with("success","Crm deleted successfully");
     }
 }

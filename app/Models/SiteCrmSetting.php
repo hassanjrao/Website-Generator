@@ -20,4 +20,9 @@ class SiteCrmSetting extends Model
     {
         return $this->belongsTo(AdvertisingCompany::class);
     }
+
+    public function crm()
+    {
+        return $this->belongsTo(Crm::class);
+    }
 }

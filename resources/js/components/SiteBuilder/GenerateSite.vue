@@ -7,11 +7,14 @@
             <h6 class="headline mb-0">Generate Site</h6>
 
             <div>
+
+
+                <v-btn color="warning" :loading="loading" @click="previewSite"
+                    :disabled="!requiredSteps.every(step => step.submitted)">Preview</v-btn>
+
                 <v-btn color="primary" :loading="loading" @click="generateSite"
                     :disabled="!requiredSteps.every(step => step.submitted)">Generate</v-btn>
 
-                <v-btn color="primary" :loading="loading" @click="previewSite"
-                    :disabled="!requiredSteps.every(step => step.submitted)">Preview</v-btn>
             </div>
 
         </v-card-title>
@@ -59,7 +62,7 @@
                             </v-col>
 
                             <v-col cols="12" sm="12" md="12" class="text-right">
-                                <v-btn color="primary" :disabled="!requiredSteps.every(step => step.submitted)"
+                                <v-btn color="success" :disabled="!requiredSteps.every(step => step.submitted)"
                                     :loading="loading" @click="uploadSite">Upload</v-btn>
                             </v-col>
                         </v-row>
@@ -177,7 +180,7 @@ export default {
             this.$v.$touch()
             if (this.$v.$invalid) {
                 return
-            }                  
+            }
 
             this.loading = true;
             axios.post('/sites/upload-to-server', {

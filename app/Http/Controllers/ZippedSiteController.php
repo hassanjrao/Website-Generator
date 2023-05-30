@@ -264,18 +264,19 @@ class ZippedSiteController extends Controller
 
             $siteCrmSetting = $site->siteCrmSetting;
             $advertisingCompany = $siteCrmSetting->advertisingCompany;
+            $siteCRM=$siteCrmSetting->crm;
 
             // dd($advertisingCompany);
             $CRM = [
-                'url'                       => $advertisingCompany->url,
-                'username'                  => $advertisingCompany->username,
-                'password'                  => $advertisingCompany->password,
-                'shippingId'                => $advertisingCompany->shipping_id,
-                'campaignId'                => $advertisingCompany->compaign_id,
-                'tranType'                  => $advertisingCompany->tran_type,
-                'offerId'                   => $advertisingCompany->offer_id,
-                'billingModelId'            => $advertisingCompany->billing_model_id,
-                'gatewayId'                 => $advertisingCompany->gateway_id,
+                'url'                       => $siteCRM->url,
+                'username'                  => $siteCRM->username,
+                'password'                  => $siteCRM->password,
+                'shippingId'                => $siteCRM->shipping_id,
+                'campaignId'                => $siteCRM->compaign_id,
+                'tranType'                  => $siteCRM->tran_type,
+                'offerId'                   => $siteCRM->offer_id,
+                'billingModelId'            => $siteCRM->billing_model_id,
+                'gatewayId'                 => $siteCRM->gateway_id,
 
                 //'shippingInsurancePrice'    => 1.00,
                 //'shippingInsuranceProductId'=> 123
