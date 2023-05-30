@@ -17,42 +17,42 @@ class CrmSeeder extends Seeder
     {
         Crm::create(
             [
+                "advertising_company_id"=>1,
+                'url' => 'https://dcconsulting.sticky.io/api/v1/new_order',
+                'username' => 'dc_consulting_user',
+                'password' => '32432fsd',
+                'shipping_id' => 3,
+                'compaign_id' => 262,
+                'tran_type' => 'Sale',
+                'offer_id' => 25,
+                'billing_model_id' => 2,
+                'gateway_id' => 0,
+                "created_at" => now(),
+                'updated_at' => now()
+            ]
+        );
+
+        Crm::create(
+            [
+                "advertising_company_id"=>2,
+                'url' => 'https://dcconsulting.sticky.io/api/v1/new_order',
+                'username' => 'dc_consulting_user',
+                'password' => '32432fsd',
+                'shipping_id' => 3,
+                'compaign_id' => 262,
+                'tran_type' => 'Sale',
+                'offer_id' => 25,
+                'billing_model_id' => 2,
+                'gateway_id' => 0,
+                "created_at" => now(),
+                'updated_at' => now()
+            ]
+        );
+
+        Crm::create(
+
+            [
                 "advertising_company_id"=>3,
-                'url' => 'https://dcconsulting.sticky.io/api/v1/new_order',
-                'username' => 'dc_consulting_user',
-                'password' => '32432fsd',
-                'shipping_id' => 3,
-                'compaign_id' => 262,
-                'tran_type' => 'Sale',
-                'offer_id' => 25,
-                'billing_model_id' => 2,
-                'gateway_id' => 0,
-                "created_at" => now(),
-                'updated_at' => now()
-            ]
-        );
-
-        Crm::create(
-            [
-                "advertising_company_id"=>4,
-                'url' => 'https://dcconsulting.sticky.io/api/v1/new_order',
-                'username' => 'dc_consulting_user',
-                'password' => '32432fsd',
-                'shipping_id' => 3,
-                'compaign_id' => 262,
-                'tran_type' => 'Sale',
-                'offer_id' => 25,
-                'billing_model_id' => 2,
-                'gateway_id' => 0,
-                "created_at" => now(),
-                'updated_at' => now()
-            ]
-        );
-
-        Crm::create(
-
-            [
-                "advertising_company_id"=>5,
                 'url' => 'https://dcconsulting.sticky.io/api/v1/new_order',
                 'username' => 'dc_consulting_user',
                 'password' => '32432fsd',
