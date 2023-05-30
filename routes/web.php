@@ -9,6 +9,7 @@ use App\Http\Controllers\CheckoutPageController;
 use App\Http\Controllers\ContactDescriptionController;
 use App\Http\Controllers\ContactSectionController;
 use App\Http\Controllers\ContactTitleController;
+use App\Http\Controllers\CrmController;
 use App\Http\Controllers\CtaSectionController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FeatureSectionController;
@@ -71,6 +72,8 @@ Route::middleware(["auth"])->group(function () {
     Route::resource('users', UserController::class);
 
     Route::resource("advertising-companies",AdvertisingCompanyController::class);
+
+    Route::resource("crms",CrmController::class);
 
 
     Route::resource("product-categories", ProductCategoryController::class);

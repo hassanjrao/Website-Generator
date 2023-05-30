@@ -257,15 +257,15 @@ class SiteController extends Controller
             return [
                 "text" => $advertisingCompany->name,
                 "value" => $advertisingCompany->id,
-                'url' => $advertisingCompany->url,
-                'username' => $advertisingCompany->username,
-                'password' => $advertisingCompany->password,
-                'shipping_id' => $advertisingCompany->shipping_id,
-                'compaign_id' => $advertisingCompany->compaign_id,
-                'tran_type' => $advertisingCompany->tran_type,
-                'offer_id' => $advertisingCompany->offer_id,
-                'billing_model_id' => $advertisingCompany->billing_model_id,
-                'gateway_id' => $advertisingCompany->gateway_id,
+                'url' => $advertisingCompany->crm->url,
+                'username' => $advertisingCompany->crm->username,
+                'password' => $advertisingCompany->crm->password,
+                'shipping_id' => $advertisingCompany->crm->shipping_id,
+                'compaign_id' => $advertisingCompany->crm->compaign_id,
+                'tran_type' => $advertisingCompany->crm->tran_type,
+                'offer_id' => $advertisingCompany->crm->offer_id,
+                'billing_model_id' => $advertisingCompany->crm->billing_model_id,
+                'gateway_id' => $advertisingCompany->crm->gateway_id,
             ];
         });
 
@@ -646,7 +646,7 @@ class SiteController extends Controller
 
     public function getAdvertisingCompanies()
     {
-        $advertisingCompanies = AdvertisingCompany::all();
+        $advertisingCompanies = AdvertisingCompany::with("crm")->get();
 
         return $advertisingCompanies;
     }

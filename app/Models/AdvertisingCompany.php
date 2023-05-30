@@ -18,8 +18,8 @@ class AdvertisingCompany extends Model
         return $this->hasMany(Product::class);
     }
 
-    public function billingModel()
-    {
-        return $this->belongsTo(BillingModel::class);
+
+    public function crm(){
+        return $this->hasOne(Crm::class);
     }
 }

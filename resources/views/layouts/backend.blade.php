@@ -200,6 +200,19 @@
                         @endif
 
 
+                        @if (auth()->user()->hasRole('super admin') ||
+                                auth()->user()->can('view advertising companies'))
+                            <li class="nav-main-item">
+                                <a class="nav-main-link{{ request()->segment(1) == 'crms' ? ' active' : '' }}"
+                                    href="{{ route('crms.index') }}">
+
+                                    <i class="fas fa-building nav-main-link-icon"></i>
+                                    <span class="nav-main-link-name">CRMs</span>
+                                </a>
+                            </li>
+                        @endif
+
+
 
                         @if (auth()->user()->hasRole('super admin') ||
                                 auth()->user()->can('view categories'))

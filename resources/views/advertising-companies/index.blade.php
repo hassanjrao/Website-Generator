@@ -33,15 +33,6 @@
                             <tr>
                                 <th>#</th>
                                 <th>Name</th>
-                                <th>URL</th>
-                                <th>Username</th>
-                                <th>Password</th>
-                                <th>Shipping Id</th>
-                                <th>Compaign Id</th>
-                                <th>Tran Type</th>
-                                <th>Offer Id</th>
-                                <th>Billing Model</th>
-                                <th>Gateway Id</th>
                                 <th>Created At</th>
                                 <th>Updated At</th>
                                 <th>Action</th>
@@ -56,15 +47,7 @@
 
                                     <td>{{ $ind + 1 }}</td>
                                     <td>{{ $company->name }}</td>
-                                    <td>{{ $company->url }}</td>
-                                    <td>{{ $company->username }}</td>
-                                    <td>{{ $company->password }}</td>
-                                    <td>{{ $company->shipping_id }}</td>
-                                    <td>{{ $company->compaign_id }}</td>
-                                    <td>{{ $company->tran_type }}</td>
-                                    <td>{{ $company->offer_id }}</td>
-                                    <td>{{ $company->billingModel->name }}</td>
-                                    <td>{{ $company->gateway_id }}</td>
+
 
                                     <td>{{ $company->created_at }}</td>
                                     <td>{{ $company->updated_at }}</td>
@@ -72,12 +55,12 @@
                                     <td>
                                         <div class="btn-group" role="group" aria-label="Horizontal Primary">
 
-                                            {{-- @can('edit advertising companies') --}}
+                                            @can('edit advertising companies')
                                                 <a href="{{ route('advertising-companies.edit', $company->id) }}"
                                                     class="btn btn-sm btn-alt-primary">Edit</a>
-                                            {{-- @endcan --}}
+                                            @endcan
 
-                                            {{-- @can('delete advertising companies') --}}
+                                            @can('delete advertising companies')
                                                 <form id="form-{{ $company->id }}"
                                                     action="{{ route('advertising-companies.destroy', $company->id) }}"
                                                     method="POST">
@@ -87,7 +70,7 @@
                                                         class="btn btn-sm btn-alt-danger" value="Delete">
 
                                                 </form>
-                                            {{-- @endcan --}}
+                                            @endcan
                                         </div>
                                     </td>
 

@@ -46,10 +46,11 @@ class DatabaseSeeder extends Seeder
             AdvertisingCompanySeeder::class,
             ProductCategorySeeder::class,
             ProductSeeder::class,
-            
+
             PageLayoutSeeder::class,
             SizeSeeder::class,
             ProductSizeSeeder::class,
+            CrmSeeder::class,
         ]);
     }
 }
