@@ -19,6 +19,8 @@ class ButtonTitleController extends Controller
         }
         $buttonTitles=ButtonName::latest()->get();
 
+        dd($buttonTitles);
+
         return view("button-titles.index",compact("buttonTitles"));
     }
 
