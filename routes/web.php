@@ -14,6 +14,7 @@ use App\Http\Controllers\CtaSectionController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FeatureSectionController;
 use App\Http\Controllers\FooterTemplateController;
+use App\Http\Controllers\FtpController;
 use App\Http\Controllers\HeaderTemplateController;
 use App\Http\Controllers\HeroSectionController;
 use App\Http\Controllers\NotificationController;
@@ -75,6 +76,7 @@ Route::middleware(["auth"])->group(function () {
 
     Route::resource("crms",CrmController::class);
 
+    Route::resource("ftps",FtpController::class);
 
     Route::resource("product-categories", ProductCategoryController::class);
     Route::resource("products", ProductController::class);

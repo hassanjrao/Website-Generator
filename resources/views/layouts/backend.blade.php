@@ -211,6 +211,18 @@
                                 </a>
                             </li>
                         @endif
+                                           
+                        @if (auth()->user()->hasRole('super admin') ||
+                                auth()->user()->can('view advertising companies'))
+                            <li class="nav-main-item">
+                                <a class="nav-main-link{{ request()->segment(1) == 'ftps' ? ' active' : '' }}"
+                                    href="{{ route('ftps.index') }}">
+
+                                    <i class="fas fa-plug nav-main-link-icon"></i>
+                                    <span class="nav-main-link-name">FTPs</span>
+                                </a>
+                            </li>
+                        @endif
 
 
 
@@ -252,8 +264,9 @@
 
 
 
-                        <li class="nav-main-item {{ request()->segment(1) == 'templates' ||  request()->segment(1) == 'pages' ? ' open' : '' }}">
-                            <a class="nav-main-link {{ request()->segment(1) == 'templates' ||  request()->segment(1) == 'pages' ? ' active' : '' }} nav-main-link-submenu"
+                        <li
+                            class="nav-main-item {{ request()->segment(1) == 'templates' || request()->segment(1) == 'pages' ? ' open' : '' }}">
+                            <a class="nav-main-link {{ request()->segment(1) == 'templates' || request()->segment(1) == 'pages' ? ' active' : '' }} nav-main-link-submenu"
                                 data-toggle="submenu" aria-haspopup="true" aria-expanded="false" href="#">
                                 <i class="nav-main-link-icon si si-energy"></i>
                                 <span class="nav-main-link-name">Templates</span>
@@ -787,8 +800,6 @@
         // $(".drp0select2").select2({
         //     dropdownParent: $(".modal")
         // });
-
-
     </script>
 
 
