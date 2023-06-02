@@ -72,4 +72,18 @@ class SiteTemplate extends Model
     public function checkoutPage(){
         return $this->belongsTo(CheckoutPage::class)->withTrashed();
     }
+
+    public function contactPage(){
+        return $this->belongsTo(ContactPage::class)->withTrashed();
+    }
+
+    public function cartPage(){
+        return $this->belongsTo(CartPage::class)->withTrashed();
+    }
+
+    public function navigationPage(){
+        return $this->belongsTo(NavigationPage::class)->withTrashed();
+    }
+
+
 }

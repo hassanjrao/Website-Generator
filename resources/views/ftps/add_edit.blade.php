@@ -22,14 +22,12 @@
             <div class="block-content">
 
                 @if ($ftp)
-                    <form action="{{ route('ftps.update', $ftp->id) }}" method="POST"
-                        enctype="multipart/form-data">
+                    <form action="{{ route('ftps.update', $ftp->id) }}" method="POST" enctype="multipart/form-data">
 
                         @csrf
                         @method('PUT')
                     @else
-                        <form action="{{ route('ftps.store') }}" method="POST"
-                            enctype="multipart/form-data">
+                        <form action="{{ route('ftps.store') }}" method="POST" enctype="multipart/form-data">
 
                             @csrf
                 @endif
@@ -41,28 +39,57 @@
 
                         <div class="row mb-4 justify-content-around">
 
+                            <div class="col-lg-3 col-md-3 col-sm-12">
+                                <label class="form-label" for="label">Advertising Company<span
+                                        class="text-danger">*</span></label>
+
+                                <select name="advertising_company_id" class="form-select" required>
+                                    <option value="">Select Advertising Company</option>
+                                    @foreach ($advertisingCompanies as $advertisingCompany)
+                                        <option value="{{ $advertisingCompany->id }}"
+                                            {{ $ftp && $ftp->advertising_company_id == $advertisingCompany->id ? 'selected' : '' }}>
+                                            {{ $advertisingCompany->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+
+                                <span class="text-danger" id="advertising_company_id_error"></span>
+                            </div>
+
+
+                            <div class="col-lg-3 col-md-3 col-sm-12">
+                                <label class="form-label" for="label">Name <span class="text-danger">*</span></label>
+                                <input required type="text" value="{{ $ftp ? $ftp->name : null }}" class="form-control"
+                                    id="name" name="name" placeholder="Enter Name">
+                                <span class="text-danger" id="name_error"></span>
+                            </div>
+
 
                             <div class="col-lg-3 col-md-3 col-sm-12">
                                 <label class="form-label" for="label">Host <span class="text-danger">*</span></label>
-                                <input required type="text"
-                                    value="{{ $ftp ? $ftp->host : null }}" class="form-control"
+                                <input required type="text" value="{{ $ftp ? $ftp->host : null }}" class="form-control"
                                     id="host" name="host" placeholder="Enter Host">
                                 <span class="text-danger" id="host_error"></span>
                             </div>
 
                             <div class="col-lg-3 col-md-3 col-sm-12">
                                 <label class="form-label" for="label">Username <span class="text-danger">*</span></label>
-                                <input required type="text"
-                                    value="{{ $ftp ? $ftp->username : null }}"
+                                <input required type="text" value="{{ $ftp ? $ftp->username : null }}"
                                     class="form-control" id="username" name="username" placeholder="Enter Username">
                                 <span class="text-danger" id="username_error"></span>
                             </div>
 
 
+
+
+
+
+                        </div>
+                        <div class="row mb-4">
+
                             <div class="col-lg-3 col-md-3 col-sm-12">
                                 <label class="form-label" for="label">password <span class="text-danger">*</span></label>
-                                <input required type="text"
-                                    value="{{ $ftp ? $ftp->password : null }}"
+                                <input required type="text" value="{{ $ftp ? $ftp->password : null }}"
                                     class="form-control" id="password" name="password" placeholder="Enter password">
                                 <span class="text-danger" id="password_error"></span>
                             </div>
@@ -70,27 +97,18 @@
 
 
                             <div class="col-lg-3 col-md-3 col-sm-12">
-                                <label class="form-label" for="label">Port <span
-                                        class="text-danger">*</span></label>
-                                <input required type="number"
-                                    value="{{ $ftp ? $ftp->port : null }}"
-                                    class="form-control" id="port" name="port"
-                                    placeholder="Enter Port">
+                                <label class="form-label" for="label">Port <span class="text-danger">*</span></label>
+                                <input required type="number" value="{{ $ftp ? $ftp->port : null }}" class="form-control"
+                                    id="port" name="port" placeholder="Enter Port">
                                 <span class="text-danger" id="port_error"></span>
                             </div>
-
-                        </div>
-                        <div class="row mb-4">
-
 
 
                             <div class="col-lg-4 col-md-4 col-sm-12">
                                 <label class="form-label" for="label">Root Path <span
                                         class="text-danger">*</span></label>
-                                <input required type="text"
-                                    value="{{ $ftp ? $ftp->root_path : null }}"
-                                    class="form-control" id="root_path" name="root_path"
-                                    placeholder="Enter Root Path">
+                                <input required type="text" value="{{ $ftp ? $ftp->root_path : null }}"
+                                    class="form-control" id="root_path" name="root_path" placeholder="Enter Root Path">
                                 <span class="text-danger" id="root_path_error"></span>
                             </div>
 

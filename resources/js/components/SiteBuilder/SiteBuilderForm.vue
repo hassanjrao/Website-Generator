@@ -27,7 +27,8 @@
                                     :ctasections="ctasections" :featuresections="featuresections"
                                     :footertemplates="footertemplates" :productpages="productpages"
                                     :checkoutpages="checkoutpages" :relatedproductsections="relatedproductsections"
-                                    :layouts="layouts" :site_id="siteId" :site_content="siteContent"
+                                    :navigationcartpages="navigationcartpages" :contactpages="contactpages"
+                                    :cartpages="cartpages" :layouts="layouts" :site_id="siteId" :site_content="siteContent"
                                     :aboutustitles="aboutustitles" :slogans="slogans" :shoptitles="shoptitles"
                                     :taglines="taglines" :aboutuscontent="aboutuscontent" :buttonnames="buttonnames"
                                     :populartitles="populartitles" :contacttitles="contacttitles"
@@ -60,7 +61,8 @@
 
 
                             <v-card-text v-if="tab.label == 'generate_site'">
-                                <GenerateSite :site_id="siteId" :steps-required="stepsRequired" />
+                                <GenerateSite :site_id="siteId" :steps-required="stepsRequired" :ftps="ftps"
+                                    :advertisingcompanies="advertisingcompanies" />
                             </v-card-text>
 
                         </v-card>
@@ -172,6 +174,18 @@ export default {
             type: Array,
             required: true
         },
+        contactpages: {
+            type: Array,
+            required: true,
+        },
+        cartpages: {
+            type: Array,
+            required: true,
+        },
+        navigationcartpages: {
+            type: Array,
+            required: true,
+        },
         relatedproductsections: {
             type: Array,
             required: true
@@ -210,6 +224,11 @@ export default {
             type: Number,
             required: true
         },
+
+        ftps: {
+            type: Array,
+            required: true
+        }
 
     },
 
@@ -604,6 +623,16 @@ export default {
 
         }
 
+
+        this.siteInfo.name = null
+        this.siteInfo.url = null
+        this.siteInfo.email = null;
+        this.siteInfo.phone = null;
+        this.siteInfo.address = null;
+        this.siteInfo.corp_name = null;
+        this.siteInfo.description = null;
+        this.siteInfo.return_address = null;
+        this.siteInfo.fulfillment = null;
         this.siteInfo.trial_period = 14;
         this.siteInfo.trial_period_breakdown = '10+4';
         this.siteInfo.shipping_period = '3-5';

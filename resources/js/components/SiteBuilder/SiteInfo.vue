@@ -19,37 +19,28 @@
                 <v-row>
 
                     <v-col cols="12" sm="6" md="4">
-                        <v-text-field v-model="site_info.name" label="DBA" required
-                            @input="$v.site_info.name.$touch()" :error-messages="siteNameErrors"
-                            @blur="$v.site_info.name.$touch()"></v-text-field>
+                        <v-text-field v-model="site_info.name" label="DBA"
+                            ></v-text-field>
                     </v-col>
 
                     <v-col cols="12" sm="6" md="4">
-                        <v-text-field type="url" v-model="site_info.url" label="URL" required
-                            @input="$v.site_info.url.$touch()" :error-messages="urlErrors"
-                            @blur="$v.site_info.url.$touch()"></v-text-field>
+                        <v-text-field type="url" v-model="site_info.url" label="URL" ></v-text-field>
                     </v-col>
 
                     <v-col cols="12" sm="6" md="4">
-                        <v-text-field v-model="site_info.email" label="Email" required @input="$v.site_info.email.$touch()"
-                            :error-messages="emailErrors" @blur="$v.site_info.email.$touch()"></v-text-field>
+                        <v-text-field v-model="site_info.email" label="Email" ></v-text-field>
                     </v-col>
 
                     <v-col cols="12" sm="6" md="4">
-                        <v-text-field v-model="site_info.phone" label="Phone" required @input="$v.site_info.phone.$touch()"
-                            :error-messages="phoneErrors" @blur="$v.site_info.phone.$touch()"></v-text-field>
+                        <v-text-field v-model="site_info.phone" label="Phone" ></v-text-field>
                     </v-col>
 
                     <v-col cols="12" sm="6" md="4">
-                        <v-text-field v-model="site_info.address" label="Address" required
-                            @input="$v.site_info.address.$touch()" :error-messages="addressErrors"
-                            @blur="$v.site_info.address.$touch()"></v-text-field>
+                        <v-text-field v-model="site_info.address" label="Address"></v-text-field>
                     </v-col>
 
                     <v-col cols="12" sm="6" md="4">
-                        <v-text-field v-model="site_info.corp_name" label="Corp. Name" required
-                            @input="$v.site_info.corp_name.$touch()" :error-messages="corpNameErrors"
-                            @blur="$v.site_info.corp_name.$touch()"></v-text-field>
+                        <v-text-field v-model="site_info.corp_name" label="Corp. Name" ></v-text-field>
                     </v-col>
 
                     <!-- <v-col cols="12" sm="6" md="6">
@@ -59,15 +50,11 @@
                     </v-col> -->
 
                     <v-col cols="12" sm="6" md="4">
-                        <v-text-field v-model="site_info.fulfillment" label="Fulfillment" required
-                            @input="$v.site_info.fulfillment.$touch()" :error-messages="fulfillmentErrors"
-                            @blur="$v.site_info.fulfillment.$touch()"></v-text-field>
+                        <v-text-field v-model="site_info.fulfillment" label="Fulfillment" ></v-text-field>
                     </v-col>
 
                     <v-col cols="12" sm="6" md="6">
-                        <v-text-field v-model="site_info.return_address" label="Return Address" required
-                            @input="$v.site_info.return_address.$touch()" :error-messages="returnAddressErrors"
-                            @blur="$v.site_info.return_address.$touch()"></v-text-field>
+                        <v-text-field v-model="site_info.return_address" label="Return Address"></v-text-field>
                     </v-col>
 
 
@@ -150,31 +137,7 @@ export default {
 
     validations: {
         site_info: {
-            name: {
-                required
-            },
-            url: {
-                required
-            },
-            email: {
-                required,
-                email
-            },
-            phone: {
-                required
-            },
-            address: {
-                required
-            },
-            corp_name: {
-                required
-            },
-            return_address: {
-                required
-            },
-            fulfillment: {
-                required
-            },
+
             trial_period: {
                 required
             },
@@ -206,61 +169,7 @@ export default {
     },
 
     computed: {
-        siteNameErrors() {
-            const errors = []
-            if (!this.$v.site_info.name.$dirty) return errors
-            !this.$v.site_info.name.required && errors.push('DBA is required.')
-            return errors
-        },
-        urlErrors() {
-            const errors = []
-            if (!this.$v.site_info.url.$dirty) return errors
-            !this.$v.site_info.url.required && errors.push('Site url is required.')
-            return errors
-        },
-        emailErrors() {
-            const errors = []
-            if (!this.$v.site_info.email.$dirty) return errors
-            !this.$v.site_info.email.required && errors.push('Email is required.')
-            !this.$v.site_info.email.email && errors.push('Email must be valid.')
-            return errors
-        },
-        phoneErrors() {
-            const errors = []
-            if (!this.$v.site_info.phone.$dirty) return errors
-            !this.$v.site_info.phone.required && errors.push('Phone is required.')
-            return errors
-        },
-        addressErrors() {
-            const errors = []
-            if (!this.$v.site_info.address.$dirty) return errors
-            !this.$v.site_info.address.required && errors.push('Address is required.')
-            return errors
-        },
-        corpNameErrors() {
-            const errors = []
-            if (!this.$v.site_info.corp_name.$dirty) return errors
-            !this.$v.site_info.corp_name.required && errors.push('Corp name is required.')
-            return errors
-        },
-        descriptionErrors() {
-            const errors = []
-            if (!this.$v.site_info.description.$dirty) return errors
-            !this.$v.site_info.description.required && errors.push('Description is required.')
-            return errors
-        },
-        returnAddressErrors() {
-            const errors = []
-            if (!this.$v.site_info.return_address.$dirty) return errors
-            !this.$v.site_info.return_address.required && errors.push('Return address is required.')
-            return errors
-        },
-        fulfillmentErrors() {
-            const errors = []
-            if (!this.$v.site_info.fulfillment.$dirty) return errors
-            !this.$v.site_info.fulfillment.required && errors.push('Fulfillment is required.')
-            return errors
-        },
+
         trialPeriodBreakdownErrors() {
             const errors = []
             if (!this.$v.site_info.trial_period_breakdown.$dirty) return errors
@@ -310,11 +219,42 @@ export default {
 
 
     methods: {
+
+        emptyFields(){
+            let emptyFields=[];
+
+            for (let [key, value] of Object.entries(this.site_info)) {
+                if(value==null || value==""){
+                    emptyFields.push(key);
+                }
+            }
+
+            return emptyFields;
+        },
+
         submitSiteInfo() {
             this.$v.$touch()
             if (this.$v.$invalid) {
                 return
             }
+
+            let emptyFields=this.emptyFields();
+
+            if(emptyFields.length>0){
+
+                let msg="Are you sure? Following fields are empty ";
+
+                emptyFields.forEach(element => {
+                    element=element.replace('_'," ")
+                    
+                    msg+=element+ ", "
+                });
+
+
+                this.showStatus(msg, "error",false)
+                return;
+            }
+
 
             this.loading = true
             axios.post('/sites/create-site', {

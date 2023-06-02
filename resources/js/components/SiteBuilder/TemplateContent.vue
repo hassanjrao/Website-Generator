@@ -156,12 +156,12 @@
 
 
 
-                <v-col cols="12" sm="12" md="6">
+                <v-col cols="12" sm="12" md="12">
 
                     <v-card>
 
                         <v-card-title>
-                            <h3 class="headline mb-0">Product Page</h3>
+                            <h3 class="headline mb-0">Pages</h3>
                         </v-card-title>
 
                         <v-card-text>
@@ -169,7 +169,7 @@
                             <v-row>
 
 
-                                <v-col cols="12" sm="12" md="12">
+                                <v-col cols="12" sm="6" md="4">
 
                                     <v-autocomplete label="Product Pages" clearable :items="productpages"
                                         v-model="selectedProductPages" required @input="$v.selectedProductPages.$touch()"
@@ -177,29 +177,7 @@
                                         @blur="$v.selectedProductPages.$touch()"></v-autocomplete>
                                 </v-col>
 
-                            </v-row>
-
-
-                        </v-card-text>
-
-                    </v-card>
-                </v-col>
-
-                <v-col cols="12" sm="12" md="6">
-
-                    <v-card>
-
-                        <v-card-title>
-                            <h3 class="headline mb-0">Checkout Page</h3>
-                        </v-card-title>
-
-                        <v-card-text>
-
-                            <v-row>
-
-
-
-                                <v-col cols="12" sm="12" md="12">
+                                <v-col cols="12" sm="6" md="4">
 
                                     <v-autocomplete label="Checkout Pages" clearable :items="checkoutpages"
                                         v-model="selectedCheckoutPages" required @input="$v.selectedCheckoutPages.$touch()"
@@ -208,6 +186,32 @@
                                 </v-col>
 
 
+                                <v-col cols="12" sm="6" md="4">
+
+                                    <v-autocomplete label="Contact Pages" clearable :items="contactpages"
+                                        v-model="selectedContactPages" required @input="$v.selectedContactPages.$touch()"
+                                        :error-messages="selectedContactPagesErrors"
+                                        @blur="$v.selectedContactPages.$touch()"></v-autocomplete>
+                                </v-col>
+
+                                <v-col cols="12" sm="6" md="4">
+
+                                    <v-autocomplete label="Cart Pages" clearable :items="cartpages"
+                                        v-model="selectedCartPages" required @input="$v.selectedCartPages.$touch()"
+                                        :error-messages="selectedCartPagesErrors"
+                                        @blur="$v.selectedCartPages.$touch()"></v-autocomplete>
+                                </v-col>
+
+                                  <v-col cols="12" sm="6" md="4">
+
+                                    <v-autocomplete label="Navigation Pages" clearable :items="navigationcartpages"
+                                        v-model="selectedNavigationCartPages" required @input="$v.selectedNavigationCartPages.$touch()"
+                                        :error-messages="selectedNavigationCartPagesErrors"
+                                        @blur="$v.selectedNavigationCartPages.$touch()"></v-autocomplete>
+                                </v-col>
+
+
+
                             </v-row>
 
 
@@ -215,6 +219,10 @@
 
                     </v-card>
                 </v-col>
+
+
+
+
 
             </v-row>
 
@@ -279,6 +287,19 @@ export default {
             type: Array,
             required: true
         },
+        contactpages: {
+            type: Array,
+            required: true
+        },
+        cartpages: {
+            type: Array,
+            required: true
+        },
+        navigationcartpages: {
+            type: Array,
+            required: true
+        },
+
         relatedproductsections: {
             type: Array,
             required: true
@@ -345,6 +366,16 @@ export default {
         selectedCheckoutPages: {
             required
         },
+        selectedContactPages: {
+            required
+        },
+        selectedCartPages: {
+            required
+        },
+        selectedNavigationCartPages: {
+            required
+        },
+
         selectedRelatedProductSection: {
             required
         },
@@ -367,6 +398,9 @@ export default {
             selectedFooterTemplate: null,
             selectedProductPages: null,
             selectedCheckoutPages: null,
+            selectedCartPages: null,
+            selectedContactPages: null,
+            selectedNavigationCartPages: null,
             selectedRelatedProductSection: null,
             siteId: null,
             siteContent: [],
@@ -442,6 +476,24 @@ export default {
             const errors = []
             if (!this.$v.selectedCheckoutPages.$dirty) return errors
             !this.$v.selectedCheckoutPages.required && errors.push('Checkout Pages is required.')
+            return errors
+        },
+        selectedContactPagesErrors() {
+            const errors = []
+            if (!this.$v.selectedContactPages.$dirty) return errors
+            !this.$v.selectedContactPages.required && errors.push('Contact Pages is required.')
+            return errors
+        },
+        selectedCartPagesErrors() {
+            const errors = []
+            if (!this.$v.selectedCartPages.$dirty) return errors
+            !this.$v.selectedCartPages.required && errors.push('Cart Pages is required.')
+            return errors
+        },
+        selectedNavigationCartPagesErrors() {
+            const errors = []
+            if (!this.$v.selectedNavigationCartPages.$dirty) return errors
+            !this.$v.selectedNavigationCartPages.required && errors.push('Navigation Cart Pages is required.')
             return errors
         },
         selectedRelatedProductSectionErrors() {
@@ -522,6 +574,19 @@ export default {
             let checkoutPages = this.checkoutpages[Math.floor(Math.random() * this.checkoutpages.length)];
             this.selectedCheckoutPages = checkoutPages.value;
 
+
+            let contactPages = this.contactpages[Math.floor(Math.random() * this.contactpages.length)];
+            this.selectedContactPages = contactPages.value;
+
+
+            let cartPages = this.cartpages[Math.floor(Math.random() * this.cartpages.length)];
+            this.selectedCartPages = cartPages.value;
+
+
+            let navigationCartPages = this.navigationcartpages[Math.floor(Math.random() * this.navigationcartpages.length)];
+            this.selectedNavigationCartPages = navigationCartPages.value;
+
+
         },
 
         submitSiteTemplate() {
@@ -571,6 +636,15 @@ export default {
             }
             if (this.selectedCheckoutPages) {
                 formData.append('checkout_page_id', this.selectedCheckoutPages);
+            }
+            if (this.selectedContactPages) {
+                formData.append('contact_page_id', this.selectedContactPages);
+            }
+            if (this.selectedCartPages) {
+                formData.append('cart_page_id', this.selectedCartPages);
+            }
+            if (this.selectedNavigationCartPages) {
+                formData.append('navigation_cart_page_id', this.selectedNavigationCartPages);
             }
             if (this.selectedRelatedProductSection) {
                 formData.append('related_product_section_id', this.selectedRelatedProductSection);
@@ -648,7 +722,7 @@ export default {
 
 
 
-        console.log('templatecontentitems',this.includedLayoutItems)
+        console.log('templatecontentitems', this.includedLayoutItems)
     },
     created() {
         this.showStatus = alert.showStatus;

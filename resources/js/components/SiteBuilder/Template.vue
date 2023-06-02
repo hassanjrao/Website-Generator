@@ -23,7 +23,7 @@
 
                 <v-col cols="12" sm="12" md="12" class="text-right">
 
-                <v-btn color="secondary" :loading="loading" class="mr-2" @click="randomizeAllMethod">RandomizeAll</v-btn>
+                <v-btn color="secondary" :loading="loading" class="mr-2" @click="randomizeAllMethod">Randomize All</v-btn>
                 </v-col>
 
 
@@ -46,6 +46,7 @@
                             :contactsections="contactsections" :popularproductsections="popularproductsections"
                             :ctasections="ctasections" :featuresections="featuresections" :footertemplates="footertemplates"
                             :site_id="siteId" :productpages="productpages" :checkoutpages="checkoutpages"
+                            :contactpages="contactpages" :cartpages="cartpages" :navigationcartpages="navigationcartpages"
                             :includedlayoutitems="includedLayoutItems"
                             @templateContentSubmitted="getTemplateContentSubmitted">
                         </TemplateContent>
@@ -76,7 +77,7 @@
                             :buttonnames="buttonnames" :populartitles="populartitles" :contacttitles="contacttitles"
                             :contactcontent="contactcontent" :site_id="siteId" @contentSubmitted="getContentSubmitted"
                             :randomize-all="randomizeAll" />
-                        />
+
 
                     </v-card>
 
@@ -172,6 +173,18 @@ export default {
         checkoutpages: {
             type: Array,
             required: true
+        },
+        contactpages: {
+            type: Array,
+            required: true,
+        },
+        cartpages: {
+            type: Array,
+            required: true,
+        },
+        navigationcartpages: {
+            type: Array,
+            required: true,
         },
         relatedproductsections: {
             type: Array,

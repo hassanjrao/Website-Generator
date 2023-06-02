@@ -39,6 +39,24 @@
 
                     <v-col cols="12" sm="6" md="6" class="mt-4">
 
+
+                        <v-row class="border border-primary px-4">
+
+
+                            <v-col cols="12" sm="6" md="6">
+                                <v-autocomplete label="Advertising Company" clearable :items="advertisingcompanies"
+                                    v-model="selectedAdvertisingCompany"
+                                    ></v-autocomplete>
+
+                            </v-col>
+
+                            <v-col cols="12" sm="6" md="6">
+                                <v-autocomplete label="FTPs" clearable :items="filteredFtps"
+                                    v-model="selectedFtp"></v-autocomplete>
+                            </v-col>
+
+                        </v-row>
+
                         <v-row class="border border-primary px-4">
                             <v-col cols="12" sm="6" md="6">
                                 <v-text-field v-model="hostName" label="Host Name" required @input="$v.hostName.$touch()"
@@ -59,6 +77,12 @@
                                 <v-text-field v-model="rootPath" label="Root Path" required @input="$v.rootPath.$touch()"
                                     :error-messages="rootPathErrors" hint="Like /public_html/ or /var/www/ or /htdocs/"
                                     @blur="$v.rootPath.$touch()"></v-text-field>
+                            </v-col>
+
+                            <v-col cols="12" sm="6" md="6">
+                                <v-text-field v-model.number="port" label="Port" required @input="$v.port.$touch()"
+                                    :error-messages="portErrors" hint="21, 22.." type="number"
+                                    @blur="$v.port.$touch()"></v-text-field>
                             </v-col>
 
                             <v-col cols="12" sm="12" md="12" class="text-right">
@@ -100,6 +124,14 @@ export default {
             type: Array,
             required: true
         },
+        ftps: {
+            type: Array,
+            required: true
+        },
+        advertisingcompanies:{
+            type: Array,
+            required: true
+        }
 
     },
 
@@ -116,6 +148,9 @@ export default {
         rootPath: {
             required
         },
+        port: {
+            required,
+        },
     },
 
 
@@ -130,12 +165,34 @@ export default {
             username: null,
             password: null,
             rootPath: null,
+            port: null,
+            selectedFtp: null,
+            selectedAdvertisingCompany: null,
+            filteredFtps:[]
         }
     },
 
     watch: {
         requiredSteps() {
             console.log("steppss", this.requiredSteps);
+        },
+        selectedFtp: function (val) {
+            console.log(val)
+
+            let ftp = this.ftps.find(ftp => ftp.value == val);
+
+            this.hostName = ftp.host;
+            this.username = ftp.username;
+            this.password = ftp.password;
+            this.rootPath = ftp.root_path;
+            this.port = ftp.port;
+        },
+
+        selectedAdvertisingCompany: function (val){
+
+            console.log("adv",val);
+
+            this.filteredFtps=this.ftps.filter(ftp=>ftp.advertising_company_id==val)
         }
     },
 
@@ -165,6 +222,12 @@ export default {
             !this.$v.rootPath.required && errors.push('Root path is required.')
             return errors
         },
+        portErrors() {
+            const errors = []
+            if (!this.$v.port.$dirty) return errors
+            !this.$v.port.required && errors.push('Port is required.')
+            return errors
+        },
     },
 
     methods: {
@@ -189,6 +252,7 @@ export default {
                 username: this.username,
                 password: this.password,
                 root_path: this.rootPath,
+                port: this.port,
             }).then(response => {
                 this.loading = false;
                 console.log(response);

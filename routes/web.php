@@ -5,8 +5,10 @@ use App\Http\Controllers\AboutUsDescriptionController;
 use App\Http\Controllers\AboutUsTitleController;
 use App\Http\Controllers\AdvertisingCompanyController;
 use App\Http\Controllers\ButtonTitleController;
+use App\Http\Controllers\CartPageController;
 use App\Http\Controllers\CheckoutPageController;
 use App\Http\Controllers\ContactDescriptionController;
+use App\Http\Controllers\ContactPageController;
 use App\Http\Controllers\ContactSectionController;
 use App\Http\Controllers\ContactTitleController;
 use App\Http\Controllers\CrmController;
@@ -17,6 +19,7 @@ use App\Http\Controllers\FooterTemplateController;
 use App\Http\Controllers\FtpController;
 use App\Http\Controllers\HeaderTemplateController;
 use App\Http\Controllers\HeroSectionController;
+use App\Http\Controllers\NavigationPageController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PopularProductSectionController;
 use App\Http\Controllers\PopularTitleController;
@@ -106,6 +109,9 @@ Route::middleware(["auth"])->group(function () {
     Route::prefix("pages")->group(function(){
         Route::resource("product-pages",ProductPageController::class);
         Route::resource("checkout-pages",CheckoutPageController::class);
+        Route::resource("contact-pages",ContactPageController::class);
+        Route::resource("cart-pages",CartPageController::class);
+        Route::resource("navigation-pages",NavigationPageController::class);
     });
 
 

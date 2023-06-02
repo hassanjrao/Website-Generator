@@ -7,17 +7,21 @@ use App\Models\AboutUsDescription;
 use App\Models\AboutUsTitle;
 use App\Models\AdvertisingCompany;
 use App\Models\ButtonName;
+use App\Models\CartPage;
 use App\Models\CheckoutPage;
 use App\Models\ContactContent;
+use App\Models\ContactPage;
 use App\Models\ContactSection;
 use App\Models\ContactTitle;
 use App\Models\CreditCardSet;
 use App\Models\CtaSection;
 use App\Models\FeatureSection;
 use App\Models\FooterTemplate;
+use App\Models\Ftp;
 use App\Models\HeaderTemplate;
 use App\Models\HeroSection;
 use App\Models\LoadingGif;
+use App\Models\NavigationPage;
 use App\Models\PageLayout;
 use App\Models\PopularProductSection;
 use App\Models\PopularTitle;
@@ -236,6 +240,30 @@ class SiteController extends Controller
             ];
         });
 
+        $contactPages = $this->getContactPages();
+        $contactPages = $contactPages->map(function ($contactPage) {
+            return [
+                "text" => $contactPage->name,
+                "value" => $contactPage->id
+            ];
+        });
+
+        $cartPages = $this->getcartPages();
+        $cartPages = $cartPages->map(function ($cartPage) {
+            return [
+                "text" => $cartPage->name,
+                "value" => $cartPage->id
+            ];
+        });
+
+        $navigationCartPages = $this->getNavigationCartPages();
+        $navigationPages = $navigationCartPages->map(function ($navigationCartPage) {
+            return [
+                "text" => $navigationCartPage->name,
+                "value" => $navigationCartPage->id
+            ];
+        });
+
         $relatedProductSections = $this->getRelatedProductSections();
         $relatedProductSections = $relatedProductSections->map(function ($relatedProductSection) {
             return [
@@ -290,6 +318,20 @@ class SiteController extends Controller
 
         $totalProducts = Product::all()->count();
 
+        $ftps = $this->getFtps();
+        $ftps = $ftps->map(function ($ftp) {
+            return [
+                "text" => $ftp->name,
+                "value" => $ftp->id,
+                "host"=>$ftp->host,
+                "advertising_company_id"=>$ftp->advertising_company_id,
+                "username"=> $ftp->username,
+                "password"=> $ftp->password,
+                "port"=> $ftp->port,
+                "root_path"=>$ftp->root_path
+            ];
+        });
+
 
         // $totalProducts = Prod;
 
@@ -320,6 +362,9 @@ class SiteController extends Controller
                 'footerTemplates',
                 'productPages',
                 'checkoutPages',
+                'contactPages',
+                'cartPages',
+                'navigationPages',
                 'relatedProductSections',
                 'layouts',
                 'loadingGifs',
@@ -328,7 +373,8 @@ class SiteController extends Controller
                 'creditCards',
                 'sortProductsBy',
                 'advertisingCompanies',
-                'totalProducts'
+                'totalProducts',
+                "ftps"
             )
         );
     }
@@ -613,6 +659,10 @@ class SiteController extends Controller
                 'totalProducts'
             )
         );
+    }
+
+    public function getFtps(){
+        return Ftp::all();
     }
 
     public function getCategories(Request $request)
@@ -918,10 +968,29 @@ class SiteController extends Controller
         return $checkoutPages;
     }
 
+
     public function getProductPages()
     {
         $productPages = ProductPage::whereNotNull("file")->get();
         return $productPages;
+    }
+
+    public function getContactPages()
+    {
+        $contactPages = ContactPage::whereNotNull("file")->get();
+        return $contactPages;
+    }
+
+    public function getCartPages()
+    {
+        $cartPages = CartPage::whereNotNull("file")->get();
+        return $cartPages;
+    }
+
+    public function getNavigationcartPages()
+    {
+        $navigationcartpagesPages = NavigationPage::whereNotNull("file")->get();
+        return $navigationcartpagesPages;
     }
 
     public function getFooterTemplates()
@@ -1225,6 +1294,9 @@ class SiteController extends Controller
             "footer_template_id" => "required|exists:footer_templates,id",
             "product_page_id" => "required|exists:product_pages,id",
             "checkout_page_id" => "required|exists:checkout_pages,id",
+            "contact_page_id" => "required|exists:contact_pages,id",
+            "cart_page_id" => "required|exists:cart_pages,id",
+            "navigation_cart_page_id"=>"required|exists:navigation_pages,id",
         ]);
 
 
@@ -1242,7 +1314,10 @@ class SiteController extends Controller
             "footer_template_id" => $request->footer_template_id,
             "product_page_id" => $request->product_page_id,
             "checkout_page_id" => $request->checkout_page_id,
-            "loading_gif_id" => 1
+            "loading_gif_id" => 1,
+            "contact_page_id" => $request->contact_page_id,
+            "cart_page_id" => $request->cart_page_id,
+            "navigation_page_id"=>$request->navigation_cart_page_id,
         ];
 
 

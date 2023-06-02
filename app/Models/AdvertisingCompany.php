@@ -22,4 +22,8 @@ class AdvertisingCompany extends Model
     public function crm(){
         return $this->hasOne(Crm::class);
     }
+
+    public function ftps(){
+        return $this->hasMany(Ftp::class);
+    }
 }

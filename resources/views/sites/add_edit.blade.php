@@ -18,10 +18,13 @@
             :popularproductsections="{{ $popularProductSections }}" :ctasections="{{ $ctaSections }}"
             :featuresections="{{ $featureSections }}" :footertemplates="{{ $footerTemplates }}"
             :productpages="{{ $productPages }}" :checkoutpages="{{ $checkoutPages }}"
+            :contactpages="{{ $contactPages }}" :cartpages="{{ $cartPages }}"
+            :navigationcartpages="{{ $navigationPages }}"
             :relatedproductsections="{{ $relatedProductSections }}" :layouts="{{ $layouts }}"
             :loadingGifs="{{ $loadingGifs }}" :colorsfonts="{{ $colors }}" :fontFamilies="{{ $fontFamilies }}"
             :creditcards="{{ $creditCards }}" :sortproductsby="{{ $sortProductsBy }}"
             :advertisingcompanies="{{ $advertisingCompanies }}" :totalproducts="{{ $totalProducts }}"
+            :ftps="{{ $ftps }}"
             />
     </div>
 

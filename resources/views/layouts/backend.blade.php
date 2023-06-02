@@ -211,7 +211,7 @@
                                 </a>
                             </li>
                         @endif
-                                           
+
                         @if (auth()->user()->hasRole('super admin') ||
                                 auth()->user()->can('view advertising companies'))
                             <li class="nav-main-item">
@@ -392,6 +392,32 @@
                                         <a class="nav-main-link {{ request()->segment(2) == 'checkout-pages' ? ' active' : '' }}"
                                             href="{{ route('checkout-pages.index') }}">
                                             <span class="nav-main-link-name">Checkout Page</span>
+                                        </a>
+                                    </li>
+                                @endcan
+                                @can('view checkout pages')
+                                    <li class="nav-main-item">
+                                        <a class="nav-main-link {{ request()->segment(2) == 'contact-pages' ? ' active' : '' }}"
+                                            href="{{ route('contact-pages.index') }}">
+                                            <span class="nav-main-link-name">Contact Page</span>
+                                        </a>
+                                    </li>
+                                @endcan
+
+                                @can('view checkout pages')
+                                    <li class="nav-main-item">
+                                        <a class="nav-main-link {{ request()->segment(2) == 'cart-pages' ? ' active' : '' }}"
+                                            href="{{ route('cart-pages.index') }}">
+                                            <span class="nav-main-link-name">Cart Page</span>
+                                        </a>
+                                    </li>
+                                @endcan
+
+                                @can('view checkout pages')
+                                    <li class="nav-main-item">
+                                        <a class="nav-main-link {{ request()->segment(2) == 'navigation-pages' ? ' active' : '' }}"
+                                            href="{{ route('navigation-pages.index') }}">
+                                            <span class="nav-main-link-name">Navigation Page</span>
                                         </a>
                                     </li>
                                 @endcan

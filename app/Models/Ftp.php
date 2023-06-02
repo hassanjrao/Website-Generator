@@ -10,4 +10,8 @@ class Ftp extends Model
     use HasFactory;
 
     protected $guarded=[];
+
+    public function advertisingCompany(){
+        return $this->belongsTo(AdvertisingCompany::class);
+    }
 }

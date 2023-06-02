@@ -145,6 +145,7 @@ class ZippedSiteController extends Controller
 
 
 
+
             $pageConfig =  [
                 'header_template' => $siteTemplate->headerTemplate ? $siteTemplate->headerTemplate->file_name : '',
                 'hero_section' => $siteTemplate->heroSection ? $siteTemplate->heroSection->file_name : '',
@@ -160,6 +161,11 @@ class ZippedSiteController extends Controller
 
                 'product_page' => $siteTemplate->productPage ? $siteTemplate->productPage->file_name : '',
                 'checkout_page' => $siteTemplate->checkoutPage ? $siteTemplate->checkoutPage->file_name : '',
+
+                'contact_page' => $siteTemplate->contactPage ? $siteTemplate->contactPage->file_name : '',
+                'cart_page'=> $siteTemplate->cartPage ? $siteTemplate->cartPage->file_name : '',
+                'navCart_template' => $siteTemplate->navigationPage ? $siteTemplate->navigationPage->file_name : '',
+
 
                 // If you want to hide any section select 0
 
@@ -240,6 +246,7 @@ class ZippedSiteController extends Controller
 
 
 
+
             //Credit Card
 
             $siteCreditCardSet = $site->siteCreditCardSet;
@@ -287,7 +294,7 @@ class ZippedSiteController extends Controller
             // make new project
             $siteName = str_replace(' ', '_', $site->name);
             $randNum = rand(1000, 9999);
-            $projectName = $siteName.$site->id;
+            $projectName = $siteName."_".$site->id;
 
             $newProjectDestination = $this->copyProject($projectName);
 
@@ -370,6 +377,24 @@ class ZippedSiteController extends Controller
             if ($siteTemplate->checkoutPage) {
                 $checkoutPageFile = [$siteTemplate->checkoutPage->file];
                 $this->addFiles($newProjectDestination . DIRECTORY_SEPARATOR . 'bp_config' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'checkout_page_templates', $checkoutPageFile);
+            }
+
+            // add contact page template file
+            if ($siteTemplate->contactPage) {
+                $contactPageFile = [$siteTemplate->contactPage->file];
+                $this->addFiles($newProjectDestination . DIRECTORY_SEPARATOR . 'bp_config' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'contact_page_templates', $contactPageFile);
+            }
+
+            // add checkout page template file
+            if ($siteTemplate->cartPage) {
+                $cartPageFile = [$siteTemplate->cartPage->file];
+                $this->addFiles($newProjectDestination . DIRECTORY_SEPARATOR . 'bp_config' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'cart_page_templates', $cartPageFile);
+            }
+
+            // add checkout page template file
+            if ($siteTemplate->navigationPage) {
+                $navigationPageFile = [$siteTemplate->navigationPage->file];
+                $this->addFiles($newProjectDestination . DIRECTORY_SEPARATOR . 'bp_config' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'nav_cart_templates', $navigationPageFile);
             }
 
 

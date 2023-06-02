@@ -32,6 +32,8 @@
                         <thead>
                             <tr>
                                 <th>#</th>
+                                <th>Advertising Company</th>
+                                <th>Name</th>
                                 <th>Host</th>
                                 <th>Username</th>
                                 <th>Password</th>
@@ -50,6 +52,8 @@
                                 <tr>
 
                                     <td>{{ $ind + 1 }}</td>
+                                    <td>{{ $ftp->advertisingCompany ? $ftp->advertisingCompany->name : '' }}</td>
+                                    <td>{{ $ftp->name }}</td>
                                     <td>{{ $ftp->host }}</td>
                                     <td>{{ $ftp->username }}</td>
                                     <td>{{ $ftp->password }}</td>

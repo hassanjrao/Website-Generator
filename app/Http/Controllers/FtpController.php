@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AdvertisingCompany;
 use App\Models\Ftp;
 use Illuminate\Http\Request;
 
@@ -27,8 +28,9 @@ class FtpController extends Controller
     public function create()
     {
         $ftp = null;
+        $advertisingCompanies=AdvertisingCompany::all();
 
-        return view("ftps.add_edit", compact("ftp"));
+        return view("ftps.add_edit", compact("ftp","advertisingCompanies"));
     }
 
     /**
@@ -40,6 +42,8 @@ class FtpController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            "advertising_company_id"=>"required|exists:advertising_companies,id",
+            "name"=>"required",
             "host" => "required",
             "username" => "required",
             "password" => "required",
@@ -72,8 +76,10 @@ class FtpController extends Controller
     public function edit($id)
     {
         $ftp = Ftp::find($id);
+        $advertisingCompanies=AdvertisingCompany::all();
 
-        return view("ftps.add_edit", compact("ftp"));
+
+        return view("ftps.add_edit", compact("ftp","advertisingCompanies"));
     }
 
     /**
@@ -88,6 +94,8 @@ class FtpController extends Controller
         $ftp=Ftp::findorfail($id);
 
         $request->validate([
+            "advertising_company_id"=>"required|exists:advertising_companies,id",
+            "name"=>"required",
             "host" => "required",
             "username" => "required",
             "password" => "required",
@@ -108,6 +116,10 @@ class FtpController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $ftp=Ftp::findorfail($id);
+
+        $ftp->delete();
+
+        return redirect()->route("ftps.index")->withToastSuccess("Deleted successfully");
     }
 }
