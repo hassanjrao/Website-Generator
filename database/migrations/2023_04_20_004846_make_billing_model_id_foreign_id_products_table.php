@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::table('products', function (Blueprint $table) {
 
-            $table->unsignedBigInteger("billing_model_id")->nullable();
-            $table->foreign('billing_model_id')->references('id')->on('billing_models')->after('ingredients_image');
+            // $table->unsignedBigInteger("billing_model_id")->nullable();
+            // $table->foreign('billing_model_id')->references('id')->on('billing_models')->after('ingredients_image');
 
         });
     }

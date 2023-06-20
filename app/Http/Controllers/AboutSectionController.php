@@ -54,12 +54,21 @@ class AboutSectionController extends Controller
             "file" => "required|file"
         ]);
 
+        // get file content
+        $content = file_get_contents($request->file("file")->getRealPath());
+
+        // check the number of img tags in the file
+        $imgCount = substr_count($content, "<img");
+
+
         $fileName = "about_" . time() . "_" . $request->file("file")->getClientOriginalName();
         $filePath = $request->file("file")->storeAs("templates/about-sections", $fileName);
 
+
         AboutSection::create([
             "name" => $request->name,
-            "file" => $filePath
+            "file" => $filePath,
+            "total_images" => $imgCount
         ]);
 
         return redirect()->route("about-sections.index")->withToastSuccess("About Section Template Created Successfully");
@@ -105,23 +114,31 @@ class AboutSectionController extends Controller
             return abort(403, "You don't have permission to access this page");
         }
         $request->validate([
-            "name"=>"required",
-            "file"=>"nullable|file"
+            "name" => "required",
+            "file" => "nullable|file"
         ]);
 
         $aboutSection = AboutSection::findOrFail($id);
 
-        if($request->hasFile("file")){
+        if ($request->hasFile("file")) {
 
-            if($aboutSection->file){
+            if ($aboutSection->file) {
                 Storage::delete($aboutSection->file);
             }
+
+            // get file content
+            $content = file_get_contents($request->file("file")->getRealPath());
+
+            // check the number of img tags in the file
+            $imgCount = substr_count($content, "<img");
+
 
             $fileName = "about_" . time() . "_" . $request->file("file")->getClientOriginalName();
             $filePath = $request->file("file")->storeAs("templates/about-sections", $fileName);
 
             $aboutSection->update([
-                "file" => $filePath
+                "file" => $filePath,
+                "total_images" => $imgCount
             ]);
         }
 
@@ -130,8 +147,6 @@ class AboutSectionController extends Controller
         ]);
 
         return redirect()->route("about-sections.index")->withToastSuccess("About Section Template Updated Successfully");
-
-
     }
 
     /**
@@ -147,7 +162,7 @@ class AboutSectionController extends Controller
         }
         $aboutSection = AboutSection::findOrFail($id);
 
-        if($aboutSection->file){
+        if ($aboutSection->file) {
             Storage::delete($aboutSection->file);
         }
 

@@ -18,34 +18,14 @@ class AdvertisingCompanySeeder extends Seeder
         AdvertisingCompany::create(
             [
                 "name" => "DC Consulting",
-                'url' => 'https://dcconsulting.sticky.io/api/v1/new_order',
-                'username' => 'dc_consulting_user',
-                'password' => '32432fsd',
-                'shipping_id' => 3,
-                'compaign_id' => 262,
-                'tran_type' => 'Sale',
-                'offer_id' => 25,
-                'billing_model_id' => 2,
-                'gateway_id' => 0,
-                "created_at" => now(),
-                'updated_at' => now()
+
             ]
         );
 
         AdvertisingCompany::create(
             [
                 "name" => "HMC Media",
-                'url' => 'https://dcconsulting.sticky.io/api/v1/new_order',
-                'username' => 'dc_consulting_user',
-                'password' => '32432fsd',
-                'shipping_id' => 3,
-                'compaign_id' => 262,
-                'tran_type' => 'Sale',
-                'offer_id' => 25,
-                'billing_model_id' => 2,
-                'gateway_id' => 0,
-                "created_at" => now(),
-                'updated_at' => now()
+
             ]
         );
 
@@ -53,17 +33,7 @@ class AdvertisingCompanySeeder extends Seeder
 
             [
                 "name" => "True Digital Solutions",
-                'url' => 'https://dcconsulting.sticky.io/api/v1/new_order',
-                'username' => 'dc_consulting_user',
-                'password' => '32432fsd',
-                'shipping_id' => 3,
-                'compaign_id' => 262,
-                'tran_type' => 'Sale',          
-                'offer_id' => 25,
-                'billing_model_id' => 2,
-                'gateway_id' => 0,
-                "created_at" => now(),
-                'updated_at' => now()
+                
             ]
         );
     }

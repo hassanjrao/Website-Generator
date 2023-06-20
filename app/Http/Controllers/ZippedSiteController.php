@@ -40,10 +40,10 @@ class ZippedSiteController extends Controller
                 $pInd = $ind + 1;
 
                 $siteProducts["product{$pInd}"] = [
-                    'id' => '12',
+                    'id' => $product->id,
                     'stickyId' => $product->sticky_id,
                     'name' => $product->name,
-                    'description' => $product->description,
+                    'description' => (string)$product->description,
                     'image' => 'products/' . $product->image,
                     'show_ingredients' => $product->show_ingredients == 1 ? 'yes' : 'no',
                     'ingredients_image' => $product->ingredients_image,
@@ -59,7 +59,7 @@ class ZippedSiteController extends Controller
                     'continuityPrice' => $product->continuity_price,       //if continuity
                     'continuityShipping' => $product->continuity_shipping,     //if continuity
                     'continuityMaxqty' => $product->continuity_max_quantity,          // 1 for disable qty, 2 for enable qty
-                    'straightSaleMultiPrice' => $product->straight_sale_multi_price,  // if yes, only then it take price from below
+                    'straightSaleMultiPrice' => $product->straight_sale_multi_price == 1 ? 'yes' : 'no',  // if yes, only then it take price from below
                     'shop_option' => array(
                         'shop_option1' => array(
                             'option_quantity' => '1',
@@ -236,7 +236,6 @@ class ZippedSiteController extends Controller
                     'require_total_price_terms' => $siteTermOther->total_price_terms == 1 ? 'yes' : 'no'    //if set to no, then disable checkout page product terms checkboxes
                 ),
 
-                "about_section_bg_image" => $siteTemplate->about_section_bg_image,
                 "contact_section_bg_image" => $siteTemplate->contact_section_bg_image,
                 "product_section_bg_image" => $siteTemplate->product_section_bg_image,
                 "cta_section_bg_image" => $siteTemplate->cta_section_bg_image,
@@ -299,7 +298,6 @@ class ZippedSiteController extends Controller
             $newProjectDestination = $this->copyProject($projectName);
 
 
-
             // add product images
             $productImagesFiles = [];
             foreach ($products as $product) {
@@ -308,104 +306,128 @@ class ZippedSiteController extends Controller
             $this->addFiles($newProjectDestination . DIRECTORY_SEPARATOR . 'bp_config' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . 'products', $productImagesFiles);
 
 
+            $templateBasePath=$newProjectDestination . DIRECTORY_SEPARATOR . 'bp_config' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR;
+
             // add header template file
             if ($siteTemplate->headerTemplate) {
                 $headerFile = [$siteTemplate->headerTemplate->file];
-                $this->addFiles($newProjectDestination . DIRECTORY_SEPARATOR . 'bp_config' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'headers', $headerFile);
+                $this->addFiles($templateBasePath . 'headers', $headerFile);
             }
+
+
             // add footer template file
             if ($siteTemplate->footerTemplate) {
                 $footerFile = [$siteTemplate->footerTemplate->file];
-                $this->addFiles($newProjectDestination . DIRECTORY_SEPARATOR . 'bp_config' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'footers', $footerFile);
+
+
+                $this->addFiles($templateBasePath . 'footer', $footerFile);
             }
 
             // add hero section template file
             if ($siteTemplate->heroSection) {
                 $heroSectionFile = [$siteTemplate->heroSection->file];
-                $this->addFiles($newProjectDestination . DIRECTORY_SEPARATOR . 'bp_config' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'hero_section_templates', $heroSectionFile);
+                $this->addFiles($templateBasePath . 'hero_section_templates', $heroSectionFile);
             }
 
             // add about section template file
             if ($siteTemplate->aboutSection) {
                 $aboutSectionFile = [$siteTemplate->aboutSection->file];
-                $this->addFiles($newProjectDestination . DIRECTORY_SEPARATOR . 'bp_config' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'about_templates', $aboutSectionFile);
+                $this->addFiles($templateBasePath . 'about_templates', $aboutSectionFile);
             }
 
             // add product section template file
             if ($siteTemplate->productSection) {
                 $productSectionFile = [$siteTemplate->productSection->file];
-                $this->addFiles($newProjectDestination . DIRECTORY_SEPARATOR . 'bp_config' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'product_section_templates', $productSectionFile);
+                $this->addFiles($templateBasePath . 'product_section_templates', $productSectionFile);
             }
 
             // add related products section template file
             if ($siteTemplate->relatedProductSection) {
                 $relatedProductsSectionFile = [$siteTemplate->relatedProductSection->file];
-                $this->addFiles($newProjectDestination . DIRECTORY_SEPARATOR . 'bp_config' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'related_products_templates', $relatedProductsSectionFile);
+                $this->addFiles($templateBasePath . 'related_products_templates', $relatedProductsSectionFile);
             }
 
             // add popular products section template file
             if ($siteTemplate->popularProductSection) {
                 $popularProductsSectionFile = [$siteTemplate->popularProductSection->file];
-                $this->addFiles($newProjectDestination . DIRECTORY_SEPARATOR . 'bp_config' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'popular_section_templates', $popularProductsSectionFile);
+                $this->addFiles($templateBasePath . 'popular_section_templates', $popularProductsSectionFile);
             }
 
             // add cta section template file
             if ($siteTemplate->ctaSection) {
                 $ctaSectionFile = [$siteTemplate->ctaSection->file];
-                $this->addFiles($newProjectDestination . DIRECTORY_SEPARATOR . 'bp_config' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'cta_templates', $ctaSectionFile);
+                $this->addFiles($templateBasePath . 'cta_templates', $ctaSectionFile);
             }
 
             // add contact section template file
             if ($siteTemplate->contactSection) {
                 $contactSectionFile = [$siteTemplate->contactSection->file];
-                $this->addFiles($newProjectDestination . DIRECTORY_SEPARATOR . 'bp_config' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'contact_templates', $contactSectionFile);
+                $this->addFiles($templateBasePath . 'contact_templates', $contactSectionFile);
             }
 
             // add features section template file
             if ($siteTemplate->featureSection) {
                 $featuresSectionFile = [$siteTemplate->featureSection->file];
-                $this->addFiles($newProjectDestination . DIRECTORY_SEPARATOR . 'bp_config' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'features_templates', $featuresSectionFile);
+                $this->addFiles($templateBasePath . 'features_templates', $featuresSectionFile);
             }
 
             // add product page template file
             if ($siteTemplate->productPage) {
                 $productPageFile = [$siteTemplate->productPage->file];
-                $this->addFiles($newProjectDestination . DIRECTORY_SEPARATOR . 'bp_config' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'product_page_templates', $productPageFile);
+                $this->addFiles($templateBasePath . 'product_page_templates', $productPageFile);
             }
 
             // add checkout page template file
             if ($siteTemplate->checkoutPage) {
                 $checkoutPageFile = [$siteTemplate->checkoutPage->file];
-                $this->addFiles($newProjectDestination . DIRECTORY_SEPARATOR . 'bp_config' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'checkout_page_templates', $checkoutPageFile);
+                $this->addFiles($templateBasePath . 'checkout_page_templates', $checkoutPageFile);
             }
 
             // add contact page template file
             if ($siteTemplate->contactPage) {
                 $contactPageFile = [$siteTemplate->contactPage->file];
-                $this->addFiles($newProjectDestination . DIRECTORY_SEPARATOR . 'bp_config' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'contact_page_templates', $contactPageFile);
+                $this->addFiles($templateBasePath . 'contact_page_templates', $contactPageFile);
             }
 
             // add checkout page template file
             if ($siteTemplate->cartPage) {
                 $cartPageFile = [$siteTemplate->cartPage->file];
-                $this->addFiles($newProjectDestination . DIRECTORY_SEPARATOR . 'bp_config' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'cart_page_templates', $cartPageFile);
+                $this->addFiles($templateBasePath . 'cart_page_templates', $cartPageFile);
             }
 
             // add checkout page template file
             if ($siteTemplate->navigationPage) {
                 $navigationPageFile = [$siteTemplate->navigationPage->file];
-                $this->addFiles($newProjectDestination . DIRECTORY_SEPARATOR . 'bp_config' . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR . 'templates' . DIRECTORY_SEPARATOR . 'nav_cart_templates', $navigationPageFile);
+                $this->addFiles($templateBasePath . 'nav_cart_templates', $navigationPageFile);
             }
 
 
             $siteImages = [];
 
-            if ($siteTemplate->about_section_bg_image) {
-                $siteImages[] = [
-                    "path" => "site-sections" . DIRECTORY_SEPARATOR . "about" . DIRECTORY_SEPARATOR . $siteTemplate->about_section_bg_image,
-                    "name" => $siteTemplate->about_section_bg_image,
-                ];
+            if ($siteTemplate->about_section_id) {
+
+                foreach($site->siteAboutSectionImages as $ind=> $siteAboutSectionImage){
+
+                    $path=$siteAboutSectionImage->image;
+                    $pathArr=explode('/',$path);
+                    $name=end($pathArr);
+
+
+                    $pageConfigInd='about_section_bg_image'.$ind +1;
+                    $pageConfig[$pageConfigInd]=$name;
+
+
+
+                    $siteImages[] = [
+                        "path" => $path,
+                        "name" => $name,
+                    ];
+
+                }
+
+
             }
+
 
             if ($siteTemplate->cta_section_bg_image) {
                 $siteImages[] = [
@@ -443,7 +465,10 @@ class ZippedSiteController extends Controller
                 ];
             }
 
+            // dd($siteImages);
+
             $this->addTemplateImages($newProjectDestination . DIRECTORY_SEPARATOR . 'img', $siteImages);
+
 
 
 
@@ -515,7 +540,7 @@ class ZippedSiteController extends Controller
 
         // copy public/storage/project to public/storage/project{site_id}
 
-        $source = public_path('real-project');
+        $source = public_path('real-project-upd');
 
         $destination = public_path('storage' . DIRECTORY_SEPARATOR . 'projects' . DIRECTORY_SEPARATOR . $projectName);
 
@@ -530,6 +555,7 @@ class ZippedSiteController extends Controller
     {
         foreach ($filePaths as $filePath) {
             $filePath = public_path('storage' . DIRECTORY_SEPARATOR . $filePath);
+
 
             // dd($filePath, $destinationFolder.'/4kmCP45l4trRW9eL6ALJ6wfmSa8JdScPXLO9GtUX.jpg');
 
@@ -549,6 +575,7 @@ class ZippedSiteController extends Controller
             // dd($filePath, $destinationFolder.'/4kmCP45l4trRW9eL6ALJ6wfmSa8JdScPXLO9GtUX.jpg');
 
             copy($filePath, $destinationFolder . DIRECTORY_SEPARATOR . $filePathArr["name"]);
+
         }
     }
 

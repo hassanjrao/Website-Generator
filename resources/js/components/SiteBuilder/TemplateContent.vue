@@ -665,6 +665,12 @@ export default {
 
                     this.$emit('templateContentSubmitted', true)
 
+                    let aboutUsSection= this.aboutsections.find((item) => item.value == this.selectedAboutSection);
+
+                    console.log("aboutUsSectionnnnnnnnnnnnn", aboutUsSection);
+
+                    this.$emit('totalAboutSectionImages', aboutUsSection.total_images);
+
                 })
                 .catch(error => {
                     console.log(error);
@@ -717,6 +723,8 @@ export default {
         },
 
     },
+
+
     mounted() {
         console.log('TemplateContent.vue mounted');
 

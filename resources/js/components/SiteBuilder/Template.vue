@@ -48,7 +48,8 @@
                             :site_id="siteId" :productpages="productpages" :checkoutpages="checkoutpages"
                             :contactpages="contactpages" :cartpages="cartpages" :navigationcartpages="navigationcartpages"
                             :includedlayoutitems="includedLayoutItems"
-                            @templateContentSubmitted="getTemplateContentSubmitted">
+                            @templateContentSubmitted="getTemplateContentSubmitted"
+                            @totalAboutSectionImages="getAboutSectionImages">
                         </TemplateContent>
                     </v-card>
 
@@ -56,6 +57,7 @@
 
                         <TemplateImages :key="templateImagesKey" :site_id="siteId"
                             :includedlayoutitems="includedLayoutItems"
+                            :aboutsectionimages="aboutSectionImages"
                             @templateImagesSubmitted="getTemplateImagesSubmitted">
 
                         </TemplateImages>
@@ -319,6 +321,7 @@ export default {
             loading: false,
             siteTemplateId: null,
             includedLayoutItems: [],
+            aboutSectionImages:0,
         }
     },
     computed: {
@@ -527,6 +530,11 @@ export default {
         getTemplateContentSubmitted(templateContentSubmitted) {
             this.$emit('templateContentSubmitted', templateContentSubmitted)
             this.tab = 2
+        },
+        getAboutSectionImages(aboutSectionImages) {
+            this.aboutSectionImages=aboutSectionImages
+
+            console.log("Template emitttttttttt", aboutSectionImages)
         },
         getTemplateImagesSubmitted(templateImagesSubmitted) {
             this.$emit('templateImagesSubmitted', templateImagesSubmitted)

@@ -55,4 +55,8 @@ class Site extends Model
     public function sitePageLayouts(){
         return $this->hasMany(SitePageLayout::class);
     }
+
+    public function siteAboutSectionImages(){
+        return $this->hasMany(SiteAboutSectionImage::class);
+    }
 }

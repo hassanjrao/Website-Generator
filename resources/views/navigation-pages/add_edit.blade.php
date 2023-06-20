@@ -13,7 +13,7 @@
         <div class="block block-rounded">
             <div class="block-header block-header-default d-flex">
                 <h3 class="block-title">{{ $addEdit }} Navigation Page</h3>
-                                                                                
+
 
                 <a href="{{ route('navigation-pages.index') }}" class="btn btn-primary push">All navigation Pages</a>
 

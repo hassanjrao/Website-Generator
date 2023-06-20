@@ -3,10 +3,10 @@
 
 
         <!-- header -->
-        <v-card-title  class="d-flex justify-content-between">
+        <v-card-title class="d-flex justify-content-between">
             <h6 class="headline mb-0">Site Information</h6>
 
-            <v-btn color="primary" :loading="loading" @click="submitSiteInfo">Submit</v-btn>
+            <v-btn color="primary" :loading="loading" @click="submitButtonClicked">Submit</v-btn>
         </v-card-title>
 
         <!-- divider -->
@@ -19,28 +19,27 @@
                 <v-row>
 
                     <v-col cols="12" sm="6" md="4">
-                        <v-text-field v-model="site_info.name" label="DBA"
-                            ></v-text-field>
+                        <v-text-field ref="name" v-model="site_info.name" label="DBA" ></v-text-field>
                     </v-col>
 
                     <v-col cols="12" sm="6" md="4">
-                        <v-text-field type="url" v-model="site_info.url" label="URL" ></v-text-field>
+                        <v-text-field ref="url" type="url" v-model="site_info.url" label="URL"></v-text-field>
                     </v-col>
 
                     <v-col cols="12" sm="6" md="4">
-                        <v-text-field v-model="site_info.email" label="Email" ></v-text-field>
+                        <v-text-field ref="email" v-model="site_info.email" label="Email"></v-text-field>
                     </v-col>
 
                     <v-col cols="12" sm="6" md="4">
-                        <v-text-field v-model="site_info.phone" label="Phone" ></v-text-field>
+                        <v-text-field ref="phone" v-model="site_info.phone" label="Phone"></v-text-field>
                     </v-col>
 
                     <v-col cols="12" sm="6" md="4">
-                        <v-text-field v-model="site_info.address" label="Address"></v-text-field>
+                        <v-text-field ref="address" v-model="site_info.address" label="Address"></v-text-field>
                     </v-col>
 
                     <v-col cols="12" sm="6" md="4">
-                        <v-text-field v-model="site_info.corp_name" label="Corp. Name" ></v-text-field>
+                        <v-text-field ref="corp_name" v-model="site_info.corp_name" label="Corp. Name"></v-text-field>
                     </v-col>
 
                     <!-- <v-col cols="12" sm="6" md="6">
@@ -50,11 +49,11 @@
                     </v-col> -->
 
                     <v-col cols="12" sm="6" md="4">
-                        <v-text-field v-model="site_info.fulfillment" label="Fulfillment" ></v-text-field>
+                        <v-text-field ref="fulfillment" v-model="site_info.fulfillment" label="Fulfillment"></v-text-field>
                     </v-col>
 
                     <v-col cols="12" sm="6" md="6">
-                        <v-text-field v-model="site_info.return_address" label="Return Address"></v-text-field>
+                        <v-text-field ref="return_address" v-model="site_info.return_address" label="Return Address"></v-text-field>
                     </v-col>
 
 
@@ -62,8 +61,7 @@
 
                     <v-col cols="12" sm="6" md="4">
                         <v-text-field v-model="site_info.trial_period" label="Trial Period" required
-                            @input="$v.site_info.trial_period.$touch()"
-                            :error-messages="trialPeriodErrors"
+                            @input="$v.site_info.trial_period.$touch()" :error-messages="trialPeriodErrors"
                             @blur="$v.site_info.trial_period.$touch()"></v-text-field>
                     </v-col>
 
@@ -96,8 +94,8 @@
                     </v-col>
 
                     <v-col cols="12" sm="6" md="4">
-                        <v-text-field type="number" v-model.number="site_info.maximum_ticket_value" label="Maximum Ticket Value" required
-                            @input="$v.site_info.maximum_ticket_value.$touch()"
+                        <v-text-field type="number" v-model.number="site_info.maximum_ticket_value"
+                            label="Maximum Ticket Value" required @input="$v.site_info.maximum_ticket_value.$touch()"
                             :error-messages="maximumTicketValueErrors"></v-text-field>
                     </v-col>
 
@@ -138,6 +136,7 @@ export default {
     validations: {
         site_info: {
 
+
             trial_period: {
                 required
             },
@@ -165,10 +164,12 @@ export default {
         return {
             loading: false,
             siteId: null,
+            focusColor: ""
         }
     },
 
     computed: {
+
 
         trialPeriodBreakdownErrors() {
             const errors = []
@@ -220,11 +221,11 @@ export default {
 
     methods: {
 
-        emptyFields(){
-            let emptyFields=[];
+        emptyFields() {
+            let emptyFields = [];
 
             for (let [key, value] of Object.entries(this.site_info)) {
-                if(value==null || value==""){
+                if ((value == null || value == "") && key!="description") {
                     emptyFields.push(key);
                 }
             }
@@ -232,28 +233,66 @@ export default {
             return emptyFields;
         },
 
-        submitSiteInfo() {
+        submitButtonClicked() {
+
+
             this.$v.$touch()
             if (this.$v.$invalid) {
                 return
             }
 
-            let emptyFields=this.emptyFields();
 
-            if(emptyFields.length>0){
 
-                let msg="Are you sure? Following fields are empty ";
+            let emptyFields = this.emptyFields();
+
+
+            if (emptyFields.length > 0) {
+
+                let msg = "Are you sure? Following fields are empty ";
 
                 emptyFields.forEach(element => {
-                    element=element.replace('_'," ")
-                    
-                    msg+=element+ ", "
+                    element = element.replace('_', " ")
+
+                    msg += element + ", "
                 });
 
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: msg,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes'
+                }).then((result) => {
+                    if (!result.isConfirmed) {
 
-                this.showStatus(msg, "error",false)
-                return;
+
+                        // this.focusColor = "#F44336"
+
+                        console.log(emptyFields);
+
+                        emptyFields.forEach(element => {
+
+                            this.$refs[element].error=true
+
+                        });
+
+
+                        return
+                    }
+                    else {
+                        this.submitSiteInfo()
+                    }
+                })
+
+            } else {
+                this.submitSiteInfo()
             }
+        },
+
+        submitSiteInfo() {
+
 
 
             this.loading = true
@@ -294,13 +333,14 @@ export default {
     },
 
     mounted() {
-        console.log('Site info.',this.site_info);
+        console.log('Site info.', this.site_info);
         this.siteId = this.site_id
     },
 
 
     created() {
         this.showStatus = alert.showStatus;
+        this.showWarning = alert.showWarning;
     }
 }
 

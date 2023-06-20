@@ -191,8 +191,7 @@ export default {
         selectedAdvertisingCompany: function (val){
 
             console.log("adv",val);
-
-            this.filteredFtps=this.ftps.filter(ftp=>ftp.advertising_company_id==val)
+             this.filteredFtps=this.ftps.filter(ftp=>ftp.advertising_company_id==val)
         }
     },
 

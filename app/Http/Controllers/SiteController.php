@@ -32,6 +32,7 @@ use App\Models\ProductSection;
 use App\Models\RelatedProductSection;
 use App\Models\ShopTitle;
 use App\Models\Site;
+use App\Models\SiteAboutSectionImage;
 use App\Models\SiteColorFont;
 use App\Models\SiteContent;
 use App\Models\SiteCreditCard;
@@ -180,9 +181,11 @@ class SiteController extends Controller
         $aboutSections = $aboutSections->map(function ($aboutSection) {
             return [
                 "text" => $aboutSection->name,
-                "value" => $aboutSection->id
+                "value" => $aboutSection->id,
+                "total_images" => $aboutSection->total_images
             ];
         });
+
 
         $contactSections = $this->getContactSections();
         $contactSections = $contactSections->map(function ($contactSection) {
@@ -286,7 +289,7 @@ class SiteController extends Controller
             return [
                 "text" => $advertisingCompany->name,
                 "value" => $advertisingCompany->id,
-                "crm_id"=> $advertisingCompany->crm ? $advertisingCompany->crm->id : null,
+                "crm_id" => $advertisingCompany->crm ? $advertisingCompany->crm->id : null,
                 'url' => $advertisingCompany->crm ? $advertisingCompany->crm->url : null,
                 'username' => $advertisingCompany->crm ? $advertisingCompany->crm->username : null,
                 'password' => $advertisingCompany->crm ? $advertisingCompany->crm->password : null,
@@ -323,12 +326,12 @@ class SiteController extends Controller
             return [
                 "text" => $ftp->name,
                 "value" => $ftp->id,
-                "host"=>$ftp->host,
-                "advertising_company_id"=>$ftp->advertising_company_id,
-                "username"=> $ftp->username,
-                "password"=> $ftp->password,
-                "port"=> $ftp->port,
-                "root_path"=>$ftp->root_path
+                "host" => $ftp->host,
+                "advertising_company_id" => $ftp->advertising_company_id,
+                "username" => $ftp->username,
+                "password" => $ftp->password,
+                "port" => $ftp->port,
+                "root_path" => $ftp->root_path
             ];
         });
 
@@ -461,7 +464,7 @@ class SiteController extends Controller
             ];
         });
 
-        $siteTemplate=$site->siteTemplate;
+        $siteTemplate = $site->siteTemplate;
 
         $headerTemplates = $this->headerTemplates();
         $headerTemplates = $headerTemplates->map(function ($headerTemplate) use ($siteTemplate) {
@@ -574,7 +577,7 @@ class SiteController extends Controller
         });
 
         $sortProductsBy = $this->getSortProductsBy();
-        $sortProductsBy = $sortProductsBy->map(function ($sortProductBy)  {
+        $sortProductsBy = $sortProductsBy->map(function ($sortProductBy) {
             return [
                 "text" => $sortProductBy->name,
                 "value" => $sortProductBy->id
@@ -661,7 +664,8 @@ class SiteController extends Controller
         );
     }
 
-    public function getFtps(){
+    public function getFtps()
+    {
         return Ftp::all();
     }
 
@@ -908,31 +912,31 @@ class SiteController extends Controller
 
         $layouts = PageLayout::all();
 
-        $fixedLayouts=["header","footer","heroSection"];
+        $fixedLayouts = ["header", "footer", "heroSection"];
 
 
         $sitePageLayouts = [];
         if ($site) {
             $sitePageLayouts = $site->sitePageLayouts()->pluck('page_layout_id')->toArray();
 
-            $layouts = $layouts->map(function ($layout) use ($sitePageLayouts,$fixedLayouts) {
+            $layouts = $layouts->map(function ($layout) use ($sitePageLayouts, $fixedLayouts) {
 
                 return [
                     "id" => $layout->id,
                     "name" => $layout->name,
                     "label" => $layout->code,
-                    "fixed" => in_array($layout->code,$fixedLayouts) ? true : false,
+                    "fixed" => in_array($layout->code, $fixedLayouts) ? true : false,
                     "selected" => in_array($layout->id, $sitePageLayouts) ? true : false
                 ];
             });
         } else {
 
-            $layouts = $layouts->map(function ($layout) use ($sitePageLayouts,$fixedLayouts) {
+            $layouts = $layouts->map(function ($layout) use ($sitePageLayouts, $fixedLayouts) {
                 return [
                     "id" => $layout->id,
                     "name" => $layout->name,
                     "label" => $layout->code,
-                    "fixed" =>  in_array($layout->code,$fixedLayouts) ? true : false,
+                    "fixed" =>  in_array($layout->code, $fixedLayouts) ? true : false,
                     "selected" => true,
                 ];
             });
@@ -1108,15 +1112,15 @@ class SiteController extends Controller
     {
 
         $request->validate([
-            "site_name" => "required",
-            "url" => "required",
-            "email" => "required|email",
-            "phone" => "required",
-            "address" => "required",
-            "corp_name" => "required",
+            "site_name" => "nullable",
+            "url" => "nullable",
+            "email" => "nullable|email",
+            "phone" => "nullable",
+            "address" => "nullable",
+            "corp_name" => "nullable",
             "description" => "nullable",
-            "return_address" => "required",
-            "fulfillment" => "required",
+            "return_address" => "nullable",
+            "fulfillment" => "nullable",
             "trial_period_breakdown" => "required",
             "trial_period" => "required",
             "shipping_period" => "required",
@@ -1296,7 +1300,7 @@ class SiteController extends Controller
             "checkout_page_id" => "required|exists:checkout_pages,id",
             "contact_page_id" => "required|exists:contact_pages,id",
             "cart_page_id" => "required|exists:cart_pages,id",
-            "navigation_cart_page_id"=>"required|exists:navigation_pages,id",
+            "navigation_cart_page_id" => "required|exists:navigation_pages,id",
         ]);
 
 
@@ -1317,7 +1321,7 @@ class SiteController extends Controller
             "loading_gif_id" => 1,
             "contact_page_id" => $request->contact_page_id,
             "cart_page_id" => $request->cart_page_id,
-            "navigation_page_id"=>$request->navigation_cart_page_id,
+            "navigation_page_id" => $request->navigation_cart_page_id,
         ];
 
 
@@ -1349,7 +1353,8 @@ class SiteController extends Controller
             "hero_section_product_image" => "nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048",
             "product_section_bg_image" => "nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048",
             "popular_product_section_bg_image" => "nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048",
-            "about_section_bg_image" => "nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048",
+            "about_section_bg_images" => "nullable|array",
+            "about_section_bg_images.*" => "nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048",
             "contact_section_bg_image" => "nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048",
             "cta_section_bg_image" => "nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048",
 
@@ -1402,24 +1407,12 @@ class SiteController extends Controller
         }
 
 
-        if ($request->hasFile('about_section_bg_image')) {
+        if ($request->hasFile('about_section_bg_images')) {
 
-            if ($siteTemplate->about_section_bg_image) {
-                Storage::delete('site-sections/about/' . $siteTemplate->about_section_bg_image);
-            }
-
-            $aboutImage = $request->file('about_section_bg_image')->store('site-sections/about');
-
-            $siteTemplate->update([
-                "about_section_bg_image" => basename($aboutImage)
-            ]);
+            $this->addAboutSectionImages($request->file('about_section_bg_images'), $request->site_id,$siteTemplate);
         } else {
-            if ($siteTemplate->about_section_bg_image) {
-                Storage::delete('site-sections/about/' . $siteTemplate->about_section_bg_image);
-            }
-            $siteTemplate->update([
-                "about_section_bg_image" => null
-            ]);
+
+            $this->deleteAboutSectionImages($request->site_id,$siteTemplate);
         }
 
         if ($request->hasFile('contact_section_bg_image')) {
@@ -1530,6 +1523,48 @@ class SiteController extends Controller
             ]
         ], 200);
     }
+
+
+    public function addAboutSectionImages($files, $site_id,$siteTemplate)
+    {
+        $siteAboutSectionImage = [];
+
+        $siteAboutSectionImages=SiteAboutSectionImage::where("site_id",$site_id)->get();
+
+        foreach ($siteAboutSectionImages as $siteAboutSectionImage) {
+            Storage::delete($siteAboutSectionImage->image);
+        }
+
+        foreach ($files as $file) {
+
+
+            $aboutImage = $file->store('site-sections'.DIRECTORY_SEPARATOR.'about');
+            $siteAboutSectionImage[] = [
+                "site_id" => $site_id,
+                "image" => $aboutImage,
+                'about_section_id'=>$siteTemplate->about_section_id,
+                'created_at'=>now(),
+                'updated_at'=>now()
+            ];
+        }
+
+        SiteAboutSectionImage::insert($siteAboutSectionImage);
+    }
+
+    public function deleteAboutSectionImages($site_id,$siteTemplate){
+        $siteAboutSectionImages=SiteAboutSectionImage::where("site_id",$site_id)->get();
+
+        foreach ($siteAboutSectionImages as $siteAboutSectionImage) {
+            Storage::delete($siteAboutSectionImage->image);
+        }
+
+        SiteAboutSectionImage::where("site_id",$site_id)->delete();
+
+        $siteTemplate->update([
+            "about_section_id" => null
+        ]);
+    }
+
 
 
 

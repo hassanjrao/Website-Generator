@@ -32,7 +32,7 @@ export default {
             }
         }
         else if (type == "error") {
-        
+
             Swal.fire({
                 icon: type,
                 title: message,
@@ -44,6 +44,23 @@ export default {
 
         }
         $('.modal').modal("hide");
+
+
+    },
+
+    showWarning: function (message, type = 'success', toast = true) {
+
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: message,
+            icon: type,
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes'
+        })
+
 
 
     }

@@ -40,7 +40,7 @@
 
                         <div class="row mb-4 justify-content-around">
 
-                            <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="col-lg-6 col-md-6 col-sm-12">
                                 <label class="form-label" for="label">Advertising Company<span
                                         class="text-danger">*</span></label>
 
@@ -58,16 +58,26 @@
                                 <span class="text-danger" id="advertising_company_error"></span>
                             </div>
 
-                            <div class="col-lg-3 col-md-3 col-sm-12">
+                            <div class="col-lg-6 col-md-6 col-sm-12">
                                 <label class="form-label" for="label">Name <span class="text-danger">*</span></label>
                                 <input type="text" value="{{ $productCategory ? $productCategory->name : null }}"
                                     class="form-control" id="name" name="name" placeholder="Enter Name">
                                 <span class="text-danger" id="name_error"></span>
                             </div>
+                        </div>
+                        <div class="row mb-4 justify-content-around">
+
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <label class="form-label" for="label">Product Array</label>
+
+                                <textarea name="products_array" class="form-control" cols="30" rows="10">{{ $productCategory ? $productCategory->products_array : null }}</textarea>
+
+                                <span class="text-danger" id="products_array_error"></span>
+                            </div>
 
                         </div>
 
-
+        
                     </div>
 
 
