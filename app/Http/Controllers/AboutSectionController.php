@@ -68,7 +68,7 @@ class AboutSectionController extends Controller
         AboutSection::create([
             "name" => $request->name,
             "file" => $filePath,
-            "total_images" => $imgCount
+            "total_images" => $imgCount == 0 ? 1 : $imgCount,
         ]);
 
         return redirect()->route("about-sections.index")->withToastSuccess("About Section Template Created Successfully");
@@ -138,7 +138,7 @@ class AboutSectionController extends Controller
 
             $aboutSection->update([
                 "file" => $filePath,
-                "total_images" => $imgCount
+                "total_images" => $imgCount == 0 ? 1 : $imgCount
             ]);
         }
 

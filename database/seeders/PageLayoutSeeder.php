@@ -70,6 +70,13 @@ class PageLayoutSeeder extends Seeder
 
             [
                 "id" => 8,
+                "name" => "Product Section",
+                "code" => "productSection",
+                "created_at" => now(),
+                "updated_at" => now(),
+            ],
+            [
+                "id" => 9,
                 "name" => "Footer",
                 "code" => "footer",
                 "created_at" => now(),
