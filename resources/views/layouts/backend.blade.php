@@ -252,6 +252,19 @@
                         @endif
 
                         @if (auth()->user()->hasRole('super admin') ||
+                                auth()->user()->can('view shop options'))
+                            <li class="nav-main-item">
+                                <a class="nav-main-link{{ request()->segment(1) == 'shop-options' ? ' active' : '' }}"
+                                    href="{{ route('shop-options.index') }}">
+
+                                    <i class="nav-main-link-icon fas fa-tags"></i>
+
+                                    <span class="nav-main-link-name">Shop Options</span>
+                                </a>
+                            </li>
+                        @endif
+
+                        @if (auth()->user()->hasRole('super admin') ||
                                 auth()->user()->can('view sites'))
                             <li class="nav-main-item">
                                 <a class="nav-main-link{{ request()->segment(1) == 'sites' ? ' active' : '' }}"

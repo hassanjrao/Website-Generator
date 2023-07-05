@@ -189,6 +189,8 @@ class ProductCategoryController extends Controller
                     "product_id" => $createdProduct->id,
                     "option_quantity" => $shopOption["option_quantity"],
                     "option_price" => $shopOption["option_price"],
+                    "created_at" => now(),
+                    "updated_at" => now(),
                 ];
             }
 
@@ -198,6 +200,8 @@ class ProductCategoryController extends Controller
                 $productSizes[]=[
                     "product_id"=>$createdProduct->id,
                     "size_id"=>$sizes->where("name",$size)->first()->id,
+                    "created_at"=>now(),
+                    "updated_at"=>now(),
                 ];
             }
 

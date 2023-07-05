@@ -27,6 +27,8 @@ use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductPageController;
 use App\Http\Controllers\ProductSectionController;
+use App\Http\Controllers\ProductShopOption;
+use App\Http\Controllers\ProductShopOptionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RelatedProductSectionController;
 use App\Http\Controllers\RoleManagementController;
@@ -83,6 +85,8 @@ Route::middleware(["auth"])->group(function () {
 
     Route::resource("product-categories", ProductCategoryController::class);
     Route::resource("products", ProductController::class);
+
+    Route::resource("shop-options",ProductShopOptionController::class);
 
 
     Route::post("update-role-permissions", [RoleManagementController::class,"updateRolePermissions"])->name("roles.update-role-permissions");
